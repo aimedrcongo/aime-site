@@ -1,0 +1,101 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Badges - Tableau de Bord{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-medal me-2"></i>Mes Badges et Récompenses</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <i class="fas fa-trophy fa-3x text-warning mb-2"></i>
+                                    <h5>{{ profile.points|default:0 }}</h5>
+                                    <small class="text-muted">Points totaux</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <i class="fas fa-level-up-alt fa-3x text-success mb-2"></i>
+                                    <h5>Niveau {{ profile.level|default:1 }}</h5>
+                                    <small class="text-muted">Niveau actuel</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <i class="fas fa-medal fa-3x text-primary mb-2"></i>
+                                    <h5>{{ badges_count|default:0 }}</h5>
+                                    <small class="text-muted">Badges obtenus</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <i class="fas fa-chart-line fa-3x text-info mb-2"></i>
+                                    <h5>{{ user_ranking|default:"Non classé" }}</h5>
+                                    <small class="text-muted">Classement</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="mb-3">Badges disponibles</h4>
+                    <div class="row">
+                        {% for badge_name, badge_info in available_badges.items %}
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card text-center h-100 {% if badge_name in earned_badges %}border-success{% endif %}">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        {% if badge_name in earned_badges %}
+                                            <i class="fas {{ badge_info.icon }} fa-3x text-success"></i>
+                                            <div class="position-absolute top-0 end-0 m-2">
+                                                <i class="fas fa-check-circle text-success"></i>
+                                            </div>
+                                        {% else %}
+                                            <i class="fas {{ badge_info.icon }} fa-3x text-muted"></i>
+                                        {% endif %}
+                                    </div>
+                                    <h6 class="card-title">{{ badge_info.name }}</h6>
+                                    <p class="card-text small">{{ badge_info.description }}</p>
+                                    {% if badge_name in earned_badges %}
+                                        <span class="badge bg-success">Obtenu</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">{{ badge_info.points }} points requis</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="col-12">
+                            <div class="text-center py-4">
+                                <i class="fas fa-medal fa-3x text-muted mb-3"></i>
+                                <h5>Système de badges en cours de développement</h5>
+                                <p class="text-muted">Les badges et récompenses seront bientôt disponibles !</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    position: relative;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,358 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Administration Chat - AIME{% endblock %}
+
+{% block extra_css %}
+<style>
+.chat-admin-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.chat-admin-header {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.chat-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #3498db;
+    display: block;
+}
+
+.stat-label {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.conversations-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.conversation-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    border-left: 4px solid #3498db;
+}
+
+.conversation-card.new {
+    border-left-color: #e74c3c;
+    background: linear-gradient(90deg, rgba(231, 76, 60, 0.05), white);
+}
+
+.conversation-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.conversation-user {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.conversation-time {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.conversation-messages {
+    max-height: 200px;
+    overflow-y: auto;
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.message-item {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.message-item.user {
+    background: #3498db;
+    color: white;
+    margin-left: 2rem;
+}
+
+.message-item.bot {
+    background: white;
+    color: #2c3e50;
+    margin-right: 2rem;
+    border: 1px solid #e1e8ed;
+}
+
+.conversation-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.btn-reply, .btn-close {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.btn-reply {
+    background: #3498db;
+    color: white;
+}
+
+.btn-reply:hover {
+    background: #2980b9;
+}
+
+.btn-close {
+    background: #e74c3c;
+    color: white;
+}
+
+.btn-close:hover {
+    background: #c0392b;
+}
+
+.reply-form {
+    display: none;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.reply-form.show {
+    display: block;
+}
+
+.reply-form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #e1e8ed;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    resize: vertical;
+}
+
+.reply-form .btn-send-reply {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.reply-form .btn-send-reply:hover {
+    background: #229954;
+}
+
+@media (max-width: 768px) {
+    .chat-admin-container {
+        padding: 0 1rem;
+    }
+
+    .conversation-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .conversation-actions {
+        justify-content: center;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="chat-admin-container">
+    <div class="chat-admin-header">
+        <h1>🗣️ Administration du Chat AIME</h1>
+        <p>Gérez les conversations avec les visiteurs et les demandes d'assistance</p>
+    </div>
+
+    <div class="chat-stats">
+        <div class="stat-card">
+            <span class="stat-number">{{ active_conversations.count }}</span>
+            <div class="stat-label">Conversations actives</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">{{ recent_messages.count }}</span>
+            <div class="stat-label">Messages récents</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">{{ total_conversations }}</span>
+            <div class="stat-label">Total conversations</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">{{ unread_count }}</span>
+            <div class="stat-label">Messages non lus</div>
+        </div>
+    </div>
+
+    <div class="conversations-grid">
+        {% for conversation in active_conversations %}
+        <div class="conversation-card {% if conversation.messages.filter(is_assistant=False).exists and not conversation.staff %}new{% endif %}">
+            <div class="conversation-header">
+                <div>
+                    <div class="conversation-user">
+                        👤 {{ conversation.user.get_full_name|default:conversation.user.username }}
+                        {% if conversation.staff %}
+                            <small>(assigné à {{ conversation.staff.get_full_name|default:conversation.staff.username }})</small>
+                        {% endif %}
+                    </div>
+                    <div class="conversation-time">
+                        🕒 {{ conversation.created_at|date:"d/m/Y H:i" }}
+                    </div>
+                </div>
+                <div class="conversation-actions">
+                    <button class="btn-reply" onclick="toggleReplyForm('{{ conversation.id }}')">
+                        💬 Répondre
+                    </button>
+                    <button class="btn-close" onclick="closeConversation('{{ conversation.id }}')">
+                        ❌ Fermer
+                    </button>
+                </div>
+            </div>
+
+            <div class="conversation-messages">
+                {% for message in conversation.messages.all|slice:":5" %}
+                <div class="message-item {% if message.is_assistant %}bot{% else %}user{% endif %}">
+                    <strong>{% if message.is_assistant %}🤖 Assistant{% else %}👤 {{ message.sender.get_full_name|default:message.sender.username }}{% endif %}:</strong>
+                    {{ message.content|truncatechars:100 }}
+                    <small style="opacity: 0.7;">({{ message.timestamp|date:"H:i" }})</small>
+                </div>
+                {% endfor %}
+                {% if conversation.messages.count > 5 %}
+                <div style="text-align: center; color: #7f8c8d; font-size: 0.8rem;">
+                    ... et {{ conversation.messages.count|add:"-5" }} autres messages
+                </div>
+                {% endif %}
+            </div>
+
+            <div id="reply-form-{{ conversation.id }}" class="reply-form">
+                <form onsubmit="sendReply(event, '{{ conversation.id }}')">
+                    {% csrf_token %}
+                    <textarea name="message" placeholder="Tapez votre réponse..." rows="3" required></textarea>
+                    <button type="submit" class="btn-send-reply">📤 Envoyer la réponse</button>
+                </form>
+            </div>
+        </div>
+        {% empty %}
+        <div class="conversation-card">
+            <div style="text-align: center; padding: 2rem; color: #7f8c8d;">
+                <i class="fas fa-comments" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                <p>Aucune conversation active pour le moment.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+// Fonction pour basculer le formulaire de réponse
+function toggleReplyForm(conversationId) {
+    const form = document.getElementById(`reply-form-${conversationId}`);
+    form.classList.toggle('show');
+}
+
+// Fonction pour envoyer une réponse
+function sendReply(event, conversationId) {
+    event.preventDefault();
+
+    const form = event.target;
+    const formData = new FormData(form);
+    const message = formData.get('message');
+
+    fetch(`/admin/chat/reply/${conversationId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCSRFToken()
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Réponse envoyée avec succès !');
+            location.reload(); // Recharger la page pour voir les changements
+        } else {
+            alert('Erreur : ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        alert('Erreur lors de l\'envoi de la réponse');
+    });
+}
+
+// Fonction pour fermer une conversation
+function closeConversation(conversationId) {
+    if (confirm('Êtes-vous sûr de vouloir fermer cette conversation ?')) {
+        fetch(`/admin/chat/close/${conversationId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCSRFToken()
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Conversation fermée avec succès !');
+                location.reload();
+            } else {
+                alert('Erreur : ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            alert('Erreur lors de la fermeture de la conversation');
+        });
+    }
+}
+
+// Fonction pour récupérer le token CSRF
+function getCSRFToken() {
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]');
+    return csrfToken ? csrfToken.value : '';
+}
+
+// Actualiser automatiquement toutes les 30 secondes
+setInterval(() => {
+    location.reload();
+}, 30000);
+</script>
+{% endblock %}

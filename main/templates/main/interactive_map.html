@@ -1,0 +1,677 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<!-- Chart.js pour les graphiques -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- CSS Amélioré pour carte moderne et responsive -->
+<link rel="stylesheet" href="{% static 'main/map-enhanced.css' %}">
+
+<style>
+    /* Hero Section pour la carte interactive */
+    .hero-section {
+        position: relative;
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        background: linear-gradient(135deg, #1299f3, #023e8a);
+    }
+
+    /* Image de fond avec effet zoom pour la carte */
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('{% static "main/images/hero/premiere_image.JPG" %}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        animation: mapZoomInOut 25s ease-in-out infinite;
+        z-index: 1;
+    }
+
+    /* Filtre dégradé pour la carte */
+    .hero-section::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+            135deg, 
+            rgba(18, 153, 243, 0.8) 0%, 
+            rgba(2, 62, 138, 0.6) 50%, 
+            rgba(18, 153, 243, 0.7) 100%
+        );
+        z-index: 2;
+    }
+
+    /* Animation de zoom pour la carte */
+    @keyframes mapZoomInOut {
+        0%, 100% {
+            transform: scale(1);
+        }
+        33% {
+            transform: scale(1.08);
+        }
+        66% {
+            transform: scale(1.05);
+        }
+    }
+
+    /* Contenu de la carte au-dessus du fond */
+    .hero-section .container {
+        position: relative;
+        z-index: 3;
+    }
+
+    .hero-section h1 {
+        color: white;
+        text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+        font-weight: 700;
+    }
+
+    .hero-section .lead {
+        color: rgba(255, 255, 255, 0.95);
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        font-size: 1.2rem;
+    }
+
+    #impact-map {
+        height: 600px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .stats-container {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .stat-item {
+        text-align: center;
+        padding: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .filter-panel {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+    }
+    
+    .impact-timeline {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        max-height: 600px;
+        overflow-y: auto;
+    }
+    
+    .timeline-item {
+        border-left: 3px solid var(--primary-color);
+        padding-left: 1rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+    
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -8px;
+        top: 0;
+        width: 12px;
+        height: 12px;
+        background: var(--primary-color);
+        border-radius: 50%;
+        border: 2px solid white;
+    }
+    
+    .timeline-item.new {
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+        100% { transform: scale(1); }
+    }
+    
+    .impact-marker {
+        background: var(--accent-color);
+        color: white;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.8rem;
+        border: 3px solid white;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    
+    .marker-event { background: #28a745; }
+    .marker-project { background: #007bff; }
+    .marker-donation { background: #ffc107; }
+    .marker-volunteer { background: #6f42c1; }
+    
+    .real-time-indicator {
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: #28a745;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        font-size: 0.8rem;
+        z-index: 1000;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    .real-time-indicator.hidden {
+        display: none;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateX(100%); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+    
+    .legend {
+        background: white;
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-top: 1rem;
+    }
+    
+    .legend-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+    
+    .legend-color {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        margin-right: 0.5rem;
+    }
+    
+    .dashboard-widget {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+    }
+    
+    .widget-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    
+    .widget-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Real-time indicator -->
+<div id="real-time-indicator" class="real-time-indicator hidden">
+    <i class="fas fa-satellite-dish me-2"></i>Données mises à jour en temps réel
+</div>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-4">{{ title }}</h1>
+                <p class="lead">
+                    Visualisez l'impact de nos actions en temps réel à travers la République Démocratique du Congo
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistiques d'Impact -->
+<section class="py-5">
+    <div class="container">
+        <div class="stats-container">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="stat-item">
+                        <span class="stat-number" id="stat-beneficiaries">{{ stats.total_beneficiaries }}</span>
+                        <div class="stat-label">Bénéficiaires</div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="stat-item">
+                        <span class="stat-number" id="stat-events">{{ stats.total_events }}</span>
+                        <div class="stat-label">Événements</div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="stat-item">
+                        <span class="stat-number" id="stat-donations">{{ stats.total_donations|floatformat:0 }}</span>
+                        <div class="stat-label">FC Collectés</div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="stat-item">
+                        <span class="stat-number" id="stat-projects">{{ stats.active_projects }}</span>
+                        <div class="stat-label">Projets Actifs</div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="stat-item">
+                        <span class="stat-number" id="stat-volunteers">{{ stats.volunteers }}</span>
+                        <div class="stat-label">Bénévoles</div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="stat-item">
+                        <span class="stat-number text-warning">
+                            <i class="fas fa-satellite-dish"></i>
+                        </span>
+                        <div class="stat-label">En Temps Réel</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Interface Principale -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Carte Interactive -->
+            <div class="col-lg-8">
+                <!-- Filtres -->
+                <div class="filter-panel">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h5 class="mb-3 mb-md-0">
+                                <i class="fas fa-filter text-primary me-2"></i>Filtres d'Impact
+                            </h5>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-6">
+                                    <select class="form-select" id="filter-type">
+                                        <option value="">Tous les types</option>
+                                        <option value="event">Événements</option>
+                                        <option value="project">Projets</option>
+                                        <option value="donation">Dons</option>
+                                        <option value="volunteer">Bénévoles</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <select class="form-select" id="filter-period">
+                                        <option value="">Toute période</option>
+                                        <option value="today">Aujourd'hui</option>
+                                        <option value="week">Cette semaine</option>
+                                        <option value="month">Ce mois</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Carte -->
+                {% if impact_data == '[]' or not impact_data %}
+                    <!-- État vide : aucune donnée d'impact -->
+                    {% include 'main/partials/map-empty-state.html' %}
+                {% else %}
+                <div class="d-flex justify-content-end mb-3">
+                    <button id="toggle-view-btn" class="btn btn-outline-primary">
+                        <i class="fas fa-list me-2"></i>Afficher la liste/statistiques
+                    </button>
+                </div>
+                <div id="impact-map" style="display: block;"></div>
+                {% endif %}
+                <div id="impact-list-view" style="display: none;">
+                    <div class="dashboard-widget">
+                        <div class="widget-header">
+                            <div class="widget-icon bg-primary">
+                                <i class="fas fa-list"></i>
+                            </div>
+                            <h6 class="mb-0">Liste & Statistiques d'Impact</h6>
+                        </div>
+                        <div id="impact-list-content">
+                            {% for point in impact_points %}
+                                <div class="mb-3 p-2 border rounded">
+                                    <strong>{{ point.type|title }}</strong> - {{ point.description }}<br>
+                                    <span class="text-muted">{{ point.date|date:'d/m/Y' }} | {{ point.location }}</span>
+                                </div>
+                            {% empty %}
+                                <div class="text-muted">Aucune donnée d'impact disponible.</div>
+                            {% endfor %}
+                        </div>
+                        <div class="mt-4">
+                            <canvas id="impact-list-chart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Légende -->
+                <div class="legend">
+                    <h6 class="mb-3">
+                        <i class="fas fa-map-marker-alt text-primary me-2"></i>Légende
+                    </h6>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="legend-item">
+                                <div class="legend-color marker-event"></div>
+                                <span>Événements</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color marker-project"></div>
+                                <span>Projets</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="legend-item">
+                                <div class="legend-color marker-donation"></div>
+                                <span>Dons</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color marker-volunteer"></div>
+                                <span>Bénévoles</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                const toggleBtn = document.getElementById('toggle-view-btn');
+                const mapDiv = document.getElementById('impact-map');
+                const listDiv = document.getElementById('impact-list-view');
+                let showingMap = true;
+                toggleBtn.addEventListener('click', function() {
+                    showingMap = !showingMap;
+                    if (showingMap) {
+                        mapDiv.style.display = 'block';
+                        listDiv.style.display = 'none';
+                        toggleBtn.innerHTML = '<i class="fas fa-list me-2"></i>Afficher la liste/statistiques';
+                    } else {
+                        mapDiv.style.display = 'none';
+                        listDiv.style.display = 'block';
+                        toggleBtn.innerHTML = '<i class="fas fa-map me-2"></i>Afficher la carte';
+                    }
+                });
+            </script>
+            
+            <!-- Timeline et Widgets -->
+            <div class="col-lg-4">
+                <!-- Timeline d'Impact -->
+                <div class="impact-timeline">
+                    <h5 class="mb-3">
+                        <i class="fas fa-clock text-primary me-2"></i>Activités Récentes
+                    </h5>
+                    <div id="impact-timeline">
+                        <!-- Timeline sera peuplée par JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Widget Graphique -->
+                <div class="dashboard-widget">
+                    <div class="widget-header">
+                        <div class="widget-icon bg-primary">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h6 class="mb-0">Impact Mensuel</h6>
+                    </div>
+                    <canvas id="impact-chart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Dashboards Personnalisés par Rôle -->
+{% if user.is_authenticated %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title text-center">Votre Dashboard Personnalisé</h2>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="dashboard-widget">
+                    <div class="widget-header">
+                        <div class="widget-icon bg-success">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h6 class="mb-0">Vos Contributions</h6>
+                    </div>
+                    <div class="text-center">
+                        <div class="stat-number text-success">5</div>
+                        <p class="text-muted">Événements soutenus</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="dashboard-widget">
+                    <div class="widget-header">
+                        <div class="widget-icon bg-warning">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <h6 class="mb-0">Vos Badges</h6>
+                    </div>
+                    <div class="d-flex justify-content-center gap-2">
+                        <span class="badge bg-primary">Donateur</span>
+                        <span class="badge bg-success">Bénévole</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="dashboard-widget">
+                    <div class="widget-header">
+                        <div class="widget-icon bg-info">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h6 class="mb-0">Points d'Impact</h6>
+                    </div>
+                    <div class="text-center">
+                        <div class="stat-number text-info">1,250</div>
+                        <p class="text-muted">Points accumulés</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+// @ts-nocheck
+// eslint-disable
+
+// Données d'impact transmises depuis Django
+const impactData = {{ impact_data|safe }};
+
+// Initialisation de la carte
+const map = L.map('impact-map').setView([-4.4419, 15.2663], 12); // Kinshasa
+
+// Ajout de la couche de carte
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+// Groupes de marqueurs par type
+const markerGroups = {
+    event: L.layerGroup().addTo(map),
+    project: L.layerGroup().addTo(map),
+    donation: L.layerGroup().addTo(map),
+    volunteer: L.layerGroup().addTo(map)
+};
+
+// Fonction pour créer des marqueurs personnalisés
+function createCustomIcon(type, value) {
+    const colors = {
+        event: '#28a745',
+        project: '#007bff',
+        donation: '#ffc107',
+        volunteer: '#6f42c1'
+    };
+    
+    return L.divIcon({
+        className: 'custom-marker',
+        html: `<div class="impact-marker marker-${type}" style="background: ${colors[type]}">${value}</div>`,
+        iconSize: [30, 30],
+        iconAnchor: [15, 15]
+    });
+}
+
+// Ajout des marqueurs d'impact
+function addImpactMarkers(data) {
+    data.forEach(item => {
+        const icon = createCustomIcon(item.type, item.impact_value);
+        
+        const marker = L.marker([item.lat, item.lng], { icon })
+            .bindPopup(`
+                <div class="impact-popup">
+                    <h6 class="text-primary">${item.title}</h6>
+                    <p class="mb-2">${item.description}</p>
+                    <div class="d-flex justify-content-between">
+                        <small class="text-muted">${item.category}</small>
+                        <small class="text-success">${item.date}</small>
+                    </div>
+                </div>
+            `)
+            .addTo(markerGroups[item.type]);
+    });
+}
+
+// Initialisation des marqueurs
+addImpactMarkers(impactData);
+
+// Filtres
+document.getElementById('filter-type').addEventListener('change', function() {
+    const selectedType = this.value;
+    
+    Object.keys(markerGroups).forEach(type => {
+        if (selectedType === '' || selectedType === type) {
+            map.addLayer(markerGroups[type]);
+        } else {
+            map.removeLayer(markerGroups[type]);
+        }
+    });
+});
+
+// Timeline d'impact
+function updateTimeline() {
+    const timeline = document.getElementById('impact-timeline');
+    timeline.innerHTML = '';
+    
+    impactData.forEach((item, index) => {
+        const timelineItem = document.createElement('div');
+        timelineItem.className = 'timeline-item';
+        timelineItem.innerHTML = `
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <h6 class="mb-1">${item.title}</h6>
+                    <p class="mb-1 text-muted">${item.description}</p>
+                    <small class="text-primary">${item.category}</small>
+                </div>
+                <small class="text-muted">${item.date}</small>
+            </div>
+        `;
+        timeline.appendChild(timelineItem);
+    });
+}
+
+// Graphique d'impact
+function createImpactChart() {
+    const ctx = document.getElementById('impact-chart').getContext('2d');
+    
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
+            datasets: [{
+                label: 'Bénéficiaires',
+                data: [50, 75, 120, 150, 200, 255],
+                borderColor: '#007bff',
+                backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+// Fonction pour vérifier de nouvelles activités réelles (optionnel)
+// Utilisez cette fonction seulement si vous avez un vrai système de notifications en temps réel
+function checkForNewActivities() {
+    // Cette fonction peut être activée plus tard quand vous aurez un système de notifications
+    // Pour l'instant, les données se mettent à jour au rechargement de la page
+    console.log('Carte avec données réelles uniquement - Pas de simulation');
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', function() {
+    updateTimeline();
+    createImpactChart();
+    // simulateRealTimeUpdates(); // SUPPRIMÉ - Pas de simulation de données fictives
+    // Utilisez checkForNewActivities() si vous implémentez un vrai système temps réel
+});
+</script>
+{% endblock %}

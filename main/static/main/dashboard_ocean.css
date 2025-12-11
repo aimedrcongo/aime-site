@@ -1,0 +1,110 @@
+/* Dashboard Ocean Blue Theme - AIME */
+:root {
+  --ocean-blue: #0077b6;
+  --ocean-blue-dark: #023e8a;
+  --ocean-blue-light: #90e0ef;
+  --white: #fff;
+  --gray: #f5f6fa;
+  --text-dark: #111;
+  --text-light: #fff;
+  --navbar-bg: #f5f6fa;
+  --navbar-text: #111;
+  --sidebar-bg: #f5f6fa;
+  --sidebar-text: #111;
+}
+
+body {
+  background: var(--white) !important;
+  color: var(--text-dark);
+}
+
+.dashboard-container, .card, .navbar, .sidebar, .modal-content {
+  background: var(--white) !important;
+  border-radius: 0 !important;
+  box-shadow: 0 2px 8px rgba(2,62,138,0.04);
+  border: 1px solid #e0e0e0;
+}
+
+.card {
+  margin-bottom: 1rem;
+  border-radius: 0 !important;
+}
+
+.btn, .form-control, .input-group, .dropdown-menu {
+  border-radius: 0 !important;
+}
+
+.navbar {
+  background: var(--navbar-bg) !important;
+  color: var(--navbar-text) !important;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.navbar .nav-link, .navbar-brand {
+  color: var(--navbar-text) !important;
+}
+
+.navbar .nav-link.active, .navbar .nav-link:focus, .navbar .nav-link:hover {
+  color: var(--ocean-blue) !important;
+  background: #e9ecef;
+}
+
+.sidebar {
+  background: var(--sidebar-bg) !important;
+  color: var(--sidebar-text);
+  border-right: 1px solid #e0e0e0;
+}
+
+.sidebar .nav-link {
+  color: var(--sidebar-text);
+}
+
+.sidebar .nav-link.active, .sidebar .nav-link:focus, .sidebar .nav-link:hover {
+  background: #e9ecef;
+  color: var(--ocean-blue);
+}
+
+.table {
+  background: var(--white);
+  border-radius: 0 !important;
+}
+
+.alert {
+  border-radius: 0 !important;
+}
+
+/* Compact spacing */
+.dashboard-container, .container, .container-fluid {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.card-body, .modal-body, .form-group, .row, .col {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+/* Remove purple/mauve backgrounds */
+.bg-primary, .bg-purple, .bg-mauve {
+  background: var(--ocean-blue) !important;
+}
+
+/* Professional look for buttons */
+.btn-primary, .btn-info, .btn-success {
+  background: var(--ocean-blue) !important;
+  border-color: var(--ocean-blue-dark) !important;
+  color: var(--text-light) !important;
+}
+
+.btn-primary:hover, .btn-info:hover, .btn-success:hover {
+  background: var(--ocean-blue-dark) !important;
+  color: var(--ocean-blue-light) !important;
+}
+
+hr {
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Remove border radius from modals, dropdowns, etc. */
+.modal-content, .dropdown-menu, .popover {
+  border-radius: 0 !important;
+}

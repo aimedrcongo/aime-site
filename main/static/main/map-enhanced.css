@@ -1,0 +1,640 @@
+/* ===========================================
+   CARTE INTERACTIVE AMÉLIORÉE - AIME
+   Styles modernes, épurés et professionnels
+   =========================================== */
+
+:root {
+    /* Palette de couleurs professionnelle */
+    --map-primary: #3498db;
+    --map-success: #27ae60;
+    --map-warning: #f39c12;
+    --map-danger: #e74c3c;
+    --map-info: #16a085;
+    --map-neutral: #95a5a6;
+    
+    /* Ombres douces */
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.16);
+    
+    /* Rayons de bordure */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    
+    /* Espacements */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+}
+
+/* ===========================================
+   État Vide - Aucune Donnée
+   =========================================== */
+.map-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 500px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    text-align: center;
+}
+
+.empty-state-icon {
+    font-size: 5rem;
+    color: var(--map-neutral);
+    margin-bottom: var(--spacing-md);
+    opacity: 0.6;
+}
+
+.empty-state-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: var(--spacing-sm);
+}
+
+.empty-state-description {
+    color: #7f8c8d;
+    max-width: 400px;
+    margin: 0 auto var(--spacing-lg);
+    line-height: 1.6;
+}
+
+/* ===========================================
+   Skeleton Loader - Chargement
+   =========================================== */
+.map-skeleton {
+    background: #f8f9fa;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.skeleton-animate {
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 25%,
+        #e0e0e0 50%,
+        #f0f0f0 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.skeleton-header {
+    height: 80px;
+    background: #e9ecef;
+    margin-bottom: 1rem;
+}
+
+.skeleton-map {
+    height: 600px;
+    background: #dee2e6;
+    margin-bottom: 1rem;
+}
+
+.skeleton-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.skeleton-item {
+    height: 100px;
+    background: #e9ecef;
+    border-radius: var(--radius-md);
+}
+
+/* ===========================================
+   Carte - Design Épuré
+   =========================================== */
+#impact-map {
+    height: 600px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    border: 2px solid #e9ecef;
+}
+
+/* Contrôles Leaflet personnalisés */
+.leaflet-control-zoom {
+    border: none !important;
+    box-shadow: var(--shadow-md) !important;
+}
+
+.leaflet-control-zoom a {
+    border-radius: var(--radius-sm) !important;
+    color: var(--map-primary) !important;
+    font-weight: 600;
+}
+
+.leaflet-control-zoom a:hover {
+    background-color: var(--map-primary) !important;
+    color: white !important;
+}
+
+/* ===========================================
+   Marqueurs Personnalisés - Modernes
+   =========================================== */
+.custom-marker .impact-marker {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: white;
+    border: 3px solid white;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.custom-marker .impact-marker:hover {
+    transform: scale(1.2);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Couleurs par type - Plus douces */
+.marker-event {
+    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+}
+
+.marker-project {
+    background: linear-gradient(135deg, #3498db 0%, #5dade2 100%);
+}
+
+.marker-donation {
+    background: linear-gradient(135deg, #f39c12 0%, #f1c40f 100%);
+}
+
+.marker-volunteer {
+    background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+}
+
+/* Cluster de marqueurs */
+.marker-cluster {
+    background: rgba(52, 152, 219, 0.9);
+    border: 4px solid white;
+    border-radius: 50%;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+}
+
+.marker-cluster:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ===========================================
+   Popups Enrichis
+   =========================================== */
+.leaflet-popup-content-wrapper {
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    padding: 0;
+    overflow: hidden;
+}
+
+.leaflet-popup-content {
+    margin: 0;
+    width: 300px !important;
+}
+
+.impact-popup-enhanced {
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.popup-header {
+    padding: var(--spacing-sm);
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.popup-header.bg-event { background: var(--map-success); }
+.popup-header.bg-project { background: var(--map-primary); }
+.popup-header.bg-donation { background: var(--map-warning); }
+.popup-header.bg-volunteer { background: #8e44ad; }
+
+.popup-body {
+    padding: var(--spacing-md);
+}
+
+.popup-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: var(--spacing-xs);
+}
+
+.popup-description {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: var(--spacing-md);
+}
+
+.popup-metrics {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid #ecf0f1;
+}
+
+.popup-metrics .metric {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.85rem;
+    color: #34495e;
+}
+
+.popup-metrics .metric i {
+    font-size: 1rem;
+}
+
+.popup-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.popup-actions .btn-sm {
+    flex: 1;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+}
+
+/* ===========================================
+   Panel de Filtres - Design Moderne
+   =========================================== */
+.filter-panel-enhanced {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.filter-chips {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+}
+
+.chip {
+    background: #ecf0f1;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #34495e;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.chip:hover {
+    background: #d5dbdb;
+    transform: translateY(-2px);
+}
+
+.chip.chip-active {
+    background: var(--map-primary);
+    color: white;
+    border-color: var(--map-primary);
+}
+
+.chip-count {
+    background: rgba(0,0,0,0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+/* ===========================================
+   Barre de Recherche
+   =========================================== */
+.search-panel {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.search-panel .input-group {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.search-panel .form-control {
+    border: 2px solid #e9ecef;
+    font-size: 0.95rem;
+}
+
+.search-panel .form-control:focus {
+    border-color: var(--map-primary);
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.search-panel .input-group-text {
+    background: var(--map-primary);
+    color: white;
+    border: none;
+}
+
+/* ===========================================
+   Légende Améliorée
+   =========================================== */
+.legend-enhanced {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-md);
+    margin-top: var(--spacing-md);
+}
+
+.legend-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+}
+
+.legend-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-sm);
+    transition: background 0.3s ease;
+    cursor: pointer;
+}
+
+.legend-item:hover {
+    background: #f8f9fa;
+}
+
+.legend-marker {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-sm);
+}
+
+.legend-content {
+    flex: 1;
+}
+
+.legend-content strong {
+    display: block;
+    font-size: 0.95rem;
+    color: #2c3e50;
+    margin-bottom: 0.2rem;
+}
+
+.legend-count {
+    color: var(--map-primary);
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+.legend-description {
+    font-size: 0.8rem;
+    color: #7f8c8d;
+    margin: 0;
+}
+
+/* ===========================================
+   Timeline Améliorée
+   =========================================== */
+.timeline-enhanced {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-md);
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid #ecf0f1;
+}
+
+.timeline-header h6 {
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.timeline-item-enhanced {
+    border-left: 3px solid var(--map-primary);
+    padding-left: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.timeline-item-enhanced::before {
+    content: '';
+    position: absolute;
+    left: -9px;
+    top: 0;
+    width: 14px;
+    height: 14px;
+    background: var(--map-primary);
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: var(--shadow-sm);
+}
+
+.timeline-item-enhanced:hover {
+    background: #f8f9fa;
+    border-radius: var(--radius-sm);
+    padding-right: var(--spacing-sm);
+}
+
+.timeline-item-title {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.3rem;
+}
+
+.timeline-item-description {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-item-meta {
+    display: flex;
+    gap: var(--spacing-md);
+    font-size: 0.8rem;
+    color: #95a5a6;
+}
+
+/* ===========================================
+   Responsive - Mobile First
+   =========================================== */
+@media (max-width: 768px) {
+    #impact-map {
+        height: 400px;
+    }
+    
+    .filter-panel-enhanced {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+        transform: translateY(calc(100% - 60px));
+        transition: transform 0.3s ease;
+        z-index: 1000;
+    }
+    
+    .filter-panel-enhanced.expanded {
+        transform: translateY(0);
+    }
+    
+    .filter-panel-handle {
+        width: 40px;
+        height: 4px;
+        background: #d5dbdb;
+        border-radius: 2px;
+        margin: 0 auto 1rem;
+        cursor: pointer;
+    }
+    
+    .timeline-enhanced {
+        display: none;
+    }
+    
+    .chip {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+/* ===========================================
+   Animations & Transitions
+   =========================================== */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fade-in 0.5s ease-out;
+}
+
+@keyframes pulse-soft {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+}
+
+.new-marker {
+    animation: pulse-soft 2s infinite;
+}
+
+/* ===========================================
+   Accessibilité
+   =========================================== */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+button:focus,
+a:focus,
+input:focus {
+    outline: 2px solid var(--map-primary);
+    outline-offset: 2px;
+}
+
+/* Mode sombre (optionnel) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --map-bg: #1a1a1a;
+        --map-text: #e0e0e0;
+    }
+    
+    .filter-panel-enhanced,
+    .legend-enhanced,
+    .timeline-enhanced {
+        background: #2c2c2c;
+        color: var(--map-text);
+    }
+}

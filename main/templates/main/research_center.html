@@ -1,0 +1,472 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Centre de Recherche & Innovation - AIME{% endblock %}
+
+{% block extra_css %}
+<style>
+    .research-hero {
+        background: linear-gradient(135deg, #2c5aa0 0%, #3498db 100%);
+        color: white;
+        padding: 5rem 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .research-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="brain" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="15" cy="35" r="1.5" fill="rgba(255,255,255,0.08)"/><circle cx="35" cy="15" r="1" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23brain)"/></svg>');
+        opacity: 0.3;
+    }
+
+    .research-areas {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin: 2rem 0;
+    }
+
+    .research-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .research-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+
+    .research-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .publication-item {
+        border-left: 4px solid var(--accent-color);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        background: #f8f9fa;
+        border-radius: 0 10px 10px 0;
+        transition: all 0.3s ease;
+    }
+
+    .publication-item:hover {
+        background: white;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .innovation-lab {
+        background: linear-gradient(135deg, #ff6b6b, #feca57);
+        color: white;
+        padding: 4rem 0;
+        position: relative;
+    }
+
+    .lab-equipment {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin: 3rem 0;
+    }
+
+    .equipment-item {
+        text-align: center;
+        padding: 1rem;
+        background: rgba(255,255,255,0.1);
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+    }
+
+    .equipment-item:hover {
+        background: rgba(255,255,255,0.2);
+        transform: scale(1.05);
+    }
+
+    .collaboration-network {
+        position: relative;
+        height: 400px;
+        background: #f8f9fa;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .network-node {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+
+    .network-connection {
+        position: absolute;
+        height: 2px;
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        transform-origin: left center;
+    }
+
+    .impact-metrics {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        text-align: center;
+    }
+
+    .metric-circle {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="research-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-4">Centre de Recherche & Innovation AIME</h1>
+                <p class="lead">
+                    "L'avenir de l'enfance se construit aujourd'hui dans nos laboratoires"
+                </p>
+                <p class="lead">
+                    Premier centre de recherche appliquée en développement de l'enfant en Afrique Centrale
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Axes de Recherche -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">Nos 7 Axes de Recherche Stratégiques</h2>
+        
+        <div class="research-areas">
+            <div class="research-card">
+                <i class="fas fa-brain text-primary fs-1 mb-3"></i>
+                <h4>Neurosciences Développementales</h4>
+                <p><strong>Directeur:</strong> Dr. Sarah Mumbere, PhD Neurosciences (Université de Louvain)</p>
+                <ul>
+                    <li>Impact de la malnutrition sur le développement cognitif</li>
+                    <li>Plasticité cérébrale et apprentissage précoce</li>
+                    <li>Thérapies neurocognitives adaptées au contexte africain</li>
+                </ul>
+                <div class="mt-3">
+                    <span class="badge bg-primary me-2">12 Publications</span>
+                    <span class="badge bg-success">€2.3M Financement</span>
+                </div>
+            </div>
+
+            <div class="research-card">
+                <i class="fas fa-microscope text-success fs-1 mb-3"></i>
+                <h4>Innovation Pédagogique STEM</h4>
+                <p><strong>Directeur:</strong> Prof. Jean-Claude Kamdem, PhD Éducation (MIT)</p>
+                <ul>
+                    <li>Méthodes d'apprentissage des sciences adaptées à l'âge</li>
+                    <li>Technologies éducatives low-cost</li>
+                    <li>Égalité filles-garçons dans l'éducation scientifique</li>
+                </ul>
+                <div class="mt-3">
+                    <span class="badge bg-success me-2">8 Brevets</span>
+                    <span class="badge bg-warning">15 Écoles Pilotes</span>
+                </div>
+            </div>
+
+            <div class="research-card">
+                <i class="fas fa-heartbeat text-danger fs-1 mb-3"></i>
+                <h4>Psychologie du Développement</h4>
+                <p><strong>Directrice:</strong> Dr. Fatima Al-Rashid, PhD Psychologie (Sorbonne)</p>
+                <ul>
+                    <li>Résilience post-traumatique chez l'enfant</li>
+                    <li>Développement socio-émotionnel en contexte de conflit</li>
+                    <li>Thérapies par le jeu et le sport</li>
+                </ul>
+                <div class="mt-3">
+                    <span class="badge bg-danger me-2">1,200 Enfants Suivis</span>
+                    <span class="badge bg-info">85% Amélioration</span>
+                </div>
+            </div>
+
+            <div class="research-card">
+                <i class="fas fa-leaf text-warning fs-1 mb-3"></i>
+                <h4>Nutrition & Sécurité Alimentaire</h4>
+                <p><strong>Directeur:</strong> Prof. Ambroise Tshisekedi, PhD Nutrition (Harvard)</p>
+                <ul>
+                    <li>Développement d'aliments fortifiés locaux</li>
+                    <li>Agriculture urbaine pour la nutrition infantile</li>
+                    <li>Prévention de la malnutrition chronique</li>
+                </ul>
+                <div class="mt-3">
+                    <span class="badge bg-warning me-2">3 Produits Brevetés</span>
+                    <span class="badge bg-success">50K Enfants Touchés</span>
+                </div>
+            </div>
+
+            <div class="research-card">
+                <i class="fas fa-users text-info fs-1 mb-3"></i>
+                <h4>Sociologie de l'Enfance</h4>
+                <p><strong>Directrice:</strong> Dr. Grace Ndikumana, PhD Sociologie (Oxford)</p>
+                <ul>
+                    <li>Impact des traditions sur l'épanouissement de l'enfant</li>
+                    <li>Dynamiques familiales et éducation</li>
+                    <li>Intégration communautaire des enfants vulnérables</li>
+                </ul>
+                <div class="mt-3">
+                    <span class="badge bg-info me-2">25 Communautés Étudiées</span>
+                    <span class="badge bg-primary">7 Langues Locales</span>
+                </div>
+            </div>
+
+            <div class="research-card">
+                <i class="fas fa-laptop-code text-secondary fs-1 mb-3"></i>
+                <h4>Technologies Éducatives</h4>
+                <p><strong>Directeur:</strong> Eng. Pacifique Niyongabo, MSc Computer Science (Stanford)</p>
+                <ul>
+                    <li>Intelligence artificielle pour l'apprentissage adaptatif</li>
+                    <li>Applications mobiles éducatives multilingues</li>
+                    <li>Réalité virtuelle pour l'éducation immersive</li>
+                </ul>
+                <div class="mt-3">
+                    <span class="badge bg-secondary me-2">5 Applications</span>
+                    <span class="badge bg-success">100K Téléchargements</span>
+                </div>
+            </div>
+
+            <div class="research-card">
+                <i class="fas fa-shield-alt text-dark fs-1 mb-3"></i>
+                <h4>Protection & Droits de l'Enfant</h4>
+                <p><strong>Directrice:</strong> Me. Espérance Kambale, LL.D Droits Humains (Columbia)</p>
+                <ul>
+                    <li>Mécanismes de signalement communautaires</li>
+                    <li>Justice réparatrice adaptée aux enfants</li>
+                    <li>Politiques publiques de protection</li>
+                </ul>
+                <div class="mt-3">
+                    <span class="badge bg-dark me-2">34 Lois Influencées</span>
+                    <span class="badge bg-danger">2,500 Cas Traités</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Laboratoire d'Innovation -->
+<section class="innovation-lab">
+    <div class="container">
+        <h2 class="text-center mb-5">AIME Innovation Lab - "Le Garage des Génies"</h2>
+        
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <p class="lead mb-4">
+                    Espace de 500m² équipé des dernières technologies pour co-créer 
+                    les solutions de demain avec et pour les enfants
+                </p>
+            </div>
+        </div>
+        
+        <div class="lab-equipment">
+            <div class="equipment-item">
+                <i class="fas fa-print fs-1 mb-2"></i>
+                <h6>Imprimantes 3D</h6>
+                <small>Prototypage rapide</small>
+            </div>
+            <div class="equipment-item">
+                <i class="fas fa-vr-cardboard fs-1 mb-2"></i>
+                <h6>Station VR/AR</h6>
+                <small>Expériences immersives</small>
+            </div>
+            <div class="equipment-item">
+                <i class="fas fa-robot fs-1 mb-2"></i>
+                <h6>Robotique Éducative</h6>
+                <small>Programmation ludique</small>
+            </div>
+            <div class="equipment-item">
+                <i class="fas fa-video fs-1 mb-2"></i>
+                <h6>Studio Multimédia</h6>
+                <small>Contenus éducatifs</small>
+            </div>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-lg-6">
+                <h4>Projets en Cours</h4>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-cog me-2"></i><strong>DraisiBot:</strong> Vélo intelligent avec capteurs de progression</li>
+                    <li class="mb-2"><i class="fas fa-gamepad me-2"></i><strong>ScienceQuest:</strong> Jeu mobile d'exploration scientifique</li>
+                    <li class="mb-2"><i class="fas fa-language me-2"></i><strong>KiLinga:</strong> Assistant IA multilingue pour l'apprentissage</li>
+                    <li class="mb-2"><i class="fas fa-heartbeat me-2"></i><strong>EmotiSafe:</strong> Détecteur de détresse émotionnelle</li>
+                </ul>
+            </div>
+            <div class="col-lg-6">
+                <h4>Hackathons Annuels</h4>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-trophy me-2"></i><strong>KidsCode Challenge:</strong> 48h pour coder l'avenir</li>
+                    <li class="mb-2"><i class="fas fa-lightbulb me-2"></i><strong>Social Innovation Weekend:</strong> Solutions aux défis locaux</li>
+                    <li class="mb-2"><i class="fas fa-users me-2"></i><strong>Parents-Enfants Techno:</strong> Créer ensemble</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Publications & Impact -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">Publications & Impact Scientifique</h2>
+        
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <h4 class="mb-4">Publications Récentes (2024)</h4>
+                
+                <div class="publication-item">
+                    <h6>"Neural plasticity in malnourished children: A longitudinal study in Eastern DRC"</h6>
+                    <p class="mb-2 text-muted">
+                        <strong>Journal:</strong> Nature Neuroscience • <strong>Impact Factor:</strong> 25.3 • <strong>Citations:</strong> 156
+                    </p>
+                    <p class="small">
+                        Cette étude révolutionnaire démontre que l'intervention nutritionnelle précoce peut 
+                        restaurer 87% des connexions synaptiques altérées par la malnutrition.
+                    </p>
+                </div>
+                
+                <div class="publication-item">
+                    <h6>"Gender equality in STEM education: The AIME model for early intervention"</h6>
+                    <p class="mb-2 text-muted">
+                        <strong>Journal:</strong> Educational Research Review • <strong>Impact Factor:</strong> 8.2 • <strong>Citations:</strong> 89
+                    </p>
+                    <p class="small">
+                        Analyse de l'efficacité des programmes AIME pour réduire l'écart de genre 
+                        dans les disciplines scientifiques dès l'âge de 3 ans.
+                    </p>
+                </div>
+                
+                <div class="publication-item">
+                    <h6>"Community-based child protection systems in post-conflict settings"</h6>
+                    <p class="mb-2 text-muted">
+                        <strong>Journal:</strong> Child Abuse & Neglect • <strong>Impact Factor:</strong> 4.1 • <strong>Citations:</strong> 234
+                    </p>
+                    <p class="small">
+                        Évaluation de l'efficacité des mécanismes communautaires de protection 
+                        développés par AIME dans 15 territoires de la RDC.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <div class="impact-metrics">
+                            <div class="metric-circle" style="background: var(--primary-color);">47</div>
+                            <h6>Publications Peer-Reviewed</h6>
+                            <small class="text-muted">Depuis 2020</small>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="impact-metrics">
+                            <div class="metric-circle" style="background: var(--success-color);">1,234</div>
+                            <h6>Citations Totales</h6>
+                            <small class="text-muted">H-index: 23</small>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="impact-metrics">
+                            <div class="metric-circle" style="background: var(--accent-color);">15</div>
+                            <h6>Brevets Déposés</h6>
+                            <small class="text-muted">3 commercialisés</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Réseau de Collaboration -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">Réseau de Collaboration Scientifique</h2>
+        
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="collaboration-network position-relative">
+                    <!-- Nœud central AIME -->
+                    <div class="network-node" style="top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--accent-color); width: 80px; height: 80px;">
+                        AIME
+                    </div>
+                    
+                    <!-- Partenaires universitaires -->
+                    <div class="network-node" style="top: 20%; left: 20%; background: var(--primary-color);">MIT</div>
+                    <div class="network-node" style="top: 20%; right: 20%; background: var(--primary-color);">Oxford</div>
+                    <div class="network-node" style="bottom: 20%; left: 20%; background: var(--primary-color);">Harvard</div>
+                    <div class="network-node" style="bottom: 20%; right: 20%; background: var(--primary-color);">UNIKIN</div>
+                    
+                    <!-- Organisations internationales -->
+                    <div class="network-node" style="top: 10%; left: 50%; transform: translateX(-50%); background: var(--success-color);">UNESCO</div>
+                    <div class="network-node" style="bottom: 10%; left: 50%; transform: translateX(-50%); background: var(--success-color);">UNICEF</div>
+                    
+                    <!-- Lignes de connexion (simulées avec CSS) -->
+                    <div class="network-connection" style="top: 40%; left: 35%; width: 30%; transform: rotate(45deg);"></div>
+                    <div class="network-connection" style="top: 40%; right: 35%; width: 30%; transform: rotate(-45deg);"></div>
+                    <div class="network-connection" style="bottom: 40%; left: 35%; width: 30%; transform: rotate(-45deg);"></div>
+                    <div class="network-connection" style="bottom: 40%; right: 35%; width: 30%; transform: rotate(45deg);"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-lg-10 mx-auto">
+                <div class="row g-3">
+                    <div class="col-md-4 text-center">
+                        <h5 class="text-primary">Universités Partenaires</h5>
+                        <p class="small">12 institutions de recherche réparties sur 4 continents</p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <h5 class="text-success">Organisations Internationales</h5>
+                        <p class="small">8 agences onusiennes et ONG internationales</p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <h5 class="text-warning">Institutions Locales</h5>
+                        <p class="small">25 universités et centres de recherche africains</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

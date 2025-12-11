@@ -1,0 +1,63 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Événements - Tableau de Bord{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-calendar-alt me-2"></i>Mes Événements</h3>
+                </div>
+                <div class="card-body">
+                    {% if participations %}
+                        <div class="row">
+                            {% for participation in participations %}
+                            <div class="col-md-6 col-lg-4 mb-4">
+                                <div class="card h-100">
+                                    {% if participation.event.image %}
+                                    <img src="{{ participation.event.image.url }}" class="card-img-top" alt="{{ participation.event.name }}" style="height: 200px; object-fit: cover;">
+                                    {% else %}
+                                    <div class="card-img-top bg-primary d-flex align-items-center justify-content-center" style="height: 200px;">
+                                        <i class="fas fa-calendar-alt fa-3x text-white"></i>
+                                    </div>
+                                    {% endif %}
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ participation.event.name }}</h5>
+                                        <p class="card-text">{{ participation.event.description|truncatewords:15 }}</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-muted">
+                                                <i class="fas fa-calendar me-1"></i>{{ participation.event.date|date:"d/m/Y" }}
+                                            </small>
+                                            <span class="badge bg-{{ participation.status|yesno:'success,warning,danger' }}">
+                                                {{ participation.get_status_display }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-muted">
+                                            <i class="fas fa-map-marker-alt me-1"></i>{{ participation.event.location }}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+                            <h4>Aucun événement</h4>
+                            <p class="text-muted">Vous ne participez à aucun événement pour le moment.</p>
+                            <a href="{% url 'main:events' %}" class="btn btn-primary">
+                                <i class="fas fa-calendar-plus me-1"></i>Découvrir les événements
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

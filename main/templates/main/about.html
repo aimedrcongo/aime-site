@@ -1,0 +1,354 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-4">{{ title }}</h1>
+                <p class="lead">
+                    Agissons Ici et Maintenant pour les Enfants - Une organisation dédiée au développement 
+                    et à l'épanouissement des enfants en République Démocratique du Congo
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission & Vision -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-bullseye text-primary fs-1 mb-3"></i>
+                            <h3 class="text-primary">Notre Mission</h3>
+                        </div>
+                        <p class="text-muted">
+                            AIME est une Association Sans But Lucratif et/ou une Organisation Non Gouvernementale 
+                            de Droit Congolais basée en RDC dont le siège social est dans la Ville-province Kinshasa, 
+                            dans la commune de la N'sele au Quartier Bibwa, avenue Ekomisa 28.
+                        </p>
+                        <p class="text-muted">
+                            Nous regroupons en notre sein plusieurs projets actifs à caractère socio-éducationnel 
+                            pour le développement, entrepreneurial, et formation en divers métiers pour tous pour 
+                            l'épanouissement et la protection de l'élite congolaise.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-eye text-success fs-1 mb-3"></i>
+                            <h3 class="text-success">Notre Vision</h3>
+                        </div>
+                        <p class="text-muted">
+                            Nous sommes une plateforme qui accueille les personnes physiques et morales, 
+                            les diverses coopératives, associations et groupements paysans autour d'un 
+                            partenariat actif pour le développement et l'émergence des enfants en 
+                            République Démocratique du Congo et partout ailleurs dans le monde.
+                        </p>
+                        <p class="text-muted">
+                            Notre vision est de créer un environnement où chaque enfant peut s'épanouir 
+                            et développer son potentiel à travers le sport, l'éducation et l'innovation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Nos Projets -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title text-center">Nos Projets Actifs</h2>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <i class="fas fa-bicycle text-primary fs-1 mb-3"></i>
+                        <h5 class="card-title">Mutoto Bike Challenge</h5>
+                        <p class="card-text text-muted">
+                            Course de vélo pour enfants de 3 à 5 ans, développant motricité, confiance en soi 
+                            et esprit de compétition dans un cadre ludique et sécurisé.
+                        </p>
+                        <a href="{% url 'main:mutoto_bike_challenge' %}" class="btn btn-outline-primary">
+                            En savoir plus
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <i class="fas fa-brain text-success fs-1 mb-3"></i>
+                        <h5 class="card-title">Génie Challenge</h5>
+                        <p class="card-text text-muted">
+                            Programme d'éveil intellectuel et de développement des capacités cognitives 
+                            des enfants à travers des défis ludiques et éducatifs.
+                        </p>
+                        <a href="#" class="btn btn-outline-success">
+                            Bientôt disponible
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <i class="fas fa-graduation-cap text-warning fs-1 mb-3"></i>
+                        <h5 class="card-title">Réforme Éducative</h5>
+                        <p class="card-text text-muted">
+                            Propositions d'idées sur la réforme du secteur de l'éducation nationale 
+                            congolaise dans l'égalité des études pour tous.
+                        </p>
+                        <a href="#" class="btn btn-outline-warning">
+                            En développement
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <i class="fas fa-home text-info fs-1 mb-3"></i>
+                        <h5 class="card-title">Challenge Toit pour Tous</h5>
+                        <p class="card-text text-muted">
+                            Initiative visant à améliorer les conditions de logement des familles 
+                            vulnérables et à sensibiliser sur l'importance du logement décent.
+                        </p>
+                        <a href="#" class="btn btn-outline-info">
+                            En préparation
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <i class="fas fa-heartbeat text-danger fs-1 mb-3"></i>
+                        <h5 class="card-title">Challenge Santé pour Tous</h5>
+                        <p class="card-text text-muted">
+                            Programme de sensibilisation et d'amélioration de l'accès aux soins 
+                            de santé pour les enfants et leurs familles.
+                        </p>
+                        <a href="#" class="btn btn-outline-danger">
+                            En préparation
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <i class="fas fa-seedling text-success fs-1 mb-3"></i>
+                        <h5 class="card-title">Challenge Agropastoral</h5>
+                        <p class="card-text text-muted">
+                            Formation et sensibilisation aux pratiques agricoles durables 
+                            pour l'autonomisation des communautés rurales.
+                        </p>
+                        <a href="#" class="btn btn-outline-success">
+                            En préparation
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mutoto Science Adventure Details -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="display-6 fw-bold text-primary mb-4">
+                    <i class="fas fa-flask me-3"></i>Mutoto Science Adventure
+                </h2>
+                <p class="lead text-muted mb-4">
+                    Extension scientifique du Mutoto Bike Challenge visant à éveiller la curiosité 
+                    scientifique des tout-petits à travers des jeux, des manipulations simples, 
+                    des expériences et des récits interactifs.
+                </p>
+                
+                <h4 class="text-primary mb-3">Objectifs :</h4>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Initier les enfants à la démarche scientifique de manière ludique
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Créer un cadre attractif pour observer, poser des questions et expérimenter
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Encourager les vocations scientifiques précoces chez les jeunes filles
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Contribuer à l'éducation citoyenne et à la compréhension du monde
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="card border-0 shadow-sm text-center p-3">
+                            <i class="fas fa-soap text-info fs-1 mb-2"></i>
+                            <h6>Bulles et air</h6>
+                            <small class="text-muted">Comprendre les gaz</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card border-0 shadow-sm text-center p-3">
+                            <i class="fas fa-magnet text-danger fs-1 mb-2"></i>
+                            <h6>Les aimants</h6>
+                            <small class="text-muted">Découvrir le magnétisme</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card border-0 shadow-sm text-center p-3">
+                            <i class="fas fa-palette text-warning fs-1 mb-2"></i>
+                            <h6>Couleurs en fête</h6>
+                            <small class="text-muted">Mélanges et réactions</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card border-0 shadow-sm text-center p-3">
+                            <i class="fas fa-search" style="color: #9b59b6;"></i>
+                            <h6>L'œil de l'explorateur</h6>
+                            <small class="text-muted">Observer le vivant</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info mt-4">
+                    <h6><i class="fas fa-female me-2"></i>Espace "Filles de Génie"</h6>
+                    <p class="mb-0">
+                        Section spéciale animée par des jeunes femmes scientifiques pour inspirer 
+                        les participantes et encourager les vocations féminines dans les STEM.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Personnel -->
+{% if staff_members %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title text-center">Notre Équipe</h2>
+        <div class="row g-4">
+            {% for staff in staff_members %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card border-0 shadow-sm text-center">
+                    <div class="card-body p-4">
+                        {% if staff.photo %}
+                        <img src="{{ staff.photo.url }}" class="rounded-circle mb-3" width="100" height="100" style="object-fit: cover;" alt="{{ staff.user.get_full_name }}">
+                        {% else %}
+                        <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
+                            <i class="fas fa-user text-white fs-2"></i>
+                        </div>
+                        {% endif %}
+                        <h5 class="card-title">{{ staff.user.get_full_name }}</h5>
+                        <p class="text-primary mb-2">{{ staff.get_position_display }}</p>
+                        {% if staff.department %}
+                        <small class="text-muted">{{ staff.department }}</small>
+                        {% endif %}
+                        {% if staff.bio %}
+                        <p class="card-text mt-3">{{ staff.bio|truncatewords:20 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Institutions Partenaires -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title text-center">Institutions Concernées</h2>
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <h4 class="text-primary mb-3">Ministères</h4>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fas fa-building text-primary me-2"></i>
+                        Ministère de Sports et Loisirs
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-building text-primary me-2"></i>
+                        Ministère de l'Éducation Nationale et Nouvelle Citoyenneté
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-building text-primary me-2"></i>
+                        Ministère du Genre, Famille et Enfant
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-building text-primary me-2"></i>
+                        Ministère de l'ESU
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-building text-primary me-2"></i>
+                        Ministère de l'Industrie et Développement des PME
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6">
+                <h4 class="text-success mb-3">Partenaires Institutionnels</h4>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fas fa-handshake text-success me-2"></i>
+                        La Primature
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-handshake text-success me-2"></i>
+                        Le Gouvernorat Kinshasa et Haut-Katanga
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-handshake text-success me-2"></i>
+                        FECOCY : Fédération congolaise du Cyclisme
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-handshake text-success me-2"></i>
+                        FDNT : Fondation Dénise Nyakeru Tshisekedi
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-handshake text-success me-2"></i>
+                        ONG nationaux et internationaux
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+        <h2 class="display-6 fw-bold mb-4">Rejoignez notre mission</h2>
+        <p class="lead mb-4">
+            « Une petite fille qui expérimente aujourd'hui sera une femme qui innove demain. »
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="{% url 'main:contact' %}" class="btn btn-warning btn-lg">
+                <i class="fas fa-handshake me-2"></i>Devenir partenaire
+            </a>
+            <a href="{% url 'main:donate' %}" class="btn btn-outline-light btn-lg">
+                <i class="fas fa-heart me-2"></i>Soutenir nos projets
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

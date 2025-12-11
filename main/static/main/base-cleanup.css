@@ -1,0 +1,214 @@
+/* === BASE STYLES CLEANUP - Remplace tout le CSS inline du base.html === */
+
+:root {
+    --primary-color: #0d47a1;
+    --secondary-color: #1976d2;
+    --accent-color: #e74c3c;
+    --success-color: #27ae60;
+    --text-dark: #333333;
+    --text-light: #7f8c8d;
+    --bg-light: #f8f9fa;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background: #ffffff;
+}
+
+/* === HERO SECTION === */
+.hero-section {
+    background: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
+    color: white;
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.1);
+    opacity: 0.3;
+}
+
+/* === BUTTONS === */
+.btn-primary {
+    background-color: #e74c3c !important;
+    border-color: #e74c3c !important;
+    font-weight: 600 !important;
+    padding: 0.6rem 1.5rem !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+    font-size: 0.9rem !important;
+}
+
+.btn-primary:hover {
+    background-color: #c0392b !important;
+    border-color: #c0392b !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3) !important;
+}
+
+/* === CARDS === */
+.card {
+    border: none !important;
+    border-radius: 10px !important;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.3s ease !important;
+    overflow: hidden !important;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* === SECTION TITLE === */
+.section-title {
+    font-weight: 700 !important;
+    color: #0d47a1 !important;
+    margin-bottom: 3rem !important;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: #e74c3c;
+    border-radius: 3px;
+}
+
+/* === STATS === */
+.stats-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+}
+
+.stats-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #e74c3c;
+    display: block;
+}
+
+/* === NEWSLETTER === */
+.newsletter-form {
+    margin-bottom: 1rem;
+}
+
+.newsletter-input {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border: 1px solid rgba(100, 181, 246, 0.3) !important;
+    border-radius: 8px 0 0 8px !important;
+    padding: 0.75rem 1rem !important;
+    color: var(--text-dark) !important;
+    transition: all 0.3s ease;
+}
+
+.newsletter-input:focus {
+    background: white !important;
+    border-color: #64b5f6 !important;
+    box-shadow: 0 0 0 0.2rem rgba(100, 181, 246, 0.2) !important;
+}
+
+.newsletter-input::placeholder {
+    color: var(--text-light) !important;
+}
+
+.btn-newsletter {
+    background: linear-gradient(45deg, #f8c471, #f39c12) !important;
+    border: 1px solid #f8c471 !important;
+    border-radius: 0 8px 8px 0 !important;
+    color: white !important;
+    padding: 0.75rem 1.2rem !important;
+    transition: all 0.3s ease;
+    border-left: none !important;
+}
+
+.btn-newsletter:hover {
+    background: linear-gradient(45deg, #f39c12, #e74c3c) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3) !important;
+    color: white !important;
+}
+
+/* === PROGRESS === */
+.progress {
+    height: 8px;
+    border-radius: 10px;
+    background-color: #e9ecef;
+}
+
+.progress-bar {
+    background: linear-gradient(45deg, #27ae60, #f8c471);
+    border-radius: 10px;
+}
+
+/* === ALERTS === */
+.alert {
+    border: none;
+    border-radius: 8px;
+    border-left: 4px solid;
+}
+
+.alert-success {
+    border-left-color: var(--success-color);
+    background-color: rgba(39, 174, 96, 0.1);
+}
+
+.alert-danger {
+    border-left-color: var(--accent-color);
+    background-color: rgba(231, 76, 60, 0.1);
+}
+
+/* === TEXT COLORS === */
+.text-primary {
+    color: #0d47a1 !important;
+}
+
+.bg-primary {
+    background-color: #0d47a1 !important;
+}
+
+.text-accent {
+    color: #e74c3c !important;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 2rem 0;
+    }
+
+    .stats-number {
+        font-size: 2rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .btn-primary {
+        padding: 0.5rem 1rem !important;
+        font-size: 0.85rem !important;
+    }
+}

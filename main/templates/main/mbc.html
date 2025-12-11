@@ -1,0 +1,576 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Mutoto Bike Challenge - AIME{% endblock %}
+
+{% block extra_css %}
+<style>
+    .mbc-hero {
+        position: relative;
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        color: white;
+        padding: 6rem 0;
+    }
+
+    /* Image de fond pour MBC */
+    .mbc-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('{% static "main/images/hero/troisieme_image.JPG" %}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        animation: mbcZoomInOut 22s ease-in-out infinite;
+        z-index: 1;
+    }
+
+    /* Filtre jaune par dessus l'image MBC */
+    .mbc-hero::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+            135deg, 
+            rgba(255, 193, 7, 0.65) 0%, 
+            rgba(255, 152, 0, 0.5) 50%, 
+            rgba(255, 193, 7, 0.6) 100%
+        );
+        z-index: 2;
+    }
+
+    /* Animation de zoom pour MBC */
+    @keyframes mbcZoomInOut {
+        0%, 100% {
+            transform: scale(1);
+        }
+        33% {
+            transform: scale(1.06);
+        }
+        66% {
+            transform: scale(1.03);
+        }
+    }
+
+    /* Contenu MBC au-dessus du fond */
+    .mbc-hero .container {
+        position: relative;
+        z-index: 3;
+    }
+
+    .mbc-hero h1 {
+        text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+
+    .mbc-hero p {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        font-size: 1.2rem;
+        opacity: 0.95;
+    }
+
+    .mbc-icon {
+        font-size: 5rem;
+        margin-bottom: 2rem;
+        animation: mbcFloat 6s ease-in-out infinite;
+        filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+        color: #fff;
+    }
+
+    @keyframes mbcFloat {
+        0%, 100% { 
+            transform: translateY(0px) rotate(0deg); 
+        }
+        33% { 
+            transform: translateY(-8px) rotate(2deg); 
+        }
+        66% { 
+            transform: translateY(-4px) rotate(-1deg); 
+        }
+    }
+
+    .challenge-card {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border-left: 5px solid #ffc107;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .challenge-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(45deg, #ffc107, #ff9800);
+        border-radius: 50%;
+        transform: translate(30%, -30%);
+        opacity: 0.1;
+    }
+
+    .challenge-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .challenge-date {
+        background: linear-gradient(45deg, #ffc107, #ff9800);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 1rem;
+    }
+
+    .challenge-status {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.3rem 1rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .status-active {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .status-past {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .status-upcoming {
+        background: #cce5f0;
+        color: #004085;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+    }
+
+    .feature-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 1.5rem;
+        background: linear-gradient(45deg, #ffc107, #ff9800);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+    }
+
+    .btn-register {
+        background: linear-gradient(45deg, #28a745, #20c997);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 25px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .btn-register:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        color: white;
+    }
+
+    .btn-register:disabled {
+        background: #6c757d;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .science-activity {
+        background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        border-left: 4px solid #2196f3;
+    }
+
+    .participants-count {
+        background: rgba(255, 193, 7, 0.1);
+        color: #ff6f00;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .timeline {
+        position: relative;
+        padding-left: 2rem;
+    }
+
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 1rem;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #ffc107;
+    }
+
+    .timeline-item {
+        position: relative;
+        padding: 1rem 0;
+        margin-left: 1rem;
+    }
+
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -1.6rem;
+        top: 1.5rem;
+        width: 12px;
+        height: 12px;
+        background: #ffc107;
+        border-radius: 50%;
+        border: 3px solid white;
+        box-shadow: 0 0 0 3px #ffc107;
+    }
+
+    @media (max-width: 768px) {
+        .mbc-hero {
+            padding: 3rem 0;
+        }
+        
+        .mbc-icon {
+            font-size: 3rem;
+        }
+        
+        .features-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="mbc-hero">
+    <div class="container text-center">
+        <div class="mbc-icon">
+            <i class="fas fa-bicycle"></i>
+        </div>
+        <h1 class="display-4 fw-bold mb-3">Mutoto Bike Challenge</h1>
+        <p class="lead mb-4">
+            Défi cycliste annuel pour sensibiliser les jeunes à la protection de l'environnement 
+            tout en promouvant le sport et la cohésion sociale.
+        </p>
+        {% if current_event %}
+            <div class="challenge-date">
+                <i class="fas fa-calendar-alt me-2"></i>
+                Prochain événement : {{ current_event.date|date:"d F Y" }}
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Événement Actuel -->
+{% if current_event %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="challenge-card">
+                    <div class="challenge-status status-active">
+                        <i class="fas fa-play-circle me-1"></i>Inscriptions ouvertes
+                    </div>
+                    
+                    <h2 class="mb-3">{{ current_event.name }}</h2>
+                    <p class="text-muted mb-4">{{ current_event.description }}</p>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-map-marker-alt text-warning me-2"></i>
+                                <strong>Lieu :</strong> {{ current_event.location }}
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-clock text-warning me-2"></i>
+                                <strong>Date :</strong> {{ current_event.date|date:"d F Y à H:i" }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-users text-warning me-2"></i>
+                                <strong>Participants :</strong> 
+                                <span class="participants-count ms-2">
+                                    {{ current_event.participants_count }}/{{ current_event.max_participants }}
+                                </span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-money-bill-wave text-warning me-2"></i>
+                                <strong>Inscription :</strong> {{ current_event.registration_fee|default:"Gratuit" }} FC
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        {% if current_event.is_full %}
+                            <button class="btn-register" disabled>
+                                <i class="fas fa-times-circle me-2"></i>
+                                Complet
+                            </button>
+                        {% else %}
+                            <a href="{% url 'main:mbc_registration' %}" class="btn-register">
+                                <i class="fas fa-bicycle me-2"></i>
+                                S'inscrire maintenant
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Pourquoi Participer -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">Pourquoi Participer au MBC ?</h2>
+            <p class="lead text-muted">Découvrez les avantages de rejoindre notre défi cycliste</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <h4>Sensibilisation Environnementale</h4>
+                <p class="text-muted">
+                    Apprenez l'importance de protéger notre environnement 
+                    tout en pratiquant une activité écologique.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h4>Santé et Bien-être</h4>
+                <p class="text-muted">
+                    Améliorez votre condition physique et votre santé 
+                    grâce à cette activité sportive accessible à tous.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h4>Cohésion Sociale</h4>
+                <p class="text-muted">
+                    Rencontrez d'autres jeunes passionnés et créez 
+                    des liens durables dans votre communauté.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h4>Défis et Récompenses</h4>
+                <p class="text-muted">
+                    Participez à des compétitions amicales et gagnez 
+                    des prix tout en vous amusant.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Activités Scientifiques Associées -->
+{% if science_activities %}
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">
+                <i class="fas fa-microscope text-primary me-2"></i>
+                Activités Scientifiques
+            </h2>
+            <p class="lead text-muted">Programmes éducatifs complémentaires</p>
+        </div>
+        
+        <div class="row">
+            {% for activity in science_activities %}
+            <div class="col-lg-4 mb-4">
+                <div class="science-activity">
+                    <h5 class="mb-2">{{ activity.name }}</h5>
+                    <p class="small text-muted mb-2">
+                        <i class="fas fa-users me-1"></i>{{ activity.age_group }} • 
+                        <i class="fas fa-clock me-1"></i>{{ activity.duration }}
+                    </p>
+                    <p class="mb-0">{{ activity.description|truncatewords:20 }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Événements Passés -->
+{% if past_events %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">Nos Précédents Défis</h2>
+            <p class="lead text-muted">Retour sur nos événements passés</p>
+        </div>
+        
+        <div class="timeline">
+            {% for event in past_events %}
+            <div class="timeline-item">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="challenge-status status-past">
+                            <i class="fas fa-check-circle me-1"></i>Terminé
+                        </div>
+                        <h5 class="card-title">{{ event.name }}</h5>
+                        <p class="card-text text-muted">{{ event.description|truncatewords:25 }}</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <small class="text-muted">
+                                    <i class="fas fa-calendar me-1"></i>{{ event.date|date:"d M Y" }}
+                                </small>
+                            </div>
+                            <div class="col-md-6">
+                                <small class="text-muted">
+                                    <i class="fas fa-users me-1"></i>{{ event.participants_count }} participants
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Call to Action -->
+<section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+        <h2 class="mb-3">Prêt à Relever le Défi ?</h2>
+        <p class="lead mb-4">
+            Rejoignez-nous pour une aventure inoubliable qui combine sport, 
+            environnement et engagement communautaire.
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            {% if current_event and not current_event.is_full %}
+                <a href="{% url 'main:mbc_registration' %}" class="btn btn-warning btn-lg">
+                    <i class="fas fa-bicycle me-2"></i>
+                    S'inscrire au MBC
+                </a>
+            {% endif %}
+            <a href="{% url 'main:contact' %}" class="btn btn-outline-light btn-lg">
+                <i class="fas fa-envelope me-2"></i>
+                Plus d'informations
+            </a>
+            <a href="{% url 'main:projects' %}" class="btn btn-outline-light btn-lg">
+                <i class="fas fa-project-diagram me-2"></i>
+                Nos autres projets
+            </a>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Animation des cartes au scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 100);
+            }
+        });
+    }, observerOptions);
+
+    // Observer les cartes de fonctionnalités
+    document.querySelectorAll('.feature-card, .challenge-card, .science-activity').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'all 0.6s ease';
+        observer.observe(card);
+    });
+
+    // Animation du compteur de participants
+    const participantsCount = document.querySelector('.participants-count');
+    if (participantsCount) {
+        const countText = participantsCount.textContent;
+        const count = parseInt(countText.split('/')[0]);
+        if (!isNaN(count)) {
+            let current = 0;
+            const increment = count / 30;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= count) {
+                    participantsCount.innerHTML = countText;
+                    clearInterval(timer);
+                } else {
+                    participantsCount.innerHTML = Math.floor(current) + countText.substring(countText.indexOf('/'));
+                }
+            }, 50);
+        }
+    }
+});
+</script>
+{% endblock %}

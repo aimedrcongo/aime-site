@@ -1,0 +1,495 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Mon Beau Métier - Valorisation des Métiers Étudiants - AIME{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Simplified styling to match the site's standard colors and subtle borders */
+    .mbm-hero {
+        background: linear-gradient(135deg, var(--primary-color), rgba(44,90,160,0.85));
+        color: white;
+        padding: 4rem 0;
+    }
+
+    .mbm-badge {
+        display: inline-block;
+        background: rgba(255,255,255,0.06);
+        padding: .4rem 1rem;
+        border-radius: 20px;
+        font-size: 1rem;
+        margin-bottom: 1.25rem;
+        border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .mbm-hero h1 {
+        font-size: 2.8rem;
+        font-weight: 700;
+        margin-bottom: .5rem;
+        text-shadow: none;
+    }
+
+    .subtitle {
+        font-size: 1.05rem;
+        opacity: .95;
+    }
+
+    /* Trade cards: subtle, aligned with site cards */
+    .trade-card {
+        border: 1px solid rgba(0,0,0,0.04);
+        border-radius: .75rem;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+        transition: none;
+        background: white;
+    }
+
+    .trade-icon { color: var(--primary-color); font-size: 2.4rem; margin-top: 1rem; }
+    .trade-card h3 { color: var(--text-dark); font-weight: 600; }
+    .skill-tag { background: rgba(44,90,160,0.06); color: var(--primary-color); padding: .25rem .6rem; border-radius: 16px; margin: .2rem; }
+    .earnings-badge { background: rgba(0,0,0,0.04); color: var(--text-dark); border-radius: 8px; padding: .35rem .6rem; font-weight: 600; }
+
+    /* Simplify sections and remove heavy gradients / colored borders */
+    .objectives-section, .activities-section, .values-section, .timeline-content {
+        background: transparent;
+        box-shadow: none;
+        border-left: none;
+        padding: 2rem 0;
+    }
+
+    .objective-item, .activity-item, .value-box {
+        background: white;
+        border: 1px solid rgba(0,0,0,0.04);
+        border-radius: 10px;
+        padding: 1.25rem;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+    }
+
+    .activity-item:hover { transform: none; background: #fff; }
+
+    .activity-number { background: var(--secondary-color); color: #fff; width:40px; height:40px; display:flex; align-items:center; justify-content:center; border-radius:50%; margin-right:1rem; }
+
+    .stat-box { background: white; color: var(--text-dark); padding: 1.5rem; border-radius: 10px; border: 1px solid rgba(0,0,0,0.04); }
+
+    /* Map MBM buttons to site's style */
+    .btn-mbm { background: var(--accent-color); border-color: var(--accent-color); color: white; }
+    .btn-mbm-outline { background: transparent; border: 1px solid rgba(0,0,0,0.08); color: var(--text-dark); }
+
+    @media (max-width: 768px) {
+        .mbm-hero { padding: 2rem 0; }
+        .mbm-hero h1 { font-size: 2rem; }
+        .subtitle { font-size: 1rem; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="mbm-hero">
+    <div class="mbm-hero::before"></div>
+    <div class="container-lg mbm-hero-content">
+        <div class="mbm-badge">
+            <i class="fas fa-star me-2"></i>Valorisation des Métiers Étudiants
+        </div>
+        <h1>
+            <i class="fas fa-briefcase me-3"></i>Mon Beau Métier
+        </h1>
+        <p class="subtitle">
+            Reconnaître, valoriser et accompagner les métiers exercés par les étudiants<br>
+            pour leur autonomisation économique et professionnelle
+        </p>
+        <div>
+            <a href="#metiers" class="btn btn-mbm me-2">
+                <i class="fas fa-handshake me-2"></i>Découvrir les métiers
+            </a>
+            <a href="{% url 'main:donate_project' 'mon-beau-metier' %}" class="btn btn-mbm-outline">
+                <i class="fas fa-heart me-2"></i>Soutenir le projet
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- About MBM Section -->
+<section class="py-5">
+    <div class="container-lg">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h2 class="display-6 fw-bold mb-4" style="color: #92400e;">
+                    <i class="fas fa-hands-helping me-3" style="color: #d97706;"></i>Un Projet de Transformation
+                </h2>
+                <p class="lead" style="color: #666;">
+                    En République Démocratique du Congo, les étudiants font face à des difficultés socio-économiques
+                    qui compromettent souvent leur parcours académique. Nombreux développent des activités génératrices
+                    de revenus pour subvenir à leurs besoins.
+                </p>
+                <p style="color: #666; line-height: 1.8;">
+                    <strong>Mon Beau Métier</strong> vise à identifier, renforcer et promouvoir ces activités professionnelles,
+                    transformant ces initiatives en véritables entreprises valorisées et accompagnées.
+                </p>
+                <p style="color: #666; line-height: 1.8; font-style: italic;">
+                    <i class="fas fa-quote-left me-2"></i>"Il n'y a pas de sots métiers, seulement des gens sans vision."<i class="fas fa-quote-right ms-2"></i>
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <div class="stat-box" style="background: linear-gradient(135deg, #92400e 0%, #d97706 100%); margin-bottom: 1.5rem;">
+                    <div class="stat-number">{{ metrics.students_trained }}</div>
+                    <div class="stat-label">Étudiants Formés</div>
+                </div>
+                <div class="stat-box" style="background: linear-gradient(135deg, #d97706 0%, #f97316 100%); margin-bottom: 1.5rem;">
+                    <div class="stat-number">{{ metrics.workshops_organized }}</div>
+                    <div class="stat-label">Ateliers Organisés</div>
+                </div>
+                <div class="stat-box" style="background: linear-gradient(135deg, #ea580c 0%, #dc2626 100%);">
+                    <div class="stat-number">{{ metrics.income_improvement }}</div>
+                    <div class="stat-label">Augmentation des Revenus</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Philosophy Section -->
+<section class="objectives-section">
+    <div class="container-lg">
+        <h2 class="text-center mb-5 fw-bold" style="color: #92400e;">
+            <i class="fas fa-lightbulb me-3" style="color: #d97706;"></i>Notre Philosophie
+        </h2>
+        <div class="row">
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="objective-item">
+                    <h4><i class="fas fa-eye me-2" style="color: #d97706;"></i>Révéler les Talents</h4>
+                    <p>Mettre en évidence les qualités cachées des praticiens : talent, sérieux, enthousiasme, respect.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="objective-item">
+                    <h4><i class="fas fa-rocket me-2" style="color: #d97706;"></i>Transformer en Entrepreneurs</h4>
+                    <p>Convertir les initiatives informelles en véritables entreprises structurées et durables.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="objective-item">
+                    <h4><i class="fas fa-heart me-2" style="color: #d97706;"></i>Restaurer la Dignité</h4>
+                    <p>Valoriser le travail des étudiants et reconnaître leur contribution à la société.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Values Section -->
+<section class="py-5">
+    <div class="container-lg">
+        <h2 class="text-center mb-5 fw-bold" style="color: #92400e;">
+            <i class="fas fa-crown me-3" style="color: #d97706;"></i>Les Qualités d'un Beau Métier
+        </h2>
+        <div class="values-section">
+            <div class="value-box">
+                <div class="value-icon"><i class="fas fa-gavel"></i></div>
+                <h4>Éthique</h4>
+                <p>Honnêteté et intégrité dans l'exercice professionnel</p>
+            </div>
+            <div class="value-box">
+                <div class="value-icon"><i class="fas fa-tools"></i></div>
+                <h4>Technique</h4>
+                <p>Maîtrise et perfectionnement des compétences métier</p>
+            </div>
+            <div class="value-box">
+                <div class="value-icon"><i class="fas fa-star"></i></div>
+                <h4>Professionnalisme</h4>
+                <p>Excellence et qualité dans chaque prestation</p>
+            </div>
+            <div class="value-box">
+                <div class="value-icon"><i class="fas fa-handshake"></i></div>
+                <h4>Relation Client</h4>
+                <p>Respect et satisfaction des clients</p>
+            </div>
+            <div class="value-box">
+                <div class="value-icon"><i class="fas fa-chart-line"></i></div>
+                <h4>Croissance</h4>
+                <p>Développement continu et amélioration des compétences</p>
+            </div>
+            <div class="value-box">
+                <div class="value-icon"><i class="fas fa-shield-alt"></i></div>
+                <h4>Sécurité</h4>
+                <p>Protéger les clients et les prestataires</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Métiers Supported -->
+<section class="py-5" id="metiers" style="background: #f8f9fa;">
+    <div class="container-lg">
+        <h2 class="text-center mb-5 fw-bold" style="color: #92400e;">
+            <i class="fas fa-briefcase me-3" style="color: #d97706;"></i>{{ total_trades }} Métiers Valorisés
+        </h2>
+        <p class="text-center text-muted mb-5 lead">
+            Découvrez les domaines dans lesquels nous accompagnons les étudiants entrepreneurs
+        </p>
+
+        <div class="row g-4">
+            {% for trade in trades %}
+            <div class="col-md-6 col-lg-4">
+                <div class="trade-card">
+                    <div class="text-center p-4">
+                        <div class="trade-icon">
+                            <i class="fas {{ trade.icon }}"></i>
+                        </div>
+                        <h3>{{ trade.name }}</h3>
+                        <p>{{ trade.description }}</p>
+                        
+                        <div class="mb-3">
+                            {% for skill in trade.skills %}
+                            <span class="skill-tag">{{ skill }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <div>
+                            {% if "Très élevé" in trade.earnings_potential %}
+                                <span class="earnings-badge earnings-high">💰 {{ trade.earnings_potential }}</span>
+                            {% elif "Élevé" in trade.earnings_potential %}
+                                <span class="earnings-badge earnings-medium">💵 {{ trade.earnings_potential }}</span>
+                            {% else %}
+                                <span class="earnings-badge earnings-low">💰 {{ trade.earnings_potential }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Activities Section -->
+<section class="py-5">
+    <div class="container-lg">
+        <h2 class="text-center mb-5 fw-bold" style="color: #92400e;">
+            <i class="fas fa-tasks me-3" style="color: #d97706;"></i>Activités Principales du Projet
+        </h2>
+
+        <div class="activities-section">
+            <div class="activity-item">
+                <div class="activity-number">1</div>
+                <div class="activity-content">
+                    <h5>Étude Diagnostique & Cartographie</h5>
+                    <p>Enquêtes participatives dans les universités de Kinshasa, Lubumbashi et autres grandes villes pour identifier les métiers et activités existantes.</p>
+                </div>
+            </div>
+
+            <div class="activity-item">
+                <div class="activity-number">2</div>
+                <div class="activity-content">
+                    <h5>Renforcement des Capacités</h5>
+                    <p>Organisation d'ateliers sur l'entrepreneuriat, la gestion financière, le marketing numérique et la gestion du temps études-travail.</p>
+                </div>
+            </div>
+
+            <div class="activity-item">
+                <div class="activity-number">3</div>
+                <div class="activity-content">
+                    <h5>Promotion & Valorisation</h5>
+                    <p>Organisation des "Journées Mon Beau Métier", foires universitaires, production de vidéos et catalogues mettant en valeur les jeunes artisans.</p>
+                </div>
+            </div>
+
+            <div class="activity-item">
+                <div class="activity-number">4</div>
+                <div class="activity-content">
+                    <h5>Appui & Accompagnement</h5>
+                    <p>Mise en place d'un cadre de mentorat avec des entrepreneurs et anciens étudiants, soutien matériel et microfinancier.</p>
+                </div>
+            </div>
+
+            <div class="activity-item">
+                <div class="activity-number">5</div>
+                <div class="activity-content">
+                    <h5>Communication & Sensibilisation</h5>
+                    <p>Campagnes de promotion dans les universités, sur les réseaux sociaux et médias, témoignages de réussite.</p>
+                </div>
+            </div>
+
+            <div class="activity-item">
+                <div class="activity-number">6</div>
+                <div class="activity-content">
+                    <h5>Suivi & Évaluation</h5>
+                    <p>Élaboration d'un système de suivi participatif et évaluation de l'impact sur les revenus et la réussite académique.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Objectives Section -->
+<section class="objectives-section">
+    <div class="container-lg">
+        <h2 class="text-center mb-5 fw-bold" style="color: #92400e;">
+            <i class="fas fa-target me-3" style="color: #d97706;"></i>Objectifs du Projet
+        </h2>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="objective-item">
+                    <h4><i class="fas fa-graduation-cap me-2" style="color: #d97706;"></i>Objectif Général</h4>
+                    <p>Contribuer à l'autonomisation économique et sociale des étudiants congolais à travers la valorisation, la formation et la promotion des métiers dans les universités du Congo.</p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="objective-item">
+                    <h4><i class="fas fa-lightbulb me-2" style="color: #d97706;"></i>Résultats Attendus</h4>
+                    <ul style="margin-bottom: 0; color: #666; padding-left: 0;">
+                        <li><strong>Cartographie</strong> complète des métiers étudiants</li>
+                        <li><strong>Formation</strong> en entrepreneuriat et gestion</li>
+                        <li><strong>Foires</strong> "Mon Beau Métier" organisées</li>
+                        <li><strong>Revenus</strong> des étudiants augmentés</li>
+                        <li><strong>Partenariats</strong> durables établis</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Timeline Section -->
+<section class="py-5" style="background: #f8f9fa;">
+    <div class="container-lg">
+        <h2 class="text-center mb-5 fw-bold" style="color: #92400e;">
+            <i class="fas fa-calendar-alt me-3" style="color: #d97706;"></i>Calendrier du Projet (18 mois)
+        </h2>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h5 style="color: #92400e; font-weight: 700;">Phase 1: Diagnostic & Planification</h5>
+                    <p><strong>Mois 1-3</strong></p>
+                    <p style="margin: 0; color: #666;">Enquêtes participatives et cartographie des métiers dans les universités ciblées.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h5 style="color: #92400e; font-weight: 700;">Phase 2: Formation & Accompagnement</h5>
+                    <p><strong>Mois 4-14</strong></p>
+                    <p style="margin: 0; color: #666;">Ateliers de formation en entrepreneuriat, gestion et communication. Foires et événements de valorisation.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h5 style="color: #92400e; font-weight: 700;">Phase 3: Évaluation & Clôture</h5>
+                    <p><strong>Mois 15-18</strong></p>
+                    <p style="margin: 0; color: #666;">Évaluation finale de l'impact, capitalisation des résultats et rapport final.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Impacts Section -->
+<section class="py-5">
+    <div class="container-lg">
+        <h2 class="text-center mb-5 fw-bold" style="color: #92400e;">
+            <i class="fas fa-chart-line me-3" style="color: #d97706;"></i>Impacts Attendus
+        </h2>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="objective-item" style="border-left-color: #d97706;">
+                    <h4><i class="fas fa-money-bill-wave me-2" style="color: #d97706;"></i>Sur les Revenus</h4>
+                    <ul style="margin-bottom: 0; color: #666;">
+                        <li><strong>Augmentation</strong> des revenus étudiants de 150%+</li>
+                        <li><strong>Développement</strong> d'une culture d'épargne</li>
+                        <li><strong>Structuration</strong> et formalisation des activités</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="objective-item" style="border-left-color: #d97706;">
+                    <h4><i class="fas fa-person-chalkboard me-2" style="color: #d97706;"></i>Sur les Capacités</h4>
+                    <ul style="margin-bottom: 0; color: #666;">
+                        <li><strong>Amélioration</strong> des compétences professionnelles</li>
+                        <li><strong>Renforcissement</strong> de l'esprit entrepreneurial</li>
+                        <li><strong>Meilleure</strong> réussite académique</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="objective-item" style="border-left-color: #d97706;">
+                    <h4><i class="fas fa-face-smile me-2" style="color: #d97706;"></i>Sur la Perception Sociale</h4>
+                    <ul style="margin-bottom: 0; color: #666;">
+                        <li><strong>Valorisation</strong> du travail étudiant</li>
+                        <li><strong>Reconnaissance</strong> par l'État et la société</li>
+                        <li><strong>Transformation</strong> de l'image des métiers</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="objective-item" style="border-left-color: #d97706;">
+                    <h4><i class="fas fa-link me-2" style="color: #d97706;"></i>Sur les Partenariats</h4>
+                    <ul style="margin-bottom: 0; color: #666;">
+                        <li><strong>Création</strong> de réseaux d'entrepreneurs</li>
+                        <li><strong>Collaboration</strong> universités-secteur privé</li>
+                        <li><strong>Durabilité</strong> des initiatives</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Target Groups Section -->
+<section class="objectives-section">
+    <div class="container-lg">
+        <h2 class="text-center mb-5 fw-bold" style="color: #92400e;">
+            <i class="fas fa-users me-3" style="color: #d97706;"></i>Groupe Cible du Projet
+        </h2>
+        <div class="row text-center">
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="p-4 rounded-3 h-100" style="background: white; border: 2px solid #d97706;">
+                    <h5 style="color: #92400e;"><i class="fas fa-graduation-cap me-2"></i>Étudiants</h5>
+                    <p style="color: #666; font-size: 0.9rem;">Actuellement engagés dans des activités génératrices de revenus</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="p-4 rounded-3 h-100" style="background: white; border: 2px solid #d97706;">
+                    <h5 style="color: #92400e;"><i class="fas fa-school me-2"></i>Universités</h5>
+                    <p style="color: #666; font-size: 0.9rem;">Partenaires de mise en œuvre et mobilisation</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="p-4 rounded-3 h-100" style="background: white; border: 2px solid #d97706;">
+                    <h5 style="color: #92400e;"><i class="fas fa-university me-2"></i>Ministères</h5>
+                    <p style="color: #666; font-size: 0.9rem;">Appui institutionnel et politique</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="p-4 rounded-3 h-100" style="background: white; border: 2px solid #d97706;">
+                    <h5 style="color: #92400e;"><i class="fas fa-briefcase me-2"></i>Secteur Privé</h5>
+                    <p style="color: #666; font-size: 0.9rem;">Partenaires économiques et mentors</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5" style="background: linear-gradient(135deg, #d97706 0%, #b45309 100%); color: white;">
+    <div class="container-lg text-center">
+        <h2 class="mb-4 fw-bold">Transformons le Travail Étudiant en Opportunité</h2>
+        <p class="lead mb-4">
+            Aidez-nous à valoriser les métiers des étudiants congolais<br>
+            et à créer une génération d'entrepreneurs responsables et productifs.
+        </p>
+        <div>
+            <a href="{% url 'main:donate_project' 'mon-beau-metier' %}" class="btn btn-light btn-lg me-3 fw-bold">
+                <i class="fas fa-heart me-2"></i>Faire un don
+            </a>
+            <a href="{% url 'main:contact' %}" class="btn btn-outline-light btn-lg fw-bold">
+                <i class="fas fa-envelope me-2"></i>Nous Contacter
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

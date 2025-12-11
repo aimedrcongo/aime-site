@@ -1,0 +1,255 @@
+/* === FOOTER OPTIMISÉ - Sans coupures, logo blanc === */
+
+footer {
+    background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%) !important;
+    color: #ffffff !important;
+    padding: 2.5rem 0 1.5rem !important;
+    margin-top: 4rem;
+    border-top: 3px solid rgba(100, 181, 246, 0.5);
+}
+
+/* Container du footer */
+footer .container {
+    max-width: 1200px;
+    padding: 0 0.5rem !important;
+}
+
+/* === LOGO FOOTER - Background blanc === */
+.footer-logo {
+    height: 60px !important;
+    width: auto !important;
+    background: #ffffff !important;
+    padding: 0.5rem !important;
+    border-radius: 8px !important;
+    display: block;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Colonnes du footer - Optimisé sans coupures */
+footer .col-lg-2,
+footer .col-md-6 {
+    padding: 0 0.8rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+footer .col-lg-2.col-md-6:nth-child(5) {
+    margin-left: auto;
+    text-align: right;
+}
+
+/* === Headings du footer - Sans coupure === */
+footer h6 {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.8rem !important;
+    text-transform: uppercase;
+    line-height: 1.2;
+    white-space: nowrap;
+    word-break: keep-all;
+}
+
+/* === Paragraphes - Pas de coupure inutile === */
+footer p,
+footer small {
+    font-size: 0.75rem !important;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.95) !important;
+    margin: 0 0 0.5rem 0 !important;
+    word-break: keep-all;
+    display: inline;
+    white-space: nowrap;
+}
+
+/* === Listes du footer === */
+footer .list-unstyled {
+    list-style: none;
+    padding: 0;
+}
+
+footer .footer-links li,
+footer .footer-contact li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+/* === Liens - Pas de coupure === */
+footer .footer-links a,
+footer .footer-contact a {
+    color: rgba(255, 255, 255, 0.95) !important;
+    font-size: 0.75rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline;
+    white-space: nowrap;
+    word-break: keep-all;
+    overflow-wrap: normal;
+}
+
+footer .footer-links a:hover,
+footer .footer-contact a:hover {
+    color: #64b5f6 !important;
+    text-decoration: underline;
+}
+
+/* === Icons du footer - Alignés === */
+footer i {
+    color: #64b5f6;
+    width: 14px;
+    text-align: center;
+    display: inline-block;
+    margin-right: 0.2rem;
+}
+
+/* === Social Links - TOUS SUR LA MÊME LIGNE === */
+.social-links {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background: rgba(100, 181, 246, 0.2);
+    border: 1px solid rgba(100, 181, 246, 0.4);
+    border-radius: 50%;
+    color: #64b5f6 !important;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+.social-links a:hover {
+    background: rgba(100, 181, 246, 0.4);
+    transform: scale(1.1);
+    color: #ffffff !important;
+}
+
+/* === Footer Bottom === */
+footer hr {
+    border-color: rgba(100, 181, 246, 0.3) !important;
+    margin: 2rem 0 1rem 0 !important;
+}
+
+.footer-bottom {
+    padding-top: 1rem;
+    border-top: 1px solid rgba(100, 181, 246, 0.2);
+}
+
+.footer-bottom p {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 0.85rem !important;
+}
+
+.footer-bottom a {
+    color: #64b5f6 !important;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.footer-bottom a:hover {
+    color: #2196f3 !important;
+    text-decoration: underline;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    footer {
+        padding: 2.5rem 0 1rem !important;
+    }
+
+    footer h6 {
+        font-size: 0.85rem;
+        margin-bottom: 0.75rem;
+    }
+
+    footer h6::before {
+        width: 25px;
+        height: 2px;
+    }
+
+    footer .col-lg-2,
+    footer .col-md-6 {
+        padding: 0 1rem !important;
+        margin-bottom: 1.5rem !important;
+        text-align: center;
+    }
+
+    footer .col-lg-2.col-md-6:nth-child(5) {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .footer-bottom {
+        text-align: center;
+    }
+
+    .footer-bottom .col-md-4 {
+        margin-top: 1rem;
+        text-align: center;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    .newsletter-form input {
+        font-size: 0.8rem !important;
+        padding: 0.4rem 0.5rem !important;
+    }
+}
+
+/* === Animations subtiles === */
+footer .footer-links li,
+footer .footer-contact li {
+    animation: slideInUp 0.5s ease-out backwards;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Stagger animation pour les items */
+footer .footer-links li:nth-child(1) { animation-delay: 0.1s; }
+footer .footer-links li:nth-child(2) { animation-delay: 0.15s; }
+footer .footer-links li:nth-child(3) { animation-delay: 0.2s; }
+footer .footer-links li:nth-child(4) { animation-delay: 0.25s; }
+footer .footer-links li:nth-child(5) { animation-delay: 0.3s; }
+footer .footer-links li:nth-child(6) { animation-delay: 0.35s; }
+
+/* === Épuration supplémentaire === */
+footer small {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+footer .text-light {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+footer .opacity-75 {
+    opacity: 0.75 !important;
+}
+
+/* Éviter les conflits */
+footer,
+footer * {
+    box-sizing: border-box;
+}

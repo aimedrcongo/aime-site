@@ -1,0 +1,320 @@
+{% extends 'main/dashboard/home.html' %}
+{% load static %}
+
+{% block title %}Profil - Tableau de Bord{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="container">
+        <!-- En-tête du profil -->
+        <div class="profile-header">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="d-flex align-items-center">
+                        {% if profile.profile_image %}
+                            <img src="{{ profile.profile_image.url }}" alt="Avatar" class="profile-avatar me-3">
+                        {% else %}
+                            <div class="profile-avatar me-3 d-flex align-items-center justify-content-center" style="background: rgba(255,255,255,0.2);">
+                                <i class="fas fa-user fa-2x"></i>
+                            </div>
+                        {% endif %}
+                        <div>
+                            <h2 class="mb-1">{{ profile.user.get_full_name|default:profile.user.username }}</h2>
+                            <p class="mb-2 opacity-75">{{ profile.get_role_display }}</p>
+                            <span class="level-badge">
+                                <i class="fas fa-star me-1"></i>
+                                Niveau {{ profile.level }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="mb-2">
+                        <strong>{{ profile.points }}</strong> points
+                    </div>
+                    <small class="opacity-75">Membre depuis {{ profile.joined_date|date:"M Y" }}</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation du tableau de bord -->
+        <nav class="dashboard-nav">
+            <ul class="nav nav-pills justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:dashboard_home' %}">
+                        <i class="fas fa-tachometer-alt me-2"></i>Accueil
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'main:dashboard_profile' %}">
+                        <i class="fas fa-user me-2"></i>Profil
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:dashboard_donations' %}">
+                        <i class="fas fa-heart me-2"></i>Donations
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:dashboard_events' %}">
+                        <i class="fas fa-calendar me-2"></i>Événements
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:dashboard_notifications' %}">
+                        <i class="fas fa-bell me-2"></i>Notifications
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:dashboard_badges' %}">
+                        <i class="fas fa-trophy me-2"></i>Badges
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:dashboard_settings' %}">
+                        <i class="fas fa-cog me-2"></i>Paramètres
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="dashboard-card">
+                    <h4 class="mb-4">
+                        <i class="fas fa-user-edit text-primary me-2"></i>
+                        Modifier mon Profil
+                    </h4>
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.first_name.id_for_label }}" class="form-label">
+                                    <i class="fas fa-user me-1"></i>Prénom
+                                </label>
+                                {{ form.first_name }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.last_name.id_for_label }}" class="form-label">
+                                    <i class="fas fa-user me-1"></i>Nom
+                                </label>
+                                {{ form.last_name }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.email.id_for_label }}" class="form-label">
+                                    <i class="fas fa-envelope me-1"></i>Email
+                                </label>
+                                {{ form.email }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.phone.id_for_label }}" class="form-label">
+                                    <i class="fas fa-phone me-1"></i>Téléphone
+                                </label>
+                                {{ form.phone }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.date_of_birth.id_for_label }}" class="form-label">
+                                    <i class="fas fa-birthday-cake me-1"></i>Date de naissance
+                                </label>
+                                {{ form.date_of_birth }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.role.id_for_label }}" class="form-label">
+                                    <i class="fas fa-user-tag me-1"></i>Rôle
+                                </label>
+                                {{ form.role }}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.address.id_for_label }}" class="form-label">
+                                <i class="fas fa-map-marker-alt me-1"></i>Adresse
+                            </label>
+                            {{ form.address }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.profile_image.id_for_label }}" class="form-label">
+                                <i class="fas fa-camera me-1"></i>Photo de profil
+                            </label>
+                            {{ form.profile_image }}
+                            {% if profile.profile_image %}
+                                <div class="mt-2">
+                                    <img src="{{ profile.profile_image.url }}" alt="Photo actuelle" 
+                                         style="width: 100px; height: 100px; object-fit: cover; border-radius: 10px;">
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.language_preference.id_for_label }}" class="form-label">
+                                <i class="fas fa-language me-1"></i>Langue préférée
+                            </label>
+                            {{ form.language_preference }}
+                        </div>
+
+                        <h5 class="mb-3 mt-4">
+                            <i class="fas fa-cog text-secondary me-2"></i>
+                            Préférences de notification
+                        </h5>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="form-check">
+                                    {{ form.newsletter_subscription }}
+                                    <label class="form-check-label" for="{{ form.newsletter_subscription.id_for_label }}">
+                                        <i class="fas fa-newspaper me-1"></i>Newsletter
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="form-check">
+                                    {{ form.email_notifications }}
+                                    <label class="form-check-label" for="{{ form.email_notifications.id_for_label }}">
+                                        <i class="fas fa-envelope me-1"></i>Notifications email
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="form-check">
+                                    {{ form.sms_notifications }}
+                                    <label class="form-check-label" for="{{ form.sms_notifications.id_for_label }}">
+                                        <i class="fas fa-sms me-1"></i>Notifications SMS
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn-dashboard">
+                                <i class="fas fa-save me-2"></i>
+                                Sauvegarder les modifications
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <!-- Informations du profil -->
+                <div class="dashboard-card">
+                    <h5 class="mb-3">
+                        <i class="fas fa-info-circle text-info me-2"></i>
+                        Informations du compte
+                    </h5>
+                    
+                    <div class="mb-3">
+                        <strong>Nom d'utilisateur:</strong><br>
+                        <span class="text-muted">{{ user.username }}</span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <strong>Date d'inscription:</strong><br>
+                        <span class="text-muted">{{ profile.joined_date|date:"d/m/Y" }}</span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <strong>Dernière connexion:</strong><br>
+                        <span class="text-muted">{{ user.last_login|date:"d/m/Y H:i" }}</span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <strong>Statut:</strong><br>
+                        {% if profile.is_active_member %}
+                            <span class="badge bg-success">
+                                <i class="fas fa-check me-1"></i>Actif
+                            </span>
+                        {% else %}
+                            <span class="badge bg-secondary">
+                                <i class="fas fa-pause me-1"></i>Inactif
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Statistiques du profil -->
+                <div class="dashboard-card">
+                    <h5 class="mb-3">
+                        <i class="fas fa-chart-bar text-success me-2"></i>
+                        Statistiques
+                    </h5>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
+                            <span>Points totaux:</span>
+                            <strong class="text-primary">{{ profile.points }}</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
+                            <span>Niveau actuel:</span>
+                            <strong class="text-warning">{{ profile.level }}</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
+                            <span>Total donations:</span>
+                            <strong class="text-success">{{ profile.total_donations }} FC</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
+                            <span>Événements:</span>
+                            <strong class="text-info">{{ profile.events_participated }}</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
+                            <span>Challenges:</span>
+                            <strong class="text-warning">{{ profile.challenges_completed }}</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Badges récents -->
+                <div class="dashboard-card">
+                    <h5 class="mb-3">
+                        <i class="fas fa-medal text-warning me-2"></i>
+                        Badges obtenus
+                    </h5>
+                    
+                    {% if profile.get_badges_list %}
+                        <div class="row">
+                            {% for badge in profile.get_badges_list %}
+                                <div class="col-6 text-center mb-2">
+                                    <div class="badge-item p-2 border rounded">
+                                        <i class="fas fa-medal text-warning fa-2x mb-1"></i>
+                                        <div class="small">{{ badge|title }}</div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="text-center mt-3">
+                            <a href="{% url 'main:dashboard_badges' %}" class="btn btn-sm btn-outline-warning">
+                                Voir tous les badges
+                            </a>
+                        </div>
+                    {% else %}
+                        <p class="text-muted text-center">
+                            <i class="fas fa-trophy fa-2x mb-2 d-block"></i>
+                            Aucun badge obtenu pour le moment
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

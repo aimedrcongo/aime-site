@@ -1,0 +1,49 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Test Images{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Test des Images Hero</h1>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Hero Main</h3>
+            <img src="{% static 'main/images/hero/hero-main.jpg' %}" class="img-fluid" alt="Hero Main" style="max-height: 200px;">
+            <br><small>{% static 'main/images/hero/hero-main.jpg' %}</small>
+        </div>
+        
+        <div class="col-md-4">
+            <h3>Hero Map</h3>
+            <img src="{% static 'main/images/hero/hero-map.jpg' %}" class="img-fluid" alt="Hero Map" style="max-height: 200px;">
+            <br><small>{% static 'main/images/hero/hero-map.jpg' %}</small>
+        </div>
+        
+        <div class="col-md-4">
+            <h3>Hero MBC</h3>
+            <img src="{% static 'main/images/hero/hero-mbc.jpg' %}" class="img-fluid" alt="Hero MBC" style="max-height: 200px;">
+            <br><small>{% static 'main/images/hero/hero-mbc.jpg' %}</small>
+        </div>
+    </div>
+    
+    <hr>
+    <h3>Test des images originales</h3>
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Première image</h4>
+            <img src="{% static 'main/images/hero/premiere_image.JPG' %}" class="img-fluid" alt="Première" style="max-height: 200px;">
+        </div>
+        
+        <div class="col-md-4">
+            <h4>Deuxième image</h4>
+            <img src="{% static 'main/images/hero/deuxieme_image.jpg' %}" class="img-fluid" alt="Deuxième" style="max-height: 200px;">
+        </div>
+        
+        <div class="col-md-4">
+            <h4>Troisième image</h4>
+            <img src="{% static 'main/images/hero/troisieme_image.JPG' %}" class="img-fluid" alt="Troisième" style="max-height: 200px;">
+        </div>
+    </div>
+</div>
+{% endblock %}

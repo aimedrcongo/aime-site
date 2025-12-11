@@ -1,0 +1,489 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Manifeste AIME - Notre Vision pour l'Afrique{% endblock %}
+
+{% block extra_css %}
+<style>
+    .manifesto-hero {
+        background: linear-gradient(135deg, #2c5aa0 0%, #3498db 50%, #e74c3c 100%);
+        color: white;
+        padding: 6rem 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .manifesto-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="africa" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23africa)"/></svg>');
+        opacity: 0.3;
+    }
+
+    .principles-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+    }
+
+    .principle-card {
+        background: white;
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .principle-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+
+    .principle-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    }
+
+    .principle-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 2rem;
+        color: white;
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .vision-timeline {
+        position: relative;
+        background: linear-gradient(135deg, #2c5aa0 0%, #3498db 100%);
+        color: white;
+        padding: 5rem 0;
+        margin: 4rem 0;
+    }
+
+    .timeline-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 3rem;
+        opacity: 0;
+        animation: slideInUp 1s ease forwards;
+    }
+
+    .timeline-item:nth-child(even) {
+        animation-delay: 0.2s;
+    }
+
+    .timeline-item:nth-child(odd) {
+        animation-delay: 0.4s;
+    }
+
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .timeline-year {
+        font-size: 3rem;
+        font-weight: bold;
+        background: rgba(255,255,255,0.2);
+        border-radius: 15px;
+        padding: 1rem 1.5rem;
+        margin-right: 2rem;
+        min-width: 120px;
+        text-align: center;
+    }
+
+    .call-to-action {
+        background: linear-gradient(135deg, #ff6b6b, #feca57);
+        color: white;
+        padding: 4rem 0;
+        text-align: center;
+        position: relative;
+    }
+
+    .cta-button {
+        background: white;
+        color: var(--primary-color);
+        border: none;
+        padding: 1rem 3rem;
+        border-radius: 50px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        margin: 0.5rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        color: var(--accent-color);
+    }
+
+    .impact-vision {
+        background: #f8f9fa;
+        padding: 4rem 0;
+        position: relative;
+    }
+
+    .impact-number {
+        font-size: 4rem;
+        font-weight: bold;
+        color: var(--accent-color);
+        text-align: center;
+        margin-bottom: 1rem;
+        animation: countUp 2s ease;
+    }
+
+    @keyframes countUp {
+        from { opacity: 0; transform: scale(0.5); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    .quote-section {
+        background: var(--primary-color);
+        color: white;
+        padding: 4rem 0;
+        position: relative;
+        text-align: center;
+    }
+
+    .quote-text {
+        font-size: 2rem;
+        font-style: italic;
+        margin-bottom: 2rem;
+        position: relative;
+    }
+
+    .quote-text::before,
+    .quote-text::after {
+        content: '"';
+        font-size: 4rem;
+        color: var(--secondary-color);
+        position: absolute;
+        top: -1rem;
+    }
+
+    .quote-text::before {
+        left: -2rem;
+    }
+
+    .quote-text::after {
+        right: -2rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="manifesto-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-10 mx-auto text-center">
+                <h1 class="display-3 fw-bold mb-4">MANIFESTE AIME</h1>
+                <h2 class="h3 mb-4 text-warning">
+                    "L'Afrique de demain se construit aujourd'hui dans les mains de nos enfants"
+                </h2>
+                <p class="lead">
+                    Nous croyons en une Afrique où chaque enfant, peu importe son origine, 
+                    sa condition sociale ou son genre, peut devenir l'architecte de son destin 
+                    et le bâtisseur d'un continent prospère.
+                </p>
+                <div class="mt-4">
+                    <span class="badge bg-warning me-2 p-3 fs-6">🌍 Vision Panafricaine</span>
+                    <span class="badge bg-success me-2 p-3 fs-6">⚡ Transformation Systémique</span>
+                    <span class="badge bg-info p-3 fs-6">🚀 Innovation Sociale</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Nos 10 Principes Fondamentaux -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">Nos 10 Principes Fondamentaux</h2>
+        
+        <div class="principles-grid">
+            <div class="principle-card">
+                <div class="principle-icon">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <h4 class="text-center mb-3">1. Le Potentiel Universel</h4>
+                <p class="text-center">
+                    Chaque enfant naît avec un potentiel illimité. Notre mission est de le révéler, 
+                    le cultiver et l'accompagner vers l'excellence, indépendamment de ses origines.
+                </p>
+            </div>
+
+            <div class="principle-card">
+                <div class="principle-icon">
+                    <i class="fas fa-balance-scale"></i>
+                </div>
+                <h4 class="text-center mb-3">2. L'Égalité des Chances</h4>
+                <p class="text-center">
+                    Nous refusons que la pauvreté, le genre ou l'origine géographique déterminent 
+                    l'avenir d'un enfant. Nous créons des ponts vers l'opportunité.
+                </p>
+            </div>
+
+            <div class="principle-card">
+                <div class="principle-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h4 class="text-center mb-3">3. L'Innovation Pédagogique</h4>
+                <p class="text-center">
+                    L'apprentissage du 21e siècle exige des méthodes révolutionnaires. 
+                    Nous réinventons l'éducation avec la science, la technologie et la créativité.
+                </p>
+            </div>
+
+            <div class="principle-card">
+                <div class="principle-icon">
+                    <i class="fas fa-hands-helping"></i>
+                </div>
+                <h4 class="text-center mb-3">4. La Communauté Solidaire</h4>
+                <p class="text-center">
+                    L'enfant grandit dans un écosystème. Nous mobilisons familles, écoles, 
+                    communautés et institutions pour créer un environnement protecteur et stimulant.
+                </p>
+            </div>
+
+            <div class="principle-card">
+                <div class="principle-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h4 class="text-center mb-3">5. L'Esprit Entrepreneurial</h4>
+                <p class="text-center">
+                    Nous formons des créateurs, pas seulement des consommateurs. 
+                    Chaque enfant apprend à identifier les problèmes et à inventer des solutions.
+                </p>
+            </div>
+
+            <div class="principle-card">
+                <div class="principle-icon">
+                    <i class="fas fa-globe-africa"></i>
+                </div>
+                <h4 class="text-center mb-3">6. La Fierté Africaine</h4>
+                <p class="text-center">
+                    Nos enfants grandissent fiers de leur héritage africain tout en étant 
+                    citoyens du monde. Nous valorisons nos cultures tout en embrassant la modernité.
+                </p>
+            </div>
+
+            <div class="principle-card">
+                <div class="principle-icon">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <h4 class="text-center mb-3">7. La Durabilité Intégrale</h4>
+                <p class="text-center">
+                    Nous préparons les gardiens de la planète. Chaque programme intègre 
+                    la conscience environnementale et la responsabilité écologique.
+                </p>
+            </div>
+
+            <div class="principle-card">
+                <div class="principle-icon">
+                    <i class="fas fa-microscope"></i>
+                </div>
+                <h4 class="text-center mb-3">8. L'Excellence Scientifique</h4>
+                <p class="text-center">
+                    Nos actions s'appuient sur la recherche rigoureuse et l'évaluation continue. 
+                    Nous mesurons notre impact et adaptons nos méthodes en permanence.
+                </p>
+            </div>
+
+            <div class="principle-card">
+                <div class="principle-icon">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <h4 class="text-center mb-3">9. La Collaboration Stratégique</h4>
+                <p class="text-center">
+                    Les défis de l'enfance exigent une réponse collective. Nous tissons des alliances 
+                    avec tous les acteurs engagés pour l'épanouissement des enfants.
+                </p>
+            </div>
+
+            <div class="principle-card">
+                <div class="principle-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h4 class="text-center mb-3">10. L'Audace Transformatrice</h4>
+                <p class="text-center">
+                    Nous refusons le statu quo. Nous osons rêver grand et agir avec courage 
+                    pour transformer radicalement la condition de l'enfance en Afrique.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Vision 2030-2050 -->
+<section class="vision-timeline">
+    <div class="container">
+        <h2 class="text-center mb-5">Notre Vision Transformatrice 2025-2050</h2>
+        
+        <div class="timeline-item">
+            <div class="timeline-year">2025</div>
+            <div>
+                <h4>Fondations Solides</h4>
+                <p>
+                    🎯 50,000 enfants touchés directement<br>
+                    📚 1,000 écoles partenaires<br>
+                    🌍 Expansion dans 5 pays de la région
+                </p>
+            </div>
+        </div>
+        
+        <div class="timeline-item">
+            <div class="timeline-year">2030</div>
+            <div>
+                <h4>Révolution Pédagogique</h4>
+                <p>
+                    🧠 500,000 enfants dans nos programmes<br>
+                    🔬 10 centres de recherche AIME<br>
+                    🏆 Recognition internationale ONU/UNESCO
+                </p>
+            </div>
+        </div>
+        
+        <div class="timeline-item">
+            <div class="timeline-year">2040</div>
+            <div>
+                <h4>Leadership Continental</h4>
+                <p>
+                    🌍 2 millions d'enfants accompagnés<br>
+                    🎓 Première génération de leaders AIME aux commandes<br>
+                    💡 Écosystème d'innovation panafricain
+                </p>
+            </div>
+        </div>
+        
+        <div class="timeline-item">
+            <div class="timeline-year">2050</div>
+            <div>
+                <h4>Transformation Achevée</h4>
+                <p>
+                    🏆 Modèle AIME adopté mondialement<br>
+                    🌟 Afrique = continent de référence pour l'éducation<br>
+                    🚀 Nouvelle génération d'innovateurs africains au sommet mondial
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Citation Inspirante -->
+<section class="quote-section">
+    <div class="container">
+        <div class="quote-text">
+            L'enfant d'aujourd'hui qui joue avec une draisienne dans nos programmes 
+            MBC sera demain l'ingénieur qui construira les smart cities africaines, 
+            la scientifique qui trouvera le remède contre la malaria, 
+            ou le leader qui réconciliera l'humanité avec la nature.
+        </div>
+        <p class="lead">
+            <strong>Patt MOUTYLA</strong><br>
+            <em>Fondateur & Coordonnateur National AIME</em>
+        </p>
+    </div>
+</section>
+
+<!-- Notre Vision pour l'Avenir -->
+<section class="impact-vision">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">Notre Vision pour l'Afrique de Demain</h2>
+        <p class="text-center text-muted mb-5">Des objectifs ambitieux mais réalisables, construits pas à pas avec chaque enfant que nous accompagnons</p>
+        
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="impact-number">Chaque</div>
+                    <h5>Enfant Compte</h5>
+                    <p class="text-muted">Nous croyons au potentiel de chaque enfant que nous accompagnons</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="impact-number">26</div>
+                    <h5>Provinces RDC</h5>
+                    <p class="text-muted">Expansion progressive dans toute la RDC et la région des Grands Lacs</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="impact-number">100%</div>
+                    <h5>Approche Locale</h5>
+                    <p class="text-muted">Solutions adaptées aux réalités et besoins de nos communautés</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="impact-number">Demain</div>
+                    <h5>Excellence Africaine</h5>
+                    <p class="text-muted">Former les leaders et innovateurs africains de demain</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Appel à l'Action -->
+<section class="call-to-action">
+    <div class="container">
+        <h2 class="display-5 fw-bold mb-4">Rejoignez la Révolution AIME</h2>
+        <p class="lead mb-5">
+            Cette vision n'est pas un rêve, c'est un plan d'action. 
+            Chaque enfant que nous touchons aujourd'hui est un leader de demain. 
+            Chaque partenaire qui nous rejoint accélère la transformation.
+        </p>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <button class="cta-button me-3">
+                    <i class="fas fa-donate me-2"></i>Investir dans l'Avenir
+                </button>
+                <button class="cta-button me-3">
+                    <i class="fas fa-handshake me-2"></i>Devenir Partenaire
+                </button>
+                <button class="cta-button me-3">
+                    <i class="fas fa-heart me-2"></i>Parrainer un Enfant
+                </button>
+                <button class="cta-button">
+                    <i class="fas fa-share me-2"></i>Partager la Vision
+                </button>
+            </div>
+        </div>
+        
+        <div class="mt-5">
+            <h4 class="mb-3">Ensemble, Faisons de l'Afrique le Continent des Possibles</h4>
+            <p class="lead">
+                #AIMERevolution #AfriqueDesRêves #EnfantsDemain #TransformationAfricaine
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

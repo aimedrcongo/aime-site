@@ -1,0 +1,344 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Observatoire des Droits de l'Enfant - AIME{% endblock %}
+
+{% block extra_css %}
+<style>
+    .observatory-hero {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        color: white;
+        padding: 5rem 0;
+    }
+
+    .rights-wheel {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        margin: 2rem auto;
+    }
+
+    .rights-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 120px;
+        height: 120px;
+        background: var(--accent-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        z-index: 10;
+    }
+
+    .rights-item {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .rights-item:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+
+    .rights-item i {
+        font-size: 1.5rem;
+        color: var(--primary-color);
+    }
+
+    .alert-critical {
+        border-left: 5px solid #dc3545;
+        background: rgba(220, 53, 69, 0.1);
+    }
+
+    .alert-warning {
+        border-left: 5px solid #ffc107;
+        background: rgba(255, 193, 7, 0.1);
+    }
+
+    .alert-success {
+        border-left: 5px solid #28a745;
+        background: rgba(40, 167, 69, 0.1);
+    }
+
+    .monitoring-dashboard {
+        background: #f8f9fa;
+        padding: 3rem 0;
+    }
+
+    .metric-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .metric-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .metric-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+
+    .metric-trend {
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+    }
+
+    .trend-up {
+        color: #28a745;
+    }
+
+    .trend-down {
+        color: #dc3545;
+    }
+
+    .regional-map {
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect width="800" height="600" fill="%23f8f9fa"/><path d="M200,200 Q400,100 600,200 L600,400 Q400,500 200,400 Z" fill="%232c5aa0" opacity="0.3"/></svg>');
+        background-size: cover;
+        padding: 4rem 0;
+        position: relative;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="observatory-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-4">Observatoire International des Droits de l'Enfant</h1>
+                <p class="lead">
+                    AIME surveille, documente et agit pour la protection des droits fondamentaux 
+                    des enfants en RDC et dans la région des Grands Lacs
+                </p>
+                <div class="mt-4">
+                    <span class="badge bg-warning me-2 p-2">🚨 Alerte Active</span>
+                    <span class="badge bg-info me-2 p-2">📊 Monitoring Continu</span>
+                    <span class="badge bg-success p-2">🤝 Plaidoyer International</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Roue des Droits de l'Enfant -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">Les Droits Fondamentaux que nous Défendons</h2>
+        
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="rights-wheel">
+                    <div class="rights-center">
+                        Droits de l'Enfant
+                    </div>
+                    
+                    <!-- Positioning des droits autour du cercle -->
+                    <div class="rights-item" style="top: 0; left: 50%; transform: translateX(-50%);" title="Droit à l'Éducation">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="rights-item" style="top: 15%; right: 15%;" title="Droit à la Santé">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="rights-item" style="top: 50%; right: 0; transform: translateY(-50%);" title="Droit au Jeu">
+                        <i class="fas fa-child"></i>
+                    </div>
+                    <div class="rights-item" style="bottom: 15%; right: 15%;" title="Droit à la Protection">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="rights-item" style="bottom: 0; left: 50%; transform: translateX(-50%);" title="Droit à l'Expression">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <div class="rights-item" style="bottom: 15%; left: 15%;" title="Droit à la Famille">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="rights-item" style="top: 50%; left: 0; transform: translateY(-50%);" title="Droit à l'Identité">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <div class="rights-item" style="top: 15%; left: 15%;" title="Droit à l'Égalité">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <h4 class="mb-4">Mission de l'Observatoire</h4>
+                <ul class="list-unstyled">
+                    <li class="mb-3">
+                        <i class="fas fa-eye text-primary me-3"></i>
+                        <strong>Surveillance Continue:</strong> Monitoring des violations des droits de l'enfant en temps réel
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-clipboard-list text-success me-3"></i>
+                        <strong>Documentation:</strong> Collecte et archivage de données probantes
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-bullhorn text-warning me-3"></i>
+                        <strong>Plaidoyer:</strong> Sensibilisation et lobbying auprès des institutions
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-gavel text-danger me-3"></i>
+                        <strong>Action Légale:</strong> Soutien juridique aux familles victimes
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-network-wired text-info me-3"></i>
+                        <strong>Partenariats:</strong> Collaboration avec organismes internationaux
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Alertes et Monitoring -->
+<section class="monitoring-dashboard">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">Tableau de Bord - Situation Actuelle RDC</h2>
+        
+        <!-- Alertes Critiques -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="alert alert-critical">
+                    <h5><i class="fas fa-exclamation-triangle me-2"></i>Alerte Critique - Province du Nord-Kivu</h5>
+                    <p class="mb-2">Augmentation de 23% des enfants non scolarisés dans la région en raison des conflits armés.</p>
+                    <small><strong>Action AIME:</strong> Déploiement d'une équipe mobile d'éducation d'urgence - 150 enfants pris en charge</small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Métriques Principales -->
+        <div class="row g-4 mb-5">
+            <div class="col-lg-3 col-md-6">
+                <div class="metric-card">
+                    <i class="fas fa-child text-primary fs-1 mb-3"></i>
+                    <div class="metric-number text-primary">2.3M</div>
+                    <h6>Enfants Hors École</h6>
+                    <div class="metric-trend trend-down">
+                        <i class="fas fa-arrow-down me-1"></i>-5% vs 2023
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="metric-card">
+                    <i class="fas fa-hospital text-danger fs-1 mb-3"></i>
+                    <div class="metric-number text-danger">67%</div>
+                    <h6>Malnutrition Sévère</h6>
+                    <div class="metric-trend trend-up">
+                        <i class="fas fa-arrow-up me-1"></i>+3% vs 2023
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="metric-card">
+                    <i class="fas fa-users text-success fs-1 mb-3"></i>
+                    <div class="metric-number text-success">1,247</div>
+                    <h6>Enfants Accompagnés</h6>
+                    <div class="metric-trend trend-up">
+                        <i class="fas fa-arrow-up me-1"></i>+45% vs 2023
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="metric-card">
+                    <i class="fas fa-balance-scale text-warning fs-1 mb-3"></i>
+                    <div class="metric-number text-warning">34</div>
+                    <h6>Cas Juridiques</h6>
+                    <div class="metric-trend trend-down">
+                        <i class="fas fa-arrow-down me-1"></i>-12% vs 2023
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Rapport Annuel -->
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <div class="card border-0 shadow">
+                    <div class="card-body p-4">
+                        <h4 class="mb-3">Rapport Annuel 2024 - Droits de l'Enfant en RDC</h4>
+                        <p class="text-muted mb-4">
+                            Document de 127 pages analysant la situation des droits de l'enfant, 
+                            avec recommandations à l'attention du Gouvernement et de la communauté internationale.
+                        </p>
+                        <a href="#" class="btn btn-primary me-3">
+                            <i class="fas fa-download me-2"></i>Télécharger le Rapport
+                        </a>
+                        <a href="#" class="btn btn-outline-primary">
+                            <i class="fas fa-share me-2"></i>Partager
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Partenaires Internationaux -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">Nos Partenaires dans la Protection des Droits</h2>
+        
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <i class="fas fa-globe text-primary fs-1 mb-3"></i>
+                        <h6>UNICEF RDC</h6>
+                        <p class="small text-muted">Partenariat stratégique pour l'éducation d'urgence</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <i class="fas fa-handshake text-success fs-1 mb-3"></i>
+                        <h6>Save the Children</h6>
+                        <p class="small text-muted">Collaboration sur la protection de l'enfance</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <i class="fas fa-university text-warning fs-1 mb-3"></i>
+                        <h6>Cour Pénale Internationale</h6>
+                        <p class="small text-muted">Documentation des crimes contre l'enfance</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <i class="fas fa-flag text-info fs-1 mb-3"></i>
+                        <h6>Union Africaine</h6>
+                        <p class="small text-muted">Représentation dans les instances continentales</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

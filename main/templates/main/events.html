@@ -1,0 +1,231 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Événements{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Nos Événements</h1>
+                <p class="lead mb-4">
+                    Découvrez tous nos événements, ateliers et activités organisés pour 
+                    le développement et l'épanouissement des enfants en RDC.
+                </p>
+                <a href="#upcoming-events" class="btn btn-primary btn-lg">
+                    <i class="fas fa-calendar-alt me-2"></i>Voir les événements
+                </a>
+            </div>
+            <div class="col-lg-6 text-center">
+                <i class="fas fa-calendar-check display-1 text-white opacity-50"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Événements à venir -->
+<section id="upcoming-events" class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="section-title text-center">Événements à venir</h2>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% if upcoming_events %}
+                {% for event in upcoming_events %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        {% if event.image %}
+                        <img src="{{ event.image.url }}" class="card-img-top" alt="{{ event.name }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                        <div class="card-img-top bg-primary d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="fas fa-calendar-alt fa-3x text-white"></i>
+                        </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ event.name }}</h5>
+                            <p class="card-text">{{ event.description|truncatewords:20 }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">
+                                    <i class="fas fa-calendar me-1"></i>{{ event.date|date:"d/m/Y" }}
+                                </small>
+                                <small class="text-muted">
+                                    <i class="fas fa-map-marker-alt me-1"></i>{{ event.location }}
+                                </small>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn btn-primary btn-sm w-100">
+                                <i class="fas fa-info-circle me-1"></i>En savoir plus
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+            <div class="col-12 text-center">
+                <div class="card">
+                    <div class="card-body py-5">
+                        <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+                        <h4>Aucun événement à venir</h4>
+                        <p class="text-muted">De nouveaux événements seront bientôt annoncés. Restez connectés !</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Événements passés -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="section-title text-center">Événements passés</h2>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% if past_events %}
+                {% for event in past_events %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        {% if event.image %}
+                        <img src="{{ event.image.url }}" class="card-img-top" alt="{{ event.name }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                        <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="fas fa-calendar-check fa-3x text-white"></i>
+                        </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ event.name }}</h5>
+                            <p class="card-text">{{ event.description|truncatewords:20 }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">
+                                    <i class="fas fa-calendar me-1"></i>{{ event.date|date:"d/m/Y" }}
+                                </small>
+                                <small class="text-muted">
+                                    <i class="fas fa-map-marker-alt me-1"></i>{{ event.location }}
+                                </small>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn btn-outline-secondary btn-sm w-100">
+                                <i class="fas fa-eye me-1"></i>Voir les photos
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+            <div class="col-12 text-center">
+                <div class="card">
+                    <div class="card-body py-5">
+                        <i class="fas fa-calendar-minus fa-3x text-muted mb-3"></i>
+                        <h4>Aucun événement passé</h4>
+                        <p class="text-muted">Les événements passés apparaîtront ici.</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Types d'événements -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="section-title text-center">Types d'événements</h2>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <i class="fas fa-graduation-cap fa-3x text-primary"></i>
+                        </div>
+                        <h5 class="card-title">Ateliers éducatifs</h5>
+                        <p class="card-text">
+                            Sessions d'apprentissage et de formation pour les enfants
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <i class="fas fa-bicycle fa-3x text-success"></i>
+                        </div>
+                        <h5 class="card-title">Activités sportives</h5>
+                        <p class="card-text">
+                            Compétitions et activités physiques comme le Mutoto Bike Challenge
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <i class="fas fa-heart fa-3x text-accent"></i>
+                        </div>
+                        <h5 class="card-title">Actions humanitaires</h5>
+                        <p class="card-text">
+                            Distributions, soins médicaux et aide aux familles
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <i class="fas fa-users fa-3x text-warning"></i>
+                        </div>
+                        <h5 class="card-title">Rencontres communautaires</h5>
+                        <p class="card-text">
+                            Rassemblements pour sensibiliser et mobiliser la communauté
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h3 class="mb-4">Participez à nos événements</h3>
+                <p class="lead mb-4">
+                    Rejoignez-nous dans nos actions pour améliorer la vie des enfants en RDC. 
+                    Chaque participation compte !
+                </p>
+                <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                    <a href="{% url 'main:contact' %}" class="btn btn-light btn-lg">
+                        <i class="fas fa-envelope me-2"></i>Nous contacter
+                    </a>
+                    <a href="{% url 'main:donate' %}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-donate me-2"></i>Faire un don
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

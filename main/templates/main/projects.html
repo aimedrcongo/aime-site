@@ -1,0 +1,107 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Nos Projets - AIME{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary">Nos Projets</h1>
+        <p class="lead">Découvrez nos initiatives pour l'épanouissement des enfants</p>
+    </div>
+
+    <div class="row">
+        {% for project in projects %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100 border-0 shadow project-card">
+                {% if project.image %}
+                <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
+                {% else %}
+                <div class="bg-primary d-flex align-items-center justify-content-center" style="height: 200px;">
+                    <i class="fas fa-project-diagram text-white" style="font-size: 3rem;"></i>
+                </div>
+                {% endif %}
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ project.title }}</h5>
+                    <p class="card-text flex-grow-1">{{ project.description|truncatewords:20 }}</p>
+                    
+                    <div class="mt-auto">
+                        {% if project.budget %}
+                        <div class="mb-2">
+                            <small class="text-muted">Budget: {{ project.budget|floatformat:0 }} FC</small>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="mb-3">
+                            <div class="progress" style="height: 8px;">
+                                <div class="progress-bar bg-success" role="progressbar" 
+                                     style="width: 75%"></div>
+                            </div>
+                            <small class="text-muted">Progression: 75%</small>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-{{ project.status|default:'primary' }}">
+                                {{ project.get_status_display|default:'En cours' }}
+                            </span>
+                            <small class="text-muted">{{ project.date }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <div class="card border-0 shadow">
+                <div class="card-body py-5">
+                    <i class="fas fa-seedling text-primary mb-3" style="font-size: 4rem;"></i>
+                    <h3>Nouveaux projets en préparation</h3>
+                    <p class="text-muted">Nous travaillons sur de nouveaux projets passionnants. Restez connectés !</p>
+                    <a href="{% url 'main:contact' %}" class="btn btn-primary">
+                        <i class="fas fa-envelope me-2"></i>Nous contacter
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Call to Action -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card bg-primary text-white border-0 shadow">
+                <div class="card-body text-center py-5">
+                    <h3>Soutenez nos projets</h3>
+                    <p class="lead">Votre contribution peut faire la différence dans la vie d'un enfant</p>
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="{% url 'main:donate' %}" class="btn btn-warning btn-lg">
+                            <i class="fas fa-heart me-2"></i>Faire un don
+                        </a>
+                        <a href="{% url 'main:contact' %}" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-hands-helping me-2"></i>Nous rejoindre
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.project-card {
+    transition: all 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+}
+
+.progress {
+    border-radius: 10px;
+}
+
+.progress-bar {
+    border-radius: 10px;
+}
+</style>
+{% endblock %}

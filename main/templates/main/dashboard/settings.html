@@ -1,0 +1,150 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Paramètres - Tableau de Bord{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-cog me-2"></i>Paramètres du compte</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <!-- Informations personnelles -->
+                        <h5 class="mb-3">Informations personnelles</h5>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label for="first_name" class="form-label">Prénom</label>
+                                <input type="text" class="form-control" id="first_name" name="first_name" 
+                                       value="{{ user.first_name }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="last_name" class="form-label">Nom</label>
+                                <input type="text" class="form-control" id="last_name" name="last_name" 
+                                       value="{{ user.last_name }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" 
+                                   value="{{ user.email }}" required>
+                        </div>
+
+                        <!-- Préférences de notification -->
+                        <h5 class="mb-3">Préférences de notification</h5>
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="email_notifications" 
+                                       name="email_notifications" {% if profile.email_notifications %}checked{% endif %}>
+                                <label class="form-check-label" for="email_notifications">
+                                    Recevoir les notifications par email
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="sms_notifications" 
+                                       name="sms_notifications" {% if profile.sms_notifications %}checked{% endif %}>
+                                <label class="form-check-label" for="sms_notifications">
+                                    Recevoir les notifications par SMS
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="newsletter" 
+                                       name="newsletter" {% if profile.newsletter %}checked{% endif %}>
+                                <label class="form-check-label" for="newsletter">
+                                    S'abonner à la newsletter AIME
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Préférences de confidentialité -->
+                        <h5 class="mb-3">Confidentialité</h5>
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="public_profile" 
+                                       name="public_profile" {% if profile.is_public %}checked{% endif %}>
+                                <label class="form-check-label" for="public_profile">
+                                    Profil public (visible par les autres membres)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="show_donations" 
+                                       name="show_donations" {% if profile.show_donations %}checked{% endif %}>
+                                <label class="form-check-label" for="show_donations">
+                                    Afficher mes donations publiquement
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-1"></i>Sauvegarder
+                            </button>
+                            <a href="{% url 'main:dashboard_home' %}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-1"></i>Retour
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <!-- Changement de mot de passe -->
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-key me-2"></i>Changer le mot de passe</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'password_change' %}">
+                        {% csrf_token %}
+                        {{ password_form.as_p }}
+                        <button type="submit" class="btn btn-warning btn-sm w-100">
+                            <i class="fas fa-lock me-1"></i>Changer le mot de passe
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Actions dangereuses -->
+            <div class="card mt-4">
+                <div class="card-header bg-danger text-white">
+                    <h5><i class="fas fa-exclamation-triangle me-2"></i>Zone dangereuse</h5>
+                </div>
+                <div class="card-body">
+                    <p class="small text-muted">
+                        Ces actions sont irréversibles. Procédez avec prudence.
+                    </p>
+                    <button class="btn btn-outline-danger btn-sm w-100 mb-2" onclick="exportData()">
+                        <i class="fas fa-download me-1"></i>Exporter mes données
+                    </button>
+                    <button class="btn btn-danger btn-sm w-100" onclick="confirmDelete()">
+                        <i class="fas fa-trash me-1"></i>Supprimer mon compte
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function exportData() {
+    if (confirm('Voulez-vous exporter toutes vos données ?')) {
+        window.location.href = '/dashboard/export-data/';
+    }
+}
+
+function confirmDelete() {
+    if (confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.')) {
+        if (confirm('Confirmation finale : supprimer définitivement mon compte AIME ?')) {
+            window.location.href = '/dashboard/delete-account/';
+        }
+    }
+}
+</script>
+{% endblock %}

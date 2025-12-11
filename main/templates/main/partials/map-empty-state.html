@@ -1,0 +1,330 @@
+<!-- État vide de la carte d'impact - Aucune donnée disponible -->
+<div class="map-empty-state">
+    <div class="empty-state-animation">
+        <i class="fas fa-map-marked-alt empty-state-icon"></i>
+        <div class="pulse-rings">
+            <span class="ring"></span>
+            <span class="ring"></span>
+            <span class="ring"></span>
+        </div>
+    </div>
+    
+    <h5 class="empty-state-title">
+        🌱 Construction de Notre Impact Social
+    </h5>
+    
+    <p class="empty-state-description">
+        Nous démarrons notre aventure avec <strong>transparence et authenticité</strong>. 
+        Les points d'impact apparaîtront ici au fur et à mesure de nos activités réelles sur le terrain.
+        <br><br>
+        <em class="text-muted">Chaque action compte, chaque enfant compte.</em>
+    </p>
+    
+    {% if stats %}
+    <div class="empty-state-stats">
+        <div class="stat-mini">
+            <div class="stat-mini-icon bg-primary">
+                <i class="fas fa-project-diagram"></i>
+            </div>
+            <div class="stat-mini-content">
+                <span class="stat-mini-number">{{ stats.active_projects }}</span>
+                <span class="stat-mini-label">Projet(s) en cours</span>
+            </div>
+        </div>
+        
+        <div class="stat-mini">
+            <div class="stat-mini-icon bg-success">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="stat-mini-content">
+                <span class="stat-mini-number">{{ stats.total_events }}</span>
+                <span class="stat-mini-label">Événement(s) planifié(s)</span>
+            </div>
+        </div>
+        
+        <div class="stat-mini">
+            <div class="stat-mini-icon bg-info">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-mini-content">
+                <span class="stat-mini-number">{{ stats.total_beneficiaries }}</span>
+                <span class="stat-mini-label">Personne(s) inscrite(s)</span>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="empty-state-message">
+        <div class="alert alert-info d-inline-block">
+            <i class="fas fa-info-circle me-2"></i>
+            <strong>Prochainement :</strong> Cette carte affichera en temps réel tous nos points d'impact :
+            événements, projets, bénévoles et zones d'intervention.
+        </div>
+    </div>
+    
+    {% if user.is_staff %}
+    <div class="empty-state-actions">
+        <a href="{% url 'admin:main_impactpoint_add' %}" class="btn btn-primary btn-lg">
+            <i class="fas fa-plus-circle me-2"></i>
+            Ajouter votre premier point d'impact
+        </a>
+        <a href="{% url 'admin:main_impactpoint_changelist' %}" class="btn btn-outline-secondary btn-lg">
+            <i class="fas fa-cog me-2"></i>
+            Gérer les points d'impact
+        </a>
+    </div>
+    {% else %}
+    <div class="empty-state-actions">
+        <a href="{% url 'main:contact' %}" class="btn btn-primary btn-lg">
+            <i class="fas fa-hands-helping me-2"></i>
+            Nous aider à créer de l'impact
+        </a>
+        <a href="{% url 'main:about' %}" class="btn btn-outline-primary btn-lg">
+            <i class="fas fa-info-circle me-2"></i>
+            En savoir plus sur AIME
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+/* Styles pour l'état vide */
+.map-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 500px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8f4f8 100%);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Animation de fond */
+.map-empty-state::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(52, 152, 219, 0.05) 0%, transparent 70%);
+    animation: rotate 30s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Icône principale avec animation */
+.empty-state-animation {
+    position: relative;
+    margin-bottom: 2rem;
+    z-index: 1;
+}
+
+.empty-state-icon {
+    font-size: 6rem;
+    color: #3498db;
+    opacity: 0.8;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+/* Anneaux pulsants autour de l'icône */
+.pulse-rings {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.pulse-rings .ring {
+    position: absolute;
+    border: 3px solid #3498db;
+    border-radius: 50%;
+    opacity: 0;
+    animation: pulse-ring 3s infinite;
+}
+
+.pulse-rings .ring:nth-child(1) { animation-delay: 0s; }
+.pulse-rings .ring:nth-child(2) { animation-delay: 1s; }
+.pulse-rings .ring:nth-child(3) { animation-delay: 2s; }
+
+@keyframes pulse-ring {
+    0% {
+        width: 60px;
+        height: 60px;
+        margin-left: -30px;
+        margin-top: -30px;
+        opacity: 0.6;
+    }
+    100% {
+        width: 200px;
+        height: 200px;
+        margin-left: -100px;
+        margin-top: -100px;
+        opacity: 0;
+    }
+}
+
+/* Titre */
+.empty-state-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    z-index: 1;
+}
+
+/* Description */
+.empty-state-description {
+    color: #5a6c7d;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    line-height: 1.8;
+    font-size: 1.05rem;
+    z-index: 1;
+}
+
+/* Mini statistiques */
+.empty-state-stats {
+    display: flex;
+    gap: 2rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    z-index: 1;
+}
+
+.stat-mini {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: white;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.stat-mini:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.stat-mini-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.stat-mini-content {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.stat-mini-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2c3e50;
+    line-height: 1;
+}
+
+.stat-mini-label {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    margin-top: 0.3rem;
+}
+
+/* Message info */
+.empty-state-message {
+    margin: 2rem 0;
+    z-index: 1;
+}
+
+.empty-state-message .alert {
+    max-width: 700px;
+    background: rgba(52, 152, 219, 0.1);
+    border: 2px solid rgba(52, 152, 219, 0.3);
+    color: #2c3e50;
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
+}
+
+/* Actions */
+.empty-state-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    z-index: 1;
+}
+
+.empty-state-actions .btn {
+    border-radius: 30px;
+    padding: 0.8rem 2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.empty-state-actions .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .map-empty-state {
+        padding: 2rem 1rem;
+        min-height: 400px;
+    }
+    
+    .empty-state-icon {
+        font-size: 4rem;
+    }
+    
+    .empty-state-title {
+        font-size: 1.4rem;
+    }
+    
+    .empty-state-description {
+        font-size: 0.95rem;
+    }
+    
+    .empty-state-stats {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .stat-mini {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .empty-state-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .empty-state-actions .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+</style>

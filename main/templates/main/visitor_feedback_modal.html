@@ -1,0 +1,227 @@
+<!-- Modal d'avis visiteur -->
+<div class="modal fade" id="visitorFeedbackModal" tabindex="-1" aria-labelledby="visitorFeedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="border-radius: 20px; border: none; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
+            <div class="modal-header" style="background: linear-gradient(135deg, #3498db 0%, #9b59b6 100%); color: white; border-radius: 20px 20px 0 0; border: none;">
+                <h5 class="modal-title" id="visitorFeedbackModalLabel">
+                    <i class="fas fa-heart me-2"></i>Bienvenue sur notre site !
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="padding: 2rem;">
+                <div class="welcome-message mb-4">
+                    <p class="lead" style="color: #2c3e50;">
+                        <strong>C'est un plaisir de vous compter parmi nos visiteurs !</strong> 🎉
+                    </p>
+                    <p style="color: #7f8c8d;">
+                        Nous aimerions connaître votre avis afin d'améliorer notre communauté et nos services.
+                    </p>
+                </div>
+
+                <form id="visitorFeedbackForm" method="post">
+                    {% csrf_token %}
+                    
+                    <div class="row g-3">
+                        <!-- Nom -->
+                        <div class="col-md-4">
+                            <label for="id_name" class="form-label">Votre nom</label>
+                            <input type="text" class="form-control" id="id_name" name="name" placeholder="Nom (optionnel)">
+                        </div>
+                        
+                        <!-- Email -->
+                        <div class="col-md-4">
+                            <label for="id_email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="id_email" name="email" placeholder="email@example.com">
+                        </div>
+                        
+                        <!-- Téléphone -->
+                        <div class="col-md-4">
+                            <label for="id_phone" class="form-label">Téléphone</label>
+                            <input type="tel" class="form-control" id="id_phone" name="phone" placeholder="+243 XXX XXX XXX">
+                        </div>
+                        
+                        <!-- Avis -->
+                        <div class="col-12">
+                            <label for="id_opinion" class="form-label">
+                                Que pensez-vous du site ou de notre projet ? <span class="text-danger">*</span>
+                            </label>
+                            <textarea class="form-control" id="id_opinion" name="opinion" rows="4" 
+                                placeholder="Partagez votre avis avec nous..." required></textarea>
+                        </div>
+                        
+                        <!-- Type de contribution -->
+                        <div class="col-md-6">
+                            <label for="id_contribution_type" class="form-label">
+                                Comment souhaitez-vous contribuer ? <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select" id="id_contribution_type" name="contribution_type" required>
+                                <option value="">Choisissez...</option>
+                                <option value="ideas">Partager des idées</option>
+                                <option value="member">Devenir membre</option>
+                                <option value="volunteer">Participer aux activités</option>
+                                <option value="donate">Faire un don</option>
+                                <option value="partner">Devenir partenaire</option>
+                                <option value="other">Autre</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Détails supplémentaires -->
+                        <div class="col-md-6">
+                            <label for="id_contribution_details" class="form-label">Détails supplémentaires</label>
+                            <textarea class="form-control" id="id_contribution_details" name="contribution_details" rows="3" 
+                                placeholder="Dites-nous en plus..."></textarea>
+                        </div>
+                    </div>
+
+                    <div id="feedbackFormError" class="alert alert-danger mt-3" style="display: none;"></div>
+                    <div id="feedbackFormSuccess" class="alert alert-success mt-3" style="display: none;"></div>
+
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="laterButton">
+                            <i class="fas fa-clock me-2"></i>Plus tard
+                        </button>
+                        <button type="submit" class="btn btn-primary" style="background: linear-gradient(135deg, #3498db 0%, #9b59b6 100%); border: none; padding: 0.75rem 2rem;">
+                            <i class="fas fa-paper-plane me-2"></i>Je donne mon avis
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #visitorFeedbackModal .form-control:focus,
+    #visitorFeedbackModal .form-select:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    }
+    
+    #visitorFeedbackModal .welcome-message {
+        background: linear-gradient(135deg, rgba(52, 152, 219, 0.1) 0%, rgba(155, 89, 182, 0.1) 100%);
+        padding: 1.5rem;
+        border-radius: 10px;
+        border-left: 4px solid #3498db;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Vérifier si la modal a déjà été affichée (cookie)
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    function setCookie(name, value, days) {
+        let expires = "";
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+    
+    // Désactiver la modal au premier chargement - Définir un cookie pour éviter le double affichage
+    // La modal n'apparaîtra que si l'utilisateur rechécharge après avoir attendu 7 jours
+    const hasSeenModal = getCookie('visitor_feedback_seen');
+    if (!hasSeenModal) {
+        // Marquer comme vu dès le chargement pour éviter l'affichage à chaque rechargement
+        setCookie('visitor_feedback_seen', 'initial_load', 7);
+    }
+    
+    // Bouton "Plus tard" - mettre un cookie pour 7 jours
+    if (document.getElementById('laterButton')) {
+        document.getElementById('laterButton').addEventListener('click', function() {
+            setCookie('visitor_feedback_seen', 'later', 7);
+            // Nettoyer le backdrop de Bootstrap s'il reste
+            const backdrops = document.querySelectorAll('.modal-backdrop');
+            backdrops.forEach(backdrop => backdrop.remove());
+        });
+    }
+    
+    // Soumission du formulaire
+    if (document.getElementById('visitorFeedbackForm')) {
+        document.getElementById('visitorFeedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const errorDiv = document.getElementById('feedbackFormError');
+            const successDiv = document.getElementById('feedbackFormSuccess');
+            const submitBtn = this.querySelector('button[type="submit"]');
+            
+            // Désactiver le bouton pendant la soumission
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Envoi en cours...';
+            
+            // Cacher les messages précédents
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            
+            fetch('{% url "main:submit_visitor_feedback" %}', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    successDiv.textContent = data.message;
+                    successDiv.style.display = 'block';
+                    
+                    // Mettre un cookie permanent
+                    setCookie('visitor_feedback_seen', 'submitted', 365);
+                    
+                    // Réinitialiser le formulaire
+                    document.getElementById('visitorFeedbackForm').reset();
+                    
+                    // Fermer la modal après 3 secondes
+                    setTimeout(function() {
+                        const modalInstance = bootstrap.Modal.getInstance(document.getElementById('visitorFeedbackModal'));
+                        if (modalInstance) {
+                            modalInstance.hide();
+                        }
+                        // Nettoyer le backdrop
+                        setTimeout(() => {
+                            const backdrops = document.querySelectorAll('.modal-backdrop');
+                            backdrops.forEach(backdrop => backdrop.remove());
+                            document.body.classList.remove('modal-open');
+                            document.body.style.overflow = '';
+                        }, 150);
+                    }, 3000);
+                } else {
+                    let errorMessage = 'Une erreur est survenue. ';
+                    if (data.errors) {
+                        errorMessage += Object.values(data.errors).flat().join(' ');
+                    } else if (data.error) {
+                        errorMessage += data.error;
+                    }
+                    errorDiv.textContent = errorMessage;
+                    errorDiv.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                errorDiv.textContent = 'Erreur de connexion. Veuillez réessayer.';
+                errorDiv.style.display = 'block';
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Je donne mon avis';
+            });
+        });
+    }
+});
+</script>
