@@ -1,0 +1,7 @@
+asgiref==3.9.1
+certifi==2025.8.3
+Django==5.2.5
+pillow==11.3.0
+python-dotenv==1.1.1
+sqlparse==0.5.3
+wheel==0.45.1
