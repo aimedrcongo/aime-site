@@ -124,7 +124,7 @@ WHITENOISE_USE_FINDERS = True
 WHITENOISE_AUTOREFRESH = True
 
 # Configuration de cache (optionnel)
-CACHES = {
+# CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
         'location': 'cache_table',
