@@ -15,7 +15,8 @@ tzdata==2025.2
 # Database - MySQL only (cPanel compatible)
 # ====================
 pymysql==1.1.0
-mysqlclient==2.2.0
+# mysqlclient==2.2.0
+pymysql==1.1.0
 
 # ====================
 # Static Files & Compression
