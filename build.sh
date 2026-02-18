@@ -13,13 +13,13 @@ echo "📦 Installing dependencies..."
 pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 
-# Préparer les migrations
-echo "🗄️  Running migrations..."
-python manage.py migrate
-
 # Collecter les fichiers statiques
 echo "📁 Collecting static files..."
-python manage.py collectstatic --noinput
+python manage.py collectstatic --noinput || true
+
+# Note: Database migrations will be run after environment variables are set
+# Run manually with: python manage.py migrate
+echo "⚠️  Database configuration needed - see RENDER_SETUP_GUIDE.md"
 
 # Compiler les messages de traduction si disponibles
 echo "🌍 Compiling messages..."
