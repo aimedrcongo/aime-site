@@ -1,6 +1,6 @@
 # ============================================================================
-# AIME Requirements - Version Optimisée pour cPanel 2.0
-# Python 3.9+ - Production Ready - MySQL Compatible
+# AIME Requirements - Version Render.com avec MySQL (LWS)
+# Python 3.11+ - Production Ready - Backend sur Render, DB sur LWS
 # ============================================================================
 
 # ====================
@@ -12,11 +12,10 @@ sqlparse==0.5.3
 tzdata==2025.2
 
 # ====================
-# Database - MySQL only (cPanel compatible)
+# Database - MySQL à distance (LWS)
 # ====================
-pymysql==1.1.0
-# mysqlclient==2.2.0
-pymysql==1.1.0
+mysqlclient==2.2.0
+PyMySQL==1.1.0
 
 # ====================
 # Static Files & Compression

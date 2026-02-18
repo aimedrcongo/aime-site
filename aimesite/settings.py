@@ -104,13 +104,37 @@ TEMPLATES = [
 WSGI_APPLICATION = 'aimesite.wsgi.application'
 
 # ==============================================================================
-# DATABASE - MySQL Configuration (Compatible avec cPanel) / SQLite (Dev)
+# DATABASE - PostgreSQL (Render.com) / MySQL (cPanel) / SQLite (Dev)
 # ==============================================================================
 
-DATABASE_ENGINE = config('DATABASE_ENGINE', default='django.db.backends.sqlite3')
-
-if DATABASE_ENGINE == 'django.db.backends.mysql':
-    # Configuration MySQL (Compatible cPanel - Production)
+# Check if DATABASE_URL is set (Render.com provides this automatically)
+if os.getenv('DATABASE_URL'):
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL'),
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
+elif config('DATABASE_ENGINE', default='django.db.backends.sqlite3') == 'django.db.backends.postgresql':
+    # PostgreSQL (Render.com - Production)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('DATABASE_NAME', default='aime_db'),
+            'USER': config('DATABASE_USER', default='aime_user'),
+            'PASSWORD': config('DATABASE_PASSWORD', default=''),
+            'HOST': config('DATABASE_HOST', default='localhost'),
+            'PORT': config('DATABASE_PORT', default='5432'),
+            'CONN_MAX_AGE': 600,
+            'OPTIONS': {
+                'connect_timeout': 10,
+            },
+        }
+    }
+elif config('DATABASE_ENGINE', default='django.db.backends.sqlite3') == 'django.db.backends.mysql':
+    # MySQL (Legacy - cPanel support)
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -119,7 +143,7 @@ if DATABASE_ENGINE == 'django.db.backends.mysql':
             'PASSWORD': config('DATABASE_PASSWORD', default=''),
             'HOST': config('DATABASE_HOST', default='localhost'),
             'PORT': config('DATABASE_PORT', default='3306'),
-            'CONN_MAX_AGE': 600,  # Connexions persistantes (10 min)
+            'CONN_MAX_AGE': 600,
             'OPTIONS': {
                 'connect_timeout': 10,
                 'charset': 'utf8mb4',
@@ -128,7 +152,7 @@ if DATABASE_ENGINE == 'django.db.backends.mysql':
         }
     }
 else:
-    # SQLite (Développement local uniquement - inclus dans le repo)
+    # SQLite (Développement local uniquement)
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',

@@ -1,0 +1,45 @@
+services:
+  - type: web
+    name: aime-backend
+    env: python
+    region: frankfurt
+    plan: standard
+    buildCommand: bash build.sh
+    startCommand: gunicorn aimesite.wsgi:application --bind 0.0.0.0:$PORT --workers 4 --worker-class sync --timeout 60
+    
+    # Variables d'environnement
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DJANGO_SETTINGS_MODULE
+        value: aimesite.settings
+      - key: DEBUG
+        value: false
+      - key: ALLOWED_HOSTS
+        value: aime-rdc.org,www.aime-rdc.org
+      - key: SECURE_SSL_REDIRECT
+        value: true
+      - key: SESSION_COOKIE_SECURE
+        value: true
+      - key: CSRF_COOKIE_SECURE
+        value: true
+      # MySQL Database Configuration (LWS)
+      - key: DATABASE_ENGINE
+        value: django.db.backends.mysql
+      - key: DATABASE_NAME
+        value: aime_production
+      - key: DATABASE_PORT
+        value: 3306
+      # Les variables suivantes doivent être définies dans le dashboard Render:
+      # DATABASE_USER, DATABASE_PASSWORD, DATABASE_HOST
+      # EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, SERVER_EMAIL, EMAIL_PORT
+
+  # Service statique pour les fichiers publics
+  - type: static_site
+    name: aime-static
+    plan: standard
+    buildCommand: |
+      python manage.py collectstatic --noinput
+    staticPublishPath: staticfiles
+
+autoDeploy: true
