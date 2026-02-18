@@ -248,51 +248,57 @@ LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
 
 # ==============================================================================
-# LOGGING - Production uniquement
+# LOGGING - Production & Development
 # ==============================================================================
 
-if not DEBUG:
-    LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'formatters': {
-            'verbose': {
-                'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-                'style': '{',
-            },
-            'simple': {
-                'format': '{levelname} {message}',
-                'style': '{',
-            },
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
         },
-        'handlers': {
-            'file': {
-                'level': 'WARNING',
-                'class': 'logging.handlers.RotatingFileHandler',
-                'filename': BASE_DIR / 'logs/django.log',
-                'maxBytes': 1024 * 1024 * 15,  # 15MB
-                'backupCount': 10,
-                'formatter': 'verbose',
-            },
-            'console': {
-                'level': 'INFO',
-                'class': 'logging.StreamHandler',
-                'formatter': 'simple',
-            },
+        'simple': {
+            'format': '{levelname} {asctime} {message}',
+            'style': '{',
         },
-        'loggers': {
-            'django': {
-                'handlers': ['file', 'console'],
-                'level': 'WARNING',
-                'propagate': False,
-            },
-            'main': {
-                'handlers': ['file', 'console'],
-                'level': 'INFO',
-                'propagate': False,
-            },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO' if DEBUG else 'WARNING',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
         },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+        'main': {
+            'handlers': ['console'],
+            'level': 'INFO' if DEBUG else 'WARNING',
+            'propagate': False,
+        },
+    },
+}
+
+# Pour développement local : optionnel de créer un fichier de logs
+if not DEBUG and os.getenv('RENDER') is None:
+    logs_dir = BASE_DIR / 'logs'
+    logs_dir.mkdir(exist_ok=True)
+    LOGGING['handlers']['file'] = {
+        'level': 'WARNING',
+        'class': 'logging.handlers.RotatingFileHandler',
+        'filename': logs_dir / 'django.log',
+        'maxBytes': 1024 * 1024 * 15,  # 15MB
+        'backupCount': 10,
+        'formatter': 'verbose',
     }
+    LOGGING['loggers']['django']['handlers'].append('file')
+    LOGGING['loggers']['main']['handlers'].append('file')
 
 # ==============================================================================
 # DEFAULT PRIMARY KEY FIELD TYPE
