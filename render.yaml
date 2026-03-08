@@ -5,7 +5,7 @@ services:
     region: frankfurt
     plan: free
     buildCommand: bash build.sh
-    startCommand: gunicorn aimesite.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --worker-class sync --timeout 120
+    startCommand: gunicorn aimesite.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120
 
     envVars:
       - key: PYTHON_VERSION
@@ -16,22 +16,11 @@ services:
         value: false
       - key: RENDER
         value: true
-      - key: ALLOWED_HOSTS
-        value: aime-rdc.org,www.aime-rdc.org,.onrender.com
-      - key: CSRF_TRUSTED_ORIGINS
-        value: https://aime-rdc.org,https://www.aime-rdc.org,https://*.onrender.com
       - key: SECURE_SSL_REDIRECT
         value: true
       - key: SESSION_COOKIE_SECURE
         value: true
       - key: CSRF_COOKIE_SECURE
         value: true
-      - key: SECRET_KEY
-        generateValue: true
-      # DATABASE_URL : à définir manuellement dans le dashboard Render
-      # Utiliser l'URL de connexion Supabase (mode "Transaction pooler")
-      # Email - à définir manuellement dans le dashboard Render :
-      # EMAIL_BACKEND, EMAIL_HOST, EMAIL_PORT, EMAIL_USE_TLS
-      # EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, DEFAULT_FROM_EMAIL
 
 autoDeploy: true
