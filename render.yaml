@@ -1,10 +1,3 @@
-databases:
-  - name: aime-db
-    databaseName: aime_production
-    user: aime_user
-    region: frankfurt
-    plan: starter
-
 services:
   - type: web
     name: aime-backend
@@ -33,15 +26,11 @@ services:
         value: true
       - key: CSRF_COOKIE_SECURE
         value: true
-      # Clé secrète Django (générée automatiquement)
       - key: SECRET_KEY
         generateValue: true
-      # Base de données PostgreSQL (connectée au service aime-db ci-dessus)
-      - key: DATABASE_URL
-        fromDatabase:
-          name: aime-db
-          property: connectionString
-      # Email - À configurer manuellement dans le dashboard Render :
+      # DATABASE_URL : à définir manuellement dans le dashboard Render
+      # Utiliser l'URL de connexion Supabase (mode "Transaction pooler")
+      # Email - à définir manuellement dans le dashboard Render :
       # EMAIL_BACKEND, EMAIL_HOST, EMAIL_PORT, EMAIL_USE_TLS
       # EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, DEFAULT_FROM_EMAIL
 
