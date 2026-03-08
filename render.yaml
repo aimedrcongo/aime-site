@@ -3,7 +3,7 @@ databases:
     databaseName: aime_production
     user: aime_user
     region: frankfurt
-    plan: free
+    plan: starter
 
 services:
   - type: web
