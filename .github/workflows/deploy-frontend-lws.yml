@@ -1,0 +1,57 @@
+name: Deploy Frontend to LWS
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'main/templates/**'
+      - 'main/static/**'
+      - '.github/workflows/deploy-frontend-lws.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Create FTP config
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          mkdir -p ~/.config/lftp
+          cat > ~/.config/lftp/rc << 'EOF'
+          set ssl:verify-certificate no
+          EOF
+
+      - name: Deploy templates to FTP
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          lftp -e "
+          open -u $FTP_USERNAME,$FTP_PASSWORD ftp://$FTP_SERVER
+          cd public_html
+          mirror -R --delete main/templates templates
+          quit
+          "
+
+      - name: Deploy static files to FTP
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          lftp -e "
+          open -u $FTP_USERNAME,$FTP_PASSWORD ftp://$FTP_SERVER
+          cd public_html
+          mirror -R --delete main/static static
+          quit
+          "
