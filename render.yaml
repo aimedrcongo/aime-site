@@ -22,5 +22,3 @@ services:
         value: true
       - key: CSRF_COOKIE_SECURE
         value: true
-
-autoDeploy: true
