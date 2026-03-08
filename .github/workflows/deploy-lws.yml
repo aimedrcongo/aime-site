@@ -16,13 +16,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Upload files to LWS via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Deploy to FTP
+        uses: wangyucode/ftpupload@v1.4
         with:
-          server: ${{ secrets.FTP_SERVER }}
+          host: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./
-          server-dir: /public_html/
-          state-name: .ftp-deploy-sync-state.json
-          dangerous-clean-slate: false
+          local_dir: ./
+          remote_dir: /public_html
