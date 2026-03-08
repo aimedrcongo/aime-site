@@ -1,6 +1,6 @@
 # ============================================================================
-# AIME Requirements - Version Render.com avec MySQL (LWS)
-# Python 3.11+ - Production Ready - Backend sur Render, DB sur LWS
+# AIME Requirements - Version Render.com avec PostgreSQL
+# Python 3.11+ - Production Ready - Backend + DB sur Render
 # ============================================================================
 
 # ====================
@@ -12,10 +12,9 @@ sqlparse==0.5.3
 tzdata==2025.2
 
 # ====================
-# Database - MySQL à distance (LWS)
+# Database - PostgreSQL (Render.com)
 # ====================
-mysqlclient==2.2.0
-PyMySQL==1.1.0
+psycopg2-binary==2.9.9
 
 # ====================
 # Static Files & Compression

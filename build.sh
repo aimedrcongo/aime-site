@@ -17,9 +17,13 @@ pip install -r requirements.txt
 echo "📁 Collecting static files..."
 python manage.py collectstatic --noinput || true
 
-# Note: Database migrations will be run after environment variables are set
-# Run manually with: python manage.py migrate
-echo "⚠️  Database configuration needed - see RENDER_SETUP_GUIDE.md"
+# Appliquer les migrations de base de données
+echo "🗄️  Running database migrations..."
+python manage.py migrate --noinput
+
+# Créer la table de cache
+echo "🗄️  Creating cache table..."
+python manage.py createcachetable || true
 
 # Compiler les messages de traduction si disponibles
 echo "🌍 Compiling messages..."
