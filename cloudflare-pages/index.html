@@ -3,68 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AIME Frontend</title>
-  <style>
-    :root {
-      --bg: #f5f7fb;
-      --card: #ffffff;
-      --ink: #14304a;
-      --muted: #5c7289;
-      --accent: #0d7ccf;
-      --accent-2: #09a17a;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      color: var(--ink);
-      background: radial-gradient(circle at 10% 10%, #e8f3ff 0%, var(--bg) 45%, #edf8f4 100%);
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-    }
-    .card {
-      width: min(760px, 100%);
-      background: var(--card);
-      border: 1px solid #d8e4f0;
-      border-radius: 16px;
-      padding: 28px;
-      box-shadow: 0 18px 45px rgba(20, 48, 74, 0.08);
-    }
-    h1 { margin: 0 0 12px; font-size: clamp(1.5rem, 3vw, 2rem); }
-    p { margin: 0 0 10px; color: var(--muted); line-height: 1.6; }
-    .actions { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 12px; }
-    a {
-      text-decoration: none;
-      border-radius: 10px;
-      padding: 11px 16px;
-      font-weight: 600;
-      transition: transform .18s ease, box-shadow .18s ease;
-    }
-    a:hover { transform: translateY(-1px); }
-    .primary { background: var(--accent); color: #fff; box-shadow: 0 8px 20px rgba(13, 124, 207, 0.22); }
-    .secondary { background: #e9f7f2; color: #0a7258; border: 1px solid #b7e4d7; }
-    code {
-      display: inline-block;
-      padding: 3px 7px;
-      border-radius: 6px;
-      background: #f1f6fb;
-      border: 1px solid #d7e4f2;
-      color: #1e4a6d;
-      font-size: 0.92rem;
-    }
-  </style>
+  <title>AIME RDC | Frontend Cloudflare Pages</title>
+  <link rel="stylesheet" href="./assets/css/styles.css" />
 </head>
 <body>
-  <main class="card">
-    <h1>Frontend AIME sur Cloudflare</h1>
-    <p>Le frontend est deploie avec succes sur Cloudflare.</p>
-    <p>Configure ensuite ton frontend pour appeler l'API Render via <code>https://api.aime-rdc.org</code> (ou ton URL Render temporaire).</p>
-    <div class="actions">
-      <a class="primary" href="https://aime-backend.onrender.com" target="_blank" rel="noopener noreferrer">Ouvrir le backend Render</a>
-      <a class="secondary" href="https://aime-backend.onrender.com/admin/" target="_blank" rel="noopener noreferrer">Admin Django</a>
-    </div>
-  </main>
+  <div class="page">
+    <section class="hero">
+      <h1>AIME RDC: Frontend sur Cloudflare Pages</h1>
+      <p>
+        Ce dossier contient les fichiers statiques publies sur
+        <strong>.pages.dev</strong>. Le backend Django reste sur Render et la base
+        de donnees sur LWS.
+      </p>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="https://api.aime-rdc.org" target="_blank" rel="noopener noreferrer">Ouvrir API Render</a>
+        <a class="btn btn-secondary" href="https://api.aime-rdc.org/admin/" target="_blank" rel="noopener noreferrer">Admin Django</a>
+        <a class="btn btn-secondary" href="#" id="ping-api-btn">Tester l'API</a>
+      </div>
+
+      <p id="api-status" class="status">Pret a tester la connexion API.</p>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Ce qui est publie ici</h2>
+        <ul>
+          <li>HTML statique</li>
+          <li>CSS et JavaScript frontend</li>
+          <li>Ressources images et medias frontend</li>
+        </ul>
+        <span class="pill">cloudflare-pages/</span>
+      </article>
+
+      <article class="card">
+        <h2>Ce qui reste sur Render</h2>
+        <ul>
+          <li>API Django</li>
+          <li>Authentification et administration</li>
+          <li>Logique metier et acces base de donnees</li>
+        </ul>
+        <span class="pill">api.aime-rdc.org</span>
+      </article>
+    </section>
+
+    <footer>
+      Frontend statique Cloudflare Pages + Backend Render + DB LWS.
+    </footer>
+  </div>
+
+  <script src="./assets/js/app.js"></script>
 </body>
 </html>
