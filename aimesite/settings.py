@@ -39,6 +39,13 @@ CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS',
     cast=Csv()
 )
 
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS',
+    default='https://aime-rdc.org,https://www.aime-rdc.org',
+    cast=Csv()
+)
+CORS_ALLOW_ALL_ORIGINS = config('CORS_ALLOW_ALL_ORIGINS', default=False, cast=bool)
+CORS_ALLOW_CREDENTIALS = config('CORS_ALLOW_CREDENTIALS', default=True, cast=bool)
+
 # Security settings (Production)
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
@@ -76,10 +83,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ Compression statiques
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
