@@ -5,4 +5,4 @@ pages_build_output_dir = "./cloudflare-pages"
 
 [assets]
 directory = "./cloudflare-pages"
-binding = "ASSETS"
+binding = "SITE_ASSETS"
