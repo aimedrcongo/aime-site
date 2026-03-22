@@ -29,13 +29,13 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-temporary-key-CHANGE-
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS',
-    default='localhost,127.0.0.1',
+    default='localhost,127.0.0.1,aime-backend-km20.onrender.com,api.aime-rdc.org',
     cast=Csv()
 )
 
 # CSRF settings
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS',
-    default='https://aime-rdc.org,https://www.aime-rdc.org',
+    default='https://aime-backend-km20.onrender.com,https://api.aime-rdc.org,https://aime-rdc.org,https://www.aime-rdc.org,https://aime-site.pages.dev',
     cast=Csv()
 )
 
