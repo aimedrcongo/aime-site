@@ -49,6 +49,8 @@ urlpatterns = [
     
     # AJAX
     path('newsletter/subscribe/', views.newsletter_subscribe, name='newsletter_subscribe'),
+    # API publique
+    path('api/stats/', views.api_stats, name='api_stats'),
     
     # Carte Interactive d'Impact Social
     path('impact-map/', map_views.InteractiveMapView.as_view(), name='interactive_map'),

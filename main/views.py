@@ -274,23 +274,39 @@ def donate_success(request):
     return render(request, 'main/donate_success.html', context)
 
 def newsletter_subscribe(request):
-    """Abonnement newsletter (AJAX)"""
+    """Abonnement newsletter (AJAX) – accepte form-data et JSON"""
     if request.method == 'POST':
-        email = request.POST.get('email')
-        name = request.POST.get('name', '')
-        
+        # Accepter JSON ou form-data
+        content_type = request.content_type or ''
+        if 'application/json' in content_type:
+            try:
+                body = json.loads(request.body)
+                email = body.get('email', '')
+                name = body.get('name', '')
+            except (json.JSONDecodeError, ValueError):
+                return JsonResponse({'success': False, 'message': 'JSON invalide.'}, status=400)
+        else:
+            email = request.POST.get('email', '')
+            name = request.POST.get('name', '')
+
+        email = email.strip()
         if email:
             subscription, created = NewsletterSubscription.objects.get_or_create(
                 email=email,
                 defaults={'name': name}
             )
-            
             if created:
                 return JsonResponse({'success': True, 'message': 'Abonnement réussi!'})
             else:
                 return JsonResponse({'success': False, 'message': 'Email déjà abonné.'})
-    
-    return JsonResponse({'success': False, 'message': 'Erreur lors de l\'abonnement.'})
+
+    return JsonResponse({'success': False, 'message': "Erreur lors de l'abonnement."}, status=400)
+
+
+def api_stats(request):
+    """Endpoint public des statistiques – utilisé par le frontend Cloudflare Pages"""
+    stats = get_site_statistics()
+    return JsonResponse(stats)
 
 @login_required
 def dashboard(request):

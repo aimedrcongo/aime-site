@@ -45,6 +45,10 @@ CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS',
 )
 CORS_ALLOW_ALL_ORIGINS = config('CORS_ALLOW_ALL_ORIGINS', default=False, cast=bool)
 CORS_ALLOW_CREDENTIALS = config('CORS_ALLOW_CREDENTIALS', default=True, cast=bool)
+# Autoriser les domaines Cloudflare Pages (*.pages.dev)
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r'^https://[\w-]+\.pages\.dev$',
+]
 
 # Security settings (Production)
 if not DEBUG:

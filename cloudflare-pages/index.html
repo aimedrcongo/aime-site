@@ -1,57 +1,741 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AIME RDC | Frontend Cloudflare Pages</title>
-  <link rel="stylesheet" href="./assets/css/styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIME - Agissons Ici et Maintenant pour les Enfants</title>
+    <meta name="description" content="Agissons Ici et Maintenant pour les Enfants - Organisation pour le développement et l'épanouissement des enfants en RDC">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #ecf0f1;
+            --transition-smooth: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --transition-ease: all 0.4s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        /* ── NAVBAR ── */
+        .navbar { box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+        .navbar-logo { height: 48px; width: auto; }
+        .navbar .btn-primary { background: #e74c3c; border-color: #e74c3c; }
+        .navbar .btn-primary:hover { background: #c0392b; border-color: #c0392b; }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeInUp   { from { opacity:0; transform:translateY(30px);  } to { opacity:1; transform:translateY(0); } }
+        @keyframes scaleIn    { from { opacity:0; transform:scale(.95); }        to { opacity:1; transform:scale(1); } }
+        @keyframes pulse-bg   { 0%,100% { opacity:.5; } 50% { opacity:1; } }
+        @keyframes pop        { 0% { transform:scale(.7); opacity:0; } 80% { transform:scale(1.1); opacity:1; } 100% { transform:scale(1); } }
+        @keyframes pulse      { 0%,100% { transform:scale(1); } 50% { transform:scale(1.05); } }
+
+        section { opacity:0; animation: fadeInUp .8s ease-out forwards; }
+        section:nth-of-type(1) { animation-delay:.0s; }
+        section:nth-of-type(2) { animation-delay:.1s; }
+        section:nth-of-type(3) { animation-delay:.2s; }
+        section:nth-of-type(4) { animation-delay:.3s; }
+        section:nth-of-type(5) { animation-delay:.4s; }
+
+        .animate-fadeInUp  { animation: fadeInUp  .8s ease-out forwards; }
+        .animate-slideInLeft {
+            animation: fadeInUp .9s cubic-bezier(.34,1.56,.64,1) .2s forwards;
+            opacity:0;
+        }
+        .animate-slideInRight {
+            animation: scaleIn .8s cubic-bezier(.34,1.56,.64,1) .4s forwards;
+            opacity:0;
+        }
+
+        /* ── HERO ── */
+        .hero-section {
+            background: linear-gradient(135deg, rgba(52,152,219,.9) 0%, rgba(155,89,182,.9) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            z-index: 1;
+        }
+        .hero-section::before {
+            content:'';
+            position:absolute; inset:0;
+            background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(255,255,255,.1) 0%, transparent 50%);
+            animation: pulse-bg 10s ease-in-out infinite;
+        }
+        .hero-content { position:relative; z-index:2; }
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        .hero-title span {
+            background: linear-gradient(45deg, #1299f3, #f5f3f2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            margin-bottom: 2rem;
+            opacity: .95;
+            font-weight: 300;
+            max-width: 600px;
+        }
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+            padding: 2rem;
+            background: rgba(255,255,255,.1);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,.2);
+            animation: scaleIn .8s cubic-bezier(.34,1.56,.64,1) .4s forwards;
+            opacity: 0;
+        }
+        .hero-stat { text-align:center; }
+        .hero-stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            display: block;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,.3);
+        }
+        .hero-stat-label { font-size:.9rem; opacity:.9; margin-top:.5rem; }
+        .hero-cta { display:flex; flex-wrap:wrap; gap:1rem; margin-top:2rem; }
+
+        .btn-hero {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all .3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-hero::before {
+            content:'';
+            position:absolute; top:0; left:-100%;
+            width:100%; height:100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.2), transparent);
+            transition: left .5s;
+        }
+        .btn-hero:hover::before { left:100%; }
+        .btn-primary-hero {
+            background: linear-gradient(45deg, var(--secondary-color), #ff6b6b);
+            color: white;
+            box-shadow: 0 4px 15px rgba(231,76,60,.4);
+        }
+        .btn-primary-hero:hover { transform:translateY(-2px); box-shadow: 0 8px 25px rgba(231,76,60,.6); color:white; }
+        .btn-secondary-hero {
+            background: rgba(255,255,255,.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,.3);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+        .btn-secondary-hero:hover { background:rgba(255,255,255,.3); transform:translateY(-2px); color:white; }
+
+        /* ── IMPACT SECTION ── */
+        .impact-section {
+            padding: 8rem 0 6rem;
+            background: linear-gradient(180deg, #fff 0%, var(--bg-light) 100%);
+            position: relative;
+            z-index: 2;
+            margin-top: -2rem;
+            border-top: 1px solid rgba(255,255,255,.3);
+            box-shadow: 0 -10px 30px rgba(0,0,0,.1);
+        }
+        .section-title { text-align:center; margin-bottom:4rem; }
+        .section-title h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .section-title p { font-size:1.2rem; color:var(--text-light); max-width:600px; margin:0 auto; }
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            background: #f8fafc;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,.07);
+            margin-top: 3rem;
+        }
+        .impact-card {
+            background: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,.08);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: transform .4s, box-shadow .4s;
+            opacity:0;
+        }
+        .impact-card:hover { transform:translateY(-8px) scale(1.03); box-shadow:0 8px 32px rgba(0,0,0,.12); }
+        .impact-icon { font-size:2.5rem; color:#3b82f6; margin-bottom:1rem; animation:pop .8s; }
+        .impact-number { font-size:2.2rem; font-weight:bold; color:#16a34a; margin-bottom:.5rem; }
+        .impact-label { font-size:1.1rem; font-weight:600; color:#334155; margin-bottom:.5rem; }
+        .impact-description { font-size:.98rem; color:#64748b; line-height:1.5; }
+
+        /* ── PROGRAMS ── */
+        .programs-section { padding:6rem 0; background:var(--primary-color); color:white; }
+        .programs-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:2rem; margin-top:3rem; }
+        .program-card {
+            background: rgba(255,255,255,.1);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255,255,255,.2);
+            transition: all .3s ease;
+            opacity:0;
+        }
+        .program-card:hover { transform:translateY(-5px); background:rgba(255,255,255,.15); }
+        .program-icon { font-size:3rem; margin-bottom:1.5rem; color:var(--warning-color); }
+        .program-title { font-size:1.5rem; font-weight:700; margin-bottom:1rem; }
+        .program-description { opacity:.9; line-height:1.7; margin-bottom:1.5rem; }
+        .program-link {
+            color:var(--warning-color); text-decoration:none; font-weight:600;
+            display:inline-flex; align-items:center; gap:.5rem; transition:all .3s ease;
+        }
+        .program-link:hover { color:white; transform:translateX(5px); }
+
+        /* ── CTA ── */
+        .cta-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #ff6b6b 100%);
+            color: white; text-align:center;
+        }
+        .cta-content { max-width:800px; margin:0 auto; }
+        .cta-title { font-size:clamp(2rem, 4vw, 3rem); font-weight:700; margin-bottom:1.5rem; }
+        .cta-description { font-size:1.2rem; opacity:.95; margin-bottom:2.5rem; line-height:1.7; }
+        .cta-buttons { display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; }
+        .btn-cta {
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all .3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            border: 2px solid transparent;
+        }
+        .btn-cta-white { background:white; color:var(--secondary-color); }
+        .btn-cta-white:hover { transform:translateY(-3px); box-shadow:0 10px 25px rgba(0,0,0,.2); color:var(--secondary-color); }
+        .btn-cta-outline { background:transparent; color:white; border-color:white; }
+        .btn-cta-outline:hover { background:white; color:var(--secondary-color); transform:translateY(-3px); }
+
+        /* ── FOOTER ── */
+        .footer {
+            background: #1a252f;
+            color: rgba(255,255,255,.8);
+            padding: 3rem 0 1rem;
+        }
+        .footer-logo { height:50px; width:auto; margin-bottom:.75rem; }
+        .footer-links, .footer-contact { list-style:none; padding:0; }
+        .footer-links li, .footer-contact li { margin-bottom:.4rem; }
+        .footer-links a, .footer-contact a { color:rgba(255,255,255,.7); text-decoration:none; font-size:.875rem; transition:color .3s; }
+        .footer-links a:hover, .footer-contact a:hover { color:#3498db; }
+        .footer h6 { color:rgba(255,255,255,.9); }
+        .footer-text { color:rgba(255,255,255,.6); }
+        .newsletter-input { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); color:white; }
+        .newsletter-input::placeholder { color:rgba(255,255,255,.5); }
+        .newsletter-input:focus { background:rgba(255,255,255,.15); border-color:#3498db; color:white; box-shadow:none; }
+        .btn-newsletter { background:#3498db; border-color:#3498db; color:white; }
+        .social-links a {
+            display:inline-flex; align-items:center; justify-content:center;
+            width:34px; height:34px; border-radius:50%;
+            background:rgba(255,255,255,.1); color:rgba(255,255,255,.8);
+            text-decoration:none; margin-right:.4rem;
+            transition:all .3s;
+        }
+        .social-links a:hover { background:#3498db; color:white; transform:translateY(-2px); }
+        .footer-bottom { border-top:1px solid rgba(255,255,255,.1); padding-top:1rem; }
+        .footer-bottom a { color:rgba(255,255,255,.5); font-size:.8rem; text-decoration:none; }
+        .footer-bottom a:hover { color:#3498db; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width:768px) {
+            .hero-cta { flex-direction:column; align-items:center; }
+            .btn-hero { width:100%; justify-content:center; max-width:300px; }
+            .impact-grid, .programs-grid { grid-template-columns:1fr; }
+            .cta-buttons { flex-direction:column; align-items:center; }
+            .btn-cta { width:100%; max-width:300px; justify-content:center; }
+        }
+    </style>
 </head>
 <body>
-  <div class="page">
-    <section class="hero">
-      <h1>AIME RDC: Frontend sur Cloudflare Pages</h1>
-      <p>
-        Ce dossier contient les fichiers statiques publies sur
-        <strong>.pages.dev</strong>. Le backend Django reste sur Render et la base
-        de donnees sur LWS.
-      </p>
 
-      <div class="actions">
-        <a class="btn btn-primary" href="https://api.aime-rdc.org" target="_blank" rel="noopener noreferrer">Ouvrir API Render</a>
-        <a class="btn btn-secondary" href="https://api.aime-rdc.org/admin/" target="_blank" rel="noopener noreferrer">Admin Django</a>
-        <a class="btn btn-secondary" href="#" id="ping-api-btn">Tester l'API</a>
-      </div>
+<!-- ══════════════════ NAVBAR ══════════════════ -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="https://api.aime-rdc.org/">
+            <img src="https://api.aime-rdc.org/static/main/images/logo-aime.png"
+                 alt="AIME Logo" class="navbar-logo"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+            <span style="display:none; align-items:center; font-weight:800; font-size:1.4rem; color:#2c3e50;">AIME</span>
+        </a>
 
-      <p id="api-status" class="status">Pret a tester la connexion API.</p>
-    </section>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Ouvrir le menu de navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <section class="grid">
-      <article class="card">
-        <h2>Ce qui est publie ici</h2>
-        <ul>
-          <li>HTML statique</li>
-          <li>CSS et JavaScript frontend</li>
-          <li>Ressources images et medias frontend</li>
-        </ul>
-        <span class="pill">cloudflare-pages/</span>
-      </article>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://api.aime-rdc.org/">Accueil</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Organisation</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="https://api.aime-rdc.org/about/">À propos</a></li>
+                        <li><a class="dropdown-item" href="https://api.aime-rdc.org/manifesto/">Notre Manifeste</a></li>
+                        <li><a class="dropdown-item" href="https://api.aime-rdc.org/impact-theory/">Théorie du Changement</a></li>
+                        <li><a class="dropdown-item" href="https://api.aime-rdc.org/research-center/">Centre de Recherche</a></li>
+                        <li><a class="dropdown-item" href="https://api.aime-rdc.org/observatory/">Observatoire Droits Enfant</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Nos Projets</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="https://api.aime-rdc.org/projects/">Tous les Projets</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item fw-bold" href="https://api.aime-rdc.org/mbc/">
+                            <i class="fas fa-bicycle me-2"></i>Mutoto Bike Challenge (MBC)
+                        </a></li>
+                        <li><a class="dropdown-item ps-5" href="https://api.aime-rdc.org/msa/">
+                            <i class="fas fa-flask me-2"></i>Mutoto Science Adventure (MSA)
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item fw-bold" href="https://api.aime-rdc.org/mon-beau-metier/">
+                            <i class="fas fa-briefcase me-2"></i>Mon Beau Métier
+                        </a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://api.aime-rdc.org/events/">Événements</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://api.aime-rdc.org/impact-map/">
+                        <i class="fas fa-map-marked-alt me-1"></i>Impact Map
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://api.aime-rdc.org/contact/">Contact</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="btn btn-primary btn-sm" href="https://api.aime-rdc.org/donate/">
+                        <i class="fas fa-donate me-1"></i>Faire un don
+                    </a>
+                </li>
+                <li class="nav-item ms-2">
+                    <a class="nav-link" href="https://api.aime-rdc.org/accounts/login/">
+                        <i class="fas fa-sign-in-alt me-1"></i>Connexion
+                    </a>
+                </li>
+                <li class="nav-item ms-1">
+                    <a class="btn btn-outline-primary btn-sm" href="https://api.aime-rdc.org/signup/">
+                        <i class="fas fa-user-plus me-1"></i>S'inscrire
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-      <article class="card">
-        <h2>Ce qui reste sur Render</h2>
-        <ul>
-          <li>API Django</li>
-          <li>Authentification et administration</li>
-          <li>Logique metier et acces base de donnees</li>
-        </ul>
-        <span class="pill">api.aime-rdc.org</span>
-      </article>
-    </section>
+<!-- ══════════════════ HERO ══════════════════ -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <div class="hero-content">
+                    <h1 class="hero-title animate-fadeInUp">
+                        Agissons Ici et Maintenant pour les
+                        <span>Enfants</span>
+                    </h1>
+                    <p class="hero-subtitle animate-slideInLeft">
+                        Organisation dédiée au développement socio-éducationnel, entrepreneurial et à la formation
+                        en divers métiers pour l'épanouissement des enfants en République Démocratique du Congo.
+                    </p>
 
-    <footer>
-      Frontend statique Cloudflare Pages + Backend Render + DB LWS.
-    </footer>
-  </div>
+                    <div class="hero-stats animate-slideInRight">
+                        <div class="hero-stat">
+                            <span class="hero-stat-number" data-stat="total_children_helped">0</span>
+                            <div class="hero-stat-label">Enfants aidés</div>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-number" data-stat="active_projects">0</span>
+                            <div class="hero-stat-label">Projets actifs</div>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-number" data-stat="total_events">0</span>
+                            <div class="hero-stat-label">Événements</div>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-number" data-stat="total_donations">0</span>
+                            <div class="hero-stat-label">FC collectés</div>
+                        </div>
+                    </div>
 
-  <script src="./assets/js/app.js"></script>
+                    <div class="hero-cta">
+                        <a href="https://api.aime-rdc.org/projects/" class="btn-hero btn-primary-hero">
+                            <i class="fas fa-rocket"></i> Découvrir nos projets
+                        </a>
+                        <a href="https://api.aime-rdc.org/impact-map/" class="btn-hero btn-secondary-hero">
+                            <i class="fas fa-map-marked-alt"></i> Voir notre impact
+                        </a>
+                        <a href="https://api.aime-rdc.org/signup/" class="btn-hero btn-secondary-hero">
+                            <i class="fas fa-user-plus"></i> Rejoindre AIME
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center d-none d-lg-block">
+                <div class="position-relative">
+                    <i class="fas fa-child" style="font-size:15rem; opacity:.8; color:rgba(255,255,255,.9);"></i>
+                    <div class="position-absolute top-0 end-0">
+                        <span class="badge bg-success rounded-pill" style="animation:pulse 2s infinite;">
+                            <i class="fas fa-satellite-dish me-1"></i>En direct
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════ IMPACT ══════════════════ -->
+<section class="impact-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Fondations Solides – Notre Démarrage</h2>
+            <p style="max-width:800px; margin:0 auto 1rem;">
+                Nous construisons notre impact pas à pas, avec authenticité et transparence.
+                Chaque chiffre représente une action concrète, un enfant accompagné, une famille soutenue.
+            </p>
+            <p class="text-muted" style="font-size:.95rem; font-style:italic;">
+                <i class="fas fa-seedling me-2"></i>Au fur et à mesure que les enfants et parents s'inscrivent, ces chiffres évolueront naturellement.
+            </p>
+        </div>
+
+        <div class="impact-grid">
+            <div class="impact-card">
+                <div class="impact-icon"><i class="fas fa-child"></i></div>
+                <div class="impact-number" data-stat="total_children_helped">0</div>
+                <div class="impact-label">Enfants touchés directement</div>
+                <div class="impact-description">Chaque enfant que nous accompagnons reçoit une attention personnalisée et un suivi de qualité.</div>
+            </div>
+            <div class="impact-card">
+                <div class="impact-icon"><i class="fas fa-school"></i></div>
+                <div class="impact-number" data-stat="schools_partners">0</div>
+                <div class="impact-label">Écoles partenaires</div>
+                <div class="impact-description">Nous développons des partenariats solides avec les établissements scolaires pour maximiser notre impact.</div>
+            </div>
+            <div class="impact-card">
+                <div class="impact-icon"><i class="fas fa-map-marked-alt"></i></div>
+                <div class="impact-number" data-stat="provinces_count">0</div>
+                <div class="impact-label">Provinces RDC</div>
+                <div class="impact-description">Démarrage à Kinshasa avec expansion progressive dans les 26 provinces de la RDC et la région.</div>
+            </div>
+            <div class="impact-card">
+                <div class="impact-icon"><i class="fas fa-seedling"></i></div>
+                <div class="impact-number" data-stat="quartiers_impacted">0</div>
+                <div class="impact-label">Quartiers impactés</div>
+                <div class="impact-description">Communautés où nous intervenons activement pour améliorer les conditions de vie.</div>
+            </div>
+            <div class="impact-card">
+                <div class="impact-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div class="impact-number" data-stat="formations_dispensed">0</div>
+                <div class="impact-label">Formations dispensées</div>
+                <div class="impact-description">Ateliers et formations en informatique, mécanique vélo, et développement personnel.</div>
+            </div>
+            <div class="impact-card">
+                <div class="impact-icon"><i class="fas fa-bicycle"></i></div>
+                <div class="impact-number" data-stat="mbc_participants">0</div>
+                <div class="impact-label">Participants MBC</div>
+                <div class="impact-description">Jeunes engagés dans notre programme phare de sensibilisation environnementale.</div>
+            </div>
+            <div class="impact-card">
+                <div class="impact-icon"><i class="fas fa-users"></i></div>
+                <div class="impact-number" data-stat="families_supported">0</div>
+                <div class="impact-label">Familles accompagnées</div>
+                <div class="impact-description">Soutien direct aux familles vulnérables à travers nos programmes communautaires.</div>
+            </div>
+            <div class="impact-card">
+                <div class="impact-icon"><i class="fas fa-project-diagram"></i></div>
+                <div class="impact-number" data-stat="active_projects">0</div>
+                <div class="impact-label">Projets actifs</div>
+                <div class="impact-description">Initiatives en cours pour créer un impact durable dans nos communautés.</div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <div class="alert alert-info d-inline-block" style="background:rgba(52,152,219,.1); border:2px solid #3498db; border-radius:15px; padding:1.5rem 2rem;">
+                <i class="fas fa-chart-line me-2" style="color:#3498db; font-size:1.5rem;"></i>
+                <strong style="color:#2c3e50;">Croissance Authentique</strong>
+                <p class="mb-0 mt-2" style="color:#34495e;">
+                    Ces chiffres sont réels et évoluent quotidiennement. Notre force réside dans la qualité de notre accompagnement, pas dans des statistiques gonflées.
+                    <br><strong>Chaque enfant compte, chaque famille compte.</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════ PROGRAMMES ══════════════════ -->
+<section class="programs-section">
+    <div class="container">
+        <div class="section-title">
+            <h2 style="color:white; -webkit-text-fill-color:white;">Nos Programmes Phares</h2>
+            <p style="color:rgba(255,255,255,.9);">Des initiatives concrètes pour l'épanouissement et l'autonomisation des enfants et jeunes de la RDC.</p>
+        </div>
+        <div class="programs-grid">
+            <div class="program-card">
+                <div class="program-icon"><i class="fas fa-bicycle"></i></div>
+                <h3 class="program-title">Mutoto Bike Challenge</h3>
+                <p class="program-description">Un défi cycliste annuel qui sensibilise les jeunes à la protection de l'environnement tout en promouvant le sport et la cohésion sociale.</p>
+                <a href="https://api.aime-rdc.org/mbc/" class="program-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="program-card">
+                <div class="program-icon"><i class="fas fa-microscope"></i></div>
+                <h3 class="program-title">Mutoto Science Adventure</h3>
+                <p class="program-description">Programme d'initiation aux sciences et technologies pour éveiller la curiosité scientifique des enfants et développer leur esprit critique.</p>
+                <a href="https://api.aime-rdc.org/msa/" class="program-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="program-card">
+                <div class="program-icon"><i class="fas fa-laptop-code"></i></div>
+                <h3 class="program-title">École Numérique</h3>
+                <p class="program-description">Formation aux outils numériques et à la programmation pour préparer les jeunes aux métiers du futur et réduire la fracture numérique.</p>
+                <a href="https://api.aime-rdc.org/projects/" class="program-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════ CTA ══════════════════ -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2 class="cta-title">Rejoignez Notre Mission</h2>
+            <p class="cta-description">
+                Ensemble, nous pouvons créer un avenir meilleur pour les enfants de la RDC.
+                Votre soutien, quelle que soit sa forme, fait la différence dans la vie de centaines d'enfants.
+            </p>
+            <div class="cta-buttons">
+                <a href="https://api.aime-rdc.org/donate/" class="btn-cta btn-cta-white">
+                    <i class="fas fa-heart"></i> Faire un don
+                </a>
+                <a href="https://api.aime-rdc.org/contact/" class="btn-cta btn-cta-outline">
+                    <i class="fas fa-hands-helping"></i> Devenir bénévole
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2 col-md-6 mb-4">
+                <img src="https://api.aime-rdc.org/static/main/images/logo-aime.png"
+                     alt="AIME Logo" class="footer-logo"
+                     onerror="this.style.display='none'">
+                <h6 class="small fw-bold">Agissons Ici et<br>Maintenant pour<br>les Enfants</h6>
+                <p class="footer-text small">Organisation dédiée au développement et épanouissement des enfants en RDC.</p>
+            </div>
+            <div class="col-lg-2 col-md-6 mb-4">
+                <h6 class="fw-bold small text-uppercase">Navigation</h6>
+                <ul class="list-unstyled footer-links">
+                    <li><a href="https://api.aime-rdc.org/">Accueil</a></li>
+                    <li><a href="https://api.aime-rdc.org/about/">À propos</a></li>
+                    <li><a href="https://api.aime-rdc.org/projects/">Nos projets</a></li>
+                    <li><a href="https://api.aime-rdc.org/impact-map/">Notre impact</a></li>
+                    <li><a href="https://api.aime-rdc.org/donate/">Faire un don</a></li>
+                    <li><a href="https://api.aime-rdc.org/contact/">Nous rejoindre</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-6 mb-4">
+                <h6 class="fw-bold small text-uppercase">Nos Projets</h6>
+                <ul class="list-unstyled footer-links">
+                    <li><a href="https://api.aime-rdc.org/mbc/">Bike Challenge</a></li>
+                    <li><a href="https://api.aime-rdc.org/msa/">Science Adventure</a></li>
+                    <li><a href="https://api.aime-rdc.org/mon-beau-metier/">Mon Beau Métier</a></li>
+                    <li><a href="https://api.aime-rdc.org/projects/">Tous les projets</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h6 class="fw-bold small text-uppercase">Contact</h6>
+                <ul class="list-unstyled footer-contact">
+                    <li class="mb-2"><small><i class="fas fa-envelope me-2"></i></small><small><a href="mailto:contact@aime-rdc.org">contact@aime-rdc.org</a></small></li>
+                    <li class="mb-2"><small><i class="fas fa-envelope me-2"></i></small><small><a href="mailto:kinshasa@aime-rdc.org">kinshasa@aime-rdc.org</a></small></li>
+                    <li class="mb-2"><small><i class="fas fa-phone me-2"></i></small><small><a href="tel:+243844444411">+243 844 444 411</a></small></li>
+                    <li class="mb-2"><small><i class="fas fa-phone me-2"></i></small><small><a href="tel:+243823090002">+243 823 090 002</a></small></li>
+                    <li class="mb-2"><small><i class="fas fa-map-marker-alt me-2"></i></small><small>Kinshasa – Gombe</small></li>
+                    <li><small><i class="fas fa-map-marker-alt me-2"></i></small><small>Lubumbashi – Ruashi</small></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h6 class="fw-bold small text-uppercase mb-2">Newsletter</h6>
+                <form id="newsletter-form" class="mb-3">
+                    <div class="input-group input-group-sm mb-2">
+                        <input type="email" id="newsletter-email" class="form-control newsletter-input" placeholder="Email" required>
+                        <button class="btn btn-newsletter btn-sm" type="submit" aria-label="S'abonner à la newsletter">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+                <small class="text-light opacity-75 d-block mb-3">Nous respectons votre vie privée</small>
+                <h6 class="fw-bold small text-uppercase mb-2">Suivez-nous</h6>
+                <div class="social-links">
+                    <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-3 opacity-25">
+        <div class="row align-items-center footer-bottom">
+            <div class="col-md-8">
+                <p class="mb-0 small">&copy; 2025 AIME – Tous droits réservés</p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <small>
+                    <a href="#" class="me-3">Politique de confidentialité</a>
+                    <a href="#">Conditions d'utilisation</a>
+                </small>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+const API_BASE = 'https://api.aime-rdc.org';
+
+/* ── Chargement des statistiques depuis l'API ── */
+async function loadStats() {
+    try {
+        const res = await fetch(`${API_BASE}/api/stats/`, { mode: 'cors' });
+        if (!res.ok) return;
+        const data = await res.json();
+        document.querySelectorAll('[data-stat]').forEach(el => {
+            const key = el.getAttribute('data-stat');
+            if (data[key] !== undefined) {
+                el.setAttribute('data-target', data[key]);
+            }
+        });
+    } catch (_) { /* silencieux si l'API est indisponible */ }
+    animateCounters();
+}
+
+/* ── Animation des compteurs ── */
+function animateCounters() {
+    const counters = document.querySelectorAll('[data-target]');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+                const el = entry.target;
+                const target = parseInt(el.getAttribute('data-target') || '0');
+                if (target === 0) { el.textContent = '0'; return; }
+                el.classList.add('animated');
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                let current = 0;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        el.textContent = target.toLocaleString('fr-FR');
+                        clearInterval(timer);
+                    } else {
+                        el.textContent = Math.floor(current).toLocaleString('fr-FR');
+                    }
+                }, 16);
+            }
+        });
+    }, { threshold: 0.5 });
+    counters.forEach(c => observer.observe(c));
+}
+
+/* ── Animation des cartes au scroll ── */
+function initScrollAnimations() {
+    const elements = document.querySelectorAll('.impact-card, .program-card');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, i * 80);
+            }
+        });
+    }, { threshold: 0.1 });
+    elements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'all .8s ease-out';
+        observer.observe(el);
+    });
+}
+
+/* ── Newsletter (envoie vers le backend) ── */
+document.getElementById('newsletter-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('newsletter-email').value;
+    try {
+        await fetch(`${API_BASE}/newsletter/subscribe/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email }),
+            mode: 'cors'
+        });
+    } catch (_) {}
+    e.target.innerHTML = '<small class="text-success"><i class="fas fa-check me-1"></i>Merci pour votre inscription !</small>';
+});
+
+/* ── Init ── */
+document.addEventListener('DOMContentLoaded', () => {
+    loadStats();
+    initScrollAnimations();
+});
+</script>
 </body>
 </html>
