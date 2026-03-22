@@ -125,7 +125,7 @@ WSGI_APPLICATION = 'aimesite.wsgi.application'
 # DATABASE - PostgreSQL (Render.com) / MySQL (cPanel) / SQLite (Dev)
 # ==============================================================================
 
-# Check if DATABASE_URL is set (Render.com provides this automatically)
+# Check if DATABASE_URL is set (Render.com / Supabase)
 if os.getenv('DATABASE_URL'):
     import dj_database_url
     DATABASES = {
@@ -133,6 +133,7 @@ if os.getenv('DATABASE_URL'):
             default=os.getenv('DATABASE_URL'),
             conn_max_age=600,
             conn_health_checks=True,
+            ssl_require=True,
         )
     }
 elif config('DATABASE_ENGINE', default='django.db.backends.sqlite3') == 'django.db.backends.postgresql':
