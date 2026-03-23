@@ -4,710 +4,8 @@
 {% block title %}AIME - Agissons Ici et Maintenant pour les Enfants{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'main/hero_section.css' %}">
-<link rel="stylesheet" href="{% static 'main/home-enhanced.css' %}">
-<style>
-    /* Override pour l'image de fond de la page d'accueil */
-    .hero-section::before {
-        background-image: url('{% static "main/images/hero/_V6A0166.JPG" %}') !important;
-        background-size: cover !important;
-        background-position: center !important;
-        background-repeat: no-repeat !important;
-    }
-    
-    :root {
-        --primary-color: #2c3e50;
-        --secondary-color: #3498db;
-        --success-color: #27ae60;
-        --warning-color: #f39c12;
-        --text-dark: #2c3e50;
-        --text-light: #7f8c8d;
-        --bg-light: #ecf0f1;
-        --transition-smooth: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        --transition-ease: all 0.4s ease;
-    }
+<link rel="stylesheet" href="{% static 'main/home.css' %}">
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        line-height: 1.6;
-        color: var(--text-dark);
-    }
-
-    /* ============ SMOOTH ANIMATIONS ============ */
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes fadeInDown {
-        from {
-            opacity: 0;
-            transform: translateY(-30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes fadeInLeft {
-        from {
-            opacity: 0;
-            transform: translateX(-40px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    @keyframes fadeInRight {
-        from {
-            opacity: 0;
-            transform: translateX(40px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    @keyframes scaleIn {
-        from {
-            opacity: 0;
-            transform: scale(0.95);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-
-    @keyframes slideInFromLeft {
-        from {
-            opacity: 0;
-            transform: translateX(-60px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    @keyframes slideInFromRight {
-        from {
-            opacity: 0;
-            transform: translateX(60px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    @keyframes floatUp {
-        0%, 100% {
-            transform: translateY(0px);
-        }
-        50% {
-            transform: translateY(-10px);
-        }
-    }
-
-    @keyframes glow {
-        0%, 100% {
-            box-shadow: 0 0 20px rgba(52, 152, 219, 0.3);
-        }
-        50% {
-            box-shadow: 0 0 30px rgba(52, 152, 219, 0.6);
-        }
-    }
-
-    /* ============ APPLY ANIMATIONS ============ */
-    .animate-fadeInUp {
-        animation: fadeInUp 0.8s ease-out forwards;
-    }
-
-    .animate-fadeInDown {
-        animation: fadeInDown 0.8s ease-out forwards;
-    }
-
-    .animate-fadeInLeft {
-        animation: fadeInLeft 0.8s ease-out 0.1s forwards;
-        opacity: 0;
-    }
-
-    .animate-slideInLeft {
-        animation: slideInFromLeft 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards;
-        opacity: 0;
-    }
-
-    .animate-slideInRight {
-        animation: slideInFromRight 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards;
-        opacity: 0;
-    }
-
-    .animate-scaleIn {
-        animation: scaleIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    }
-
-    /* ============ SECTION ANIMATIONS ============ */
-    section {
-        opacity: 0;
-        animation: fadeInUp 0.8s ease-out forwards;
-    }
-
-    section:nth-of-type(1) { animation-delay: 0s; }
-    section:nth-of-type(2) { animation-delay: 0.1s; }
-    section:nth-of-type(3) { animation-delay: 0.2s; }
-    section:nth-of-type(4) { animation-delay: 0.3s; }
-    section:nth-of-type(5) { animation-delay: 0.4s; }
-
-    /* ============ CARD ANIMATIONS ============ */
-    .gallery-card, .impact-card, .program-card, .news-item, .sidebar-card {
-        opacity: 0;
-        animation: fadeInUp 0.6s ease-out forwards;
-        transition: var(--transition-smooth);
-    }
-
-    .gallery-card:hover, .impact-card:hover, .program-card:hover {
-        transform: translateY(-8px);
-    }
-
-    /* Stagger effect for cards */
-    .col-md-6:nth-child(1) { animation-delay: 0.05s; }
-    .col-md-6:nth-child(2) { animation-delay: 0.1s; }
-    .col-md-6:nth-child(3) { animation-delay: 0.15s; }
-    .col-md-6:nth-child(4) { animation-delay: 0.2s; }
-    .col-md-6:nth-child(5) { animation-delay: 0.25s; }
-    .col-md-6:nth-child(6) { animation-delay: 0.3s; }
-
-    .col-lg-4:nth-child(1) .gallery-card { animation-delay: 0.1s; }
-    .col-lg-4:nth-child(2) .gallery-card { animation-delay: 0.2s; }
-    .col-lg-4:nth-child(3) .gallery-card { animation-delay: 0.3s; }
-
-    .news-item:nth-child(1) { animation-delay: 0.1s; }
-    .news-item:nth-child(2) { animation-delay: 0.2s; }
-    .news-item:nth-child(3) { animation-delay: 0.3s; }
-
-    /* ============ BUTTON ANIMATIONS ============ */
-    .btn {
-        transition: var(--transition-ease);
-        position: relative;
-    }
-
-    .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    .btn-primary {
-        transition: var(--transition-ease);
-    }
-
-    .btn-primary:hover {
-        background-color: #c0392b;
-        transform: translateY(-2px);
-    }
-
-    /* ============ LINK ANIMATIONS ============ */
-    a {
-        transition: color 0.3s ease;
-    }
-
-    .link-primary {
-        position: relative;
-        font-weight: 600;
-    }
-
-    .link-primary::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        width: 0;
-        height: 2px;
-        background: var(--secondary-color);
-        transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .link-primary:hover::after {
-        width: 100%;
-    }
-
-    /* ============ HERO SECTION ============ */
-    .hero-section {
-        background: linear-gradient(135deg, rgba(52, 152, 219, 0.9) 0%, rgba(155, 89, 182, 0.9) 100%),
-                    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        position: relative;
-        overflow: hidden;
-        color: white;
-        z-index: 1;
-    }
-
-    .hero-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                    radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
-        animation: pulse-bg 10s ease-in-out infinite;
-    }
-
-    @keyframes pulse-bg {
-        0%, 100% { opacity: 0.5; }
-        50% { opacity: 1; }
-    }
-
-    .hero-content {
-        position: relative;
-        z-index: 2;
-    }
-
-    .hero-title {
-        font-size: clamp(2.5rem, 5vw, 4rem);
-        font-weight: 800;
-        margin-bottom: 1.5rem;
-        line-height: 1.2;
-        text-shadow: none;
-    }
-
-    .hero-subtitle {
-        font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-        margin-bottom: 2rem;
-        opacity: 0.95;
-        font-weight: 300;
-        max-width: 600px;
-    }
-
-    .hero-stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 2rem;
-        margin: 3rem 0;
-        padding: 2rem;
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        animation: scaleIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s forwards;
-        opacity: 0;
-    }
-
-    .hero-stat {
-        text-align: center;
-    }
-
-    .hero-stat-number {
-        font-size: 2.5rem;
-        font-weight: 800;
-        display: block;
-        color: #fff;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    .hero-stat-label {
-        font-size: 0.9rem;
-        opacity: 0.9;
-        margin-top: 0.5rem;
-    }
-
-    .hero-cta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-        margin-top: 2rem;
-    }
-
-    .btn-hero {
-        padding: 1rem 2rem;
-        border-radius: 50px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        border: none;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .btn-hero::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        transition: left 0.5s;
-    }
-
-    .btn-hero:hover::before {
-        left: 100%;
-    }
-
-    .btn-primary {
-        background: linear-gradient(45deg, var(--secondary-color), #ff6b6b);
-        color: white;
-        box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
-    }
-
-    .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(231, 76, 60, 0.6);
-        color: white;
-    }
-
-    .btn-secondary {
-        background: rgba(255, 255, 255, 0.2);
-        color: white;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        backdrop-filter: blur(10px);
-    }
-
-    .btn-secondary:hover {
-        background: rgba(255, 255, 255, 0.3);
-        transform: translateY(-2px);
-        color: white;
-    }
-
-    /* Impact Section */
-    .impact-section {
-        padding: 8rem 0 6rem 0; /* Augmenter le padding supérieur */
-        background: linear-gradient(180deg, #fff 0%, var(--bg-light) 100%);
-        position: relative;
-        z-index: 2;
-        margin-top: -2rem; /* Ajustement pour éviter le chevauchement */
-        border-top: 1px solid rgba(255, 255, 255, 0.3); /* Bordure de séparation */
-        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1); /* Ombre vers le haut */
-    }
-
-    .section-title {
-        text-align: center;
-        margin-bottom: 4rem;
-    }
-
-    .section-title h2 {
-        font-size: clamp(2rem, 4vw, 3rem);
-        font-weight: 700;
-        margin-bottom: 1rem;
-        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    .section-title p {
-        font-size: 1.2rem;
-        color: var(--text-light);
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    .impact-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-        padding: 2rem;
-        background: #f8fafc;
-        border-radius: 1.5rem;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.07);
-        margin-top: 3rem;
-    }
-
-    .impact-card {
-        background: #fff;
-        border-radius: 1rem;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-        padding: 2rem 1.5rem;
-        text-align: center;
-        transition: transform 0.4s cubic-bezier(.25,.8,.25,1), box-shadow 0.4s;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .impact-card:hover {
-        transform: translateY(-8px) scale(1.03);
-        box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-    }
-
-    .impact-icon {
-        font-size: 2.5rem;
-        color: #3b82f6;
-        margin-bottom: 1rem;
-        animation: pop 0.8s;
-    }
-
-    @keyframes pop {
-        0% { transform: scale(0.7); opacity: 0; }
-        80% { transform: scale(1.1); opacity: 1; }
-        100% { transform: scale(1); }
-    }
-
-    .impact-number {
-        font-size: 2.2rem;
-        font-weight: bold;
-        color: #16a34a;
-        margin-bottom: 0.5rem;
-        transition: color 0.5s;
-    }
-
-    .impact-label {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: #334155;
-        margin-bottom: 0.5rem;
-    }
-
-    .impact-description {
-        font-size: 0.98rem;
-        color: #64748b;
-        margin-bottom: 0.5rem;
-        line-height: 1.5;
-    }
-
-    /* Programs Section */
-    .programs-section {
-        padding: 6rem 0;
-        background: var(--primary-color);
-        color: white;
-    }
-
-    .programs-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 2rem;
-        margin-top: 3rem;
-    }
-
-    .program-card {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        padding: 2.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        transition: all 0.3s ease;
-    }
-
-    .program-card:hover {
-        transform: translateY(-5px);
-        background: rgba(255, 255, 255, 0.15);
-    }
-
-    .program-icon {
-        font-size: 3rem;
-        margin-bottom: 1.5rem;
-        color: var(--warning-color);
-    }
-
-    .program-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-    }
-
-    .program-description {
-        opacity: 0.9;
-        line-height: 1.7;
-        margin-bottom: 1.5rem;
-    }
-
-    .program-link {
-        color: var(--warning-color);
-        text-decoration: none;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        transition: all 0.3s ease;
-    }
-
-    .program-link:hover {
-        color: white;
-        transform: translateX(5px);
-    }
-
-    /* CTA Section */
-    .cta-section {
-        padding: 6rem 0;
-        background: linear-gradient(135deg, var(--secondary-color) 0%, #ff6b6b 100%);
-        color: white;
-        text-align: center;
-    }
-
-    .cta-content {
-        max-width: 800px;
-        margin: 0 auto;
-    }
-
-    .cta-title {
-        font-size: clamp(2rem, 4vw, 3rem);
-        font-weight: 700;
-        margin-bottom: 1.5rem;
-    }
-
-    .cta-description {
-        font-size: 1.2rem;
-        opacity: 0.95;
-        margin-bottom: 2.5rem;
-        line-height: 1.7;
-    }
-
-    .cta-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-        flex-wrap: wrap;
-    }
-
-    .btn-cta {
-        padding: 1.2rem 2.5rem;
-        border-radius: 50px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        border: 2px solid transparent;
-    }
-
-    .btn-cta-white {
-    background: white;
-    color: var(--secondary-color);
-    }
-
-    .btn-cta-white:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    color: var(--secondary-color);
-    }
-
-    .btn-cta-outline {
-        background: transparent;
-        color: white;
-        border-color: white;
-    }
-
-    .btn-cta-outline:hover {
-    background: white;
-    color: var(--secondary-color);
-    transform: translateY(-3px);
-    }
-
-    /* Animations */
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes slideInLeft {
-        from {
-            opacity: 0;
-            transform: translateX(-30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    @keyframes slideInRight {
-        from {
-            opacity: 0;
-            transform: translateX(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    .animate-fadeInUp {
-        animation: fadeInUp 0.8s ease-out;
-    }
-
-    .animate-slideInLeft {
-        animation: slideInLeft 0.8s ease-out;
-    }
-
-    .animate-slideInRight {
-        animation: slideInRight 0.8s ease-out;
-    }
-
-    /* Smooth transition between sections */
-    section {
-        position: relative;
-    }
-
-    .hero-section + .impact-section {
-        margin-top: 0;
-        padding-top: 8rem; /* Espace supplémentaire au-dessus de la section impact */
-        border-top: 2px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Mobile responsive */
-    @media (max-width: 768px) {
-        
-        .hero-cta {
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .btn-hero {
-            width: 100%;
-            justify-content: center;
-            max-width: 300px;
-        }
-        
-        .impact-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        .programs-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        .cta-buttons {
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .btn-cta {
-            width: 100%;
-            max-width: 300px;
-            justify-content: center;
-        }
-    }
-</style>
 {% endblock %}
 
 {% block content %}
@@ -717,16 +15,16 @@
         <div class="row align-items-center">
             <div class="col-lg-8">
                 <div class="hero-content">
-                    <h1 class="hero-title animate-fadeInUp">
+                    <h1 class="hero-title animate-enter">
                         Agissons Ici et Maintenant pour les 
-                        <span style="background: linear-gradient(45deg, #1299f3, #f5f3f2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: none;">Enfants</span>
+                        <span class="text-gradient">Enfants</span>
                     </h1>
-                    <p class="hero-subtitle animate-slideInLeft">
+                    <p class="hero-subtitle animate-enter delay-1">
                         Organisation dédiée au développement socio-éducationnel, entrepreneurial et à la formation 
                         en divers métiers pour l'épanouissement des enfants en République Démocratique du Congo.
                     </p>
                     
-                    <div class="hero-stats animate-slideInRight">
+                    <div class="hero-stats animate-enter delay-2">
                         <div class="hero-stat">
                             <span class="hero-stat-number" data-target="{{ stats.total_children_helped }}">0</span>
                             <div class="hero-stat-label">Enfants aidés</div>
@@ -747,21 +45,21 @@
                     
                     <div class="hero-cta">
                         {% if user.is_authenticated %}
-                        <a href="{% url 'main:dashboard_home' %}" class="btn-hero btn-primary">
+                        <a href="{% url 'main:dashboard_home' %}" class="btn btn-primary">
                             <i class="fas fa-tachometer-alt"></i>
                             Mon tableau de bord
                         </a>
                         {% endif %}
-                        <a href="{% url 'main:projects' %}" class="btn-hero btn-primary">
+                        <a href="{% url 'main:projects' %}" class="btn btn-primary">
                             <i class="fas fa-rocket"></i>
                             Découvrir nos projets
                         </a>
-                        <a href="{% url 'main:interactive_map' %}" class="btn-hero btn-secondary">
+                        <a href="{% url 'main:interactive_map' %}" class="btn btn-secondary">
                             <i class="fas fa-map-marked-alt"></i>
                             Voir notre impact
                         </a>
                         {% if not user.is_authenticated %}
-                        <a href="{% url 'main:signup' %}" class="btn-hero btn-secondary">
+                        <a href="{% url 'main:signup' %}" class="btn btn-secondary">
                             <i class="fas fa-user-plus"></i>
                             Rejoindre AIME
                         </a>
@@ -784,511 +82,171 @@
 </section>
 
 <!-- Impact Section -->
-<section class="impact-section">
-    <div class="container">
-        <div class="section-title">
-            <h2>Fondations Solides - Notre Démarrage</h2>
-            <p style="max-width: 800px; margin: 0 auto 1rem auto;">Nous construisons notre impact pas à pas, avec authenticité et transparence. Chaque chiffre ci-dessous représente une action concrète, un enfant accompagné, une famille soutenue.</p>
-            <p class="text-muted" style="font-size: 0.95rem; font-style: italic;">
-                <i class="fas fa-seedling me-2"></i>Au fur et à mesure que les enfants et parents s'inscrivent, ces chiffres évolueront naturellement.
+
+<!-- ==============================
+     NOUVELLE SECTION IMPACT (PROFESSIONNELLE)
+     ============================== -->
+<section class="py-5 bg-light">
+    <div class="container text-center">
+        <div class="mb-5 reveal-on-scroll">
+            <h2 class="fw-bold mb-3" style="color: var(--clr-primary-dark);">Notre Impact en Chiffres</h2>
+            <p class="text-muted mx-auto" style="max-width: 700px; font-weight: 300;">
+                Nous construisons notre impact pas à pas, avec authenticité et transparence.
+                Chaque chiffre représente une action concrète pour l'avenir de la RDC.
             </p>
         </div>
-        
-        <div class="impact-grid">
-            <div class="impact-card">
-                <div class="impact-icon">
-                    <i class="fas fa-child"></i>
-                </div>
-                <div class="impact-number" data-target="{{ stats.total_children_helped }}">0</div>
-                <div class="impact-label">Enfants touchés directement</div>
-                <div class="impact-description">
-                    Chaque enfant que nous accompagnons reçoit une attention personnalisée et un suivi de qualité.
+
+        <div class="row g-4 justify-content-center">
+            <!-- Carte 1 -->
+            <div class="col-6 col-md-3 reveal-on-scroll" style="transition-delay: 0.1s;">
+                <div class="card h-100 border-0 shadow-sm rounded-4 text-center p-4" style="background: white;">
+                    <i class="fas fa-child fa-3x mb-3" style="color: var(--clr-primary);"></i>
+                    <h3 class="fw-bold mb-1" style="font-size: 2.5rem; color: var(--clr-primary-dark);" data-target="{{ stats.total_children_helped }}">0</h3>
+                    <p class="text-muted mb-0 small text-uppercase fw-bold">Enfants Accompagnés</p>
                 </div>
             </div>
-            
-            <div class="impact-card">
-                <div class="impact-icon">
-                    <i class="fas fa-school"></i>
-                </div>
-                <div class="impact-number" data-target="{{ stats.schools_partners }}">0</div>
-                <div class="impact-label">Écoles partenaires</div>
-                <div class="impact-description">
-                    Nous développons des partenariats solides avec les établissements scolaires pour maximiser notre impact.
+            <!-- Carte 2 -->
+            <div class="col-6 col-md-3 reveal-on-scroll" style="transition-delay: 0.2s;">
+                <div class="card h-100 border-0 shadow-sm rounded-4 text-center p-4" style="background: white;">
+                    <i class="fas fa-school fa-3x mb-3" style="color: var(--clr-secondary);"></i>
+                    <h3 class="fw-bold mb-1" style="font-size: 2.5rem; color: var(--clr-primary-dark);" data-target="{{ stats.schools_partners }}">0</h3>
+                    <p class="text-muted mb-0 small text-uppercase fw-bold">Écoles Partenaires</p>
                 </div>
             </div>
-            
-            <div class="impact-card">
-                <div class="impact-icon">
-                    <i class="fas fa-map-marked-alt"></i>
-                </div>
-                <div class="impact-number" data-target="{{ stats.provinces_count }}">0</div>
-                <div class="impact-label">Provinces RDC</div>
-                <div class="impact-description">
-                    Démarrage à Kinshasa avec expansion progressive dans les 26 provinces de la RDC et la région.
+            <!-- Carte 3 -->
+            <div class="col-6 col-md-3 reveal-on-scroll" style="transition-delay: 0.3s;">
+                <div class="card h-100 border-0 shadow-sm rounded-4 text-center p-4" style="background: white;">
+                    <i class="fas fa-map-marker-alt fa-3x mb-3" style="color: #25d366;"></i>
+                    <h3 class="fw-bold mb-1" style="font-size: 2.5rem; color: var(--clr-primary-dark);" data-target="1">1</h3>
+                    <p class="text-muted mb-0 small text-uppercase fw-bold">Provinces RDC</p>
                 </div>
             </div>
-            
-            <div class="impact-card">
-                <div class="impact-icon">
-                    <i class="fas fa-seedling"></i>
-                </div>
-                <div class="impact-number" data-target="{{ stats.quartiers_impacted }}">0</div>
-                <div class="impact-label">Quartiers impactés</div>
-                <div class="impact-description">
-                    Communautés où nous intervenons activement pour améliorer les conditions de vie et créer des opportunités.
-                </div>
-            </div>
-            
-            <div class="impact-card">
-                <div class="impact-icon">
-                    <i class="fas fa-graduation-cap"></i>
-                </div>
-                <div class="impact-number" data-target="{{ stats.formations_dispensed }}">0</div>
-                <div class="impact-label">Formations dispensées</div>
-                <div class="impact-description">
-                    Ateliers et formations en informatique, mécanique vélo, et développement personnel.
-                </div>
-            </div>
-            
-            <div class="impact-card">
-                <div class="impact-icon">
-                    <i class="fas fa-bicycle"></i>
-                </div>
-                <div class="impact-number" data-target="{{ stats.mbc_participants }}">0</div>
-                <div class="impact-label">Participants MBC</div>
-                <div class="impact-description">
-                    Jeunes engagés dans notre programme phare de sensibilisation environnementale.
-                </div>
-            </div>
-            
-            <div class="impact-card">
-                <div class="impact-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <div class="impact-number" data-target="{{ stats.families_supported }}">0</div>
-                <div class="impact-label">Familles accompagnées</div>
-                <div class="impact-description">
-                    Soutien direct aux familles vulnérables à travers nos programmes communautaires.
-                </div>
-            </div>
-            
-            <div class="impact-card">
-                <div class="impact-icon">
-                    <i class="fas fa-project-diagram"></i>
-                </div>
-                <div class="impact-number" data-target="{{ stats.active_projects }}">0</div>
-                <div class="impact-label">Projets actifs</div>
-                <div class="impact-description">
-                    Initiatives en cours pour créer un impact durable dans nos communautés.
+            <!-- Carte 4 -->
+            <div class="col-6 col-md-3 reveal-on-scroll" style="transition-delay: 0.4s;">
+                <div class="card h-100 border-0 shadow-sm rounded-4 text-center p-4" style="background: white;">
+                    <i class="fas fa-hands-helping fa-3x mb-3" style="color: #e74c3c;"></i>
+                    <h3 class="fw-bold mb-1" style="font-size: 2.5rem; color: var(--clr-primary-dark);" data-target="{{ stats.families_helped }}">0</h3>
+                    <p class="text-muted mb-0 small text-uppercase fw-bold">Familles Soutenues</p>
                 </div>
             </div>
         </div>
         
-        <div class="text-center mt-5">
-            <div class="alert alert-info d-inline-block" style="background: rgba(52, 152, 219, 0.1); border: 2px solid #3498db; border-radius: 15px; padding: 1.5rem 2rem;">
-                <i class="fas fa-chart-line me-2" style="color: #3498db; font-size: 1.5rem;"></i>
-                <strong style="color: #2c3e50;">Croissance Authentique</strong>
-                <p class="mb-0 mt-2" style="color: #34495e;">
-                    Ces chiffres sont réels et évoluent quotidiennement. Notre force réside dans la qualité de notre accompagnement, pas dans des statistiques gonflées. 
-                    <br><strong>Chaque enfant compte, chaque famille compte.</strong>
-                </p>
-            </div>
+        <div class="mt-4 pt-4 border-top reveal-on-scroll" style="transition-delay: 0.5s;">
+             <p class="text-muted mb-0"><i class="fas fa-info-circle me-2 text-primary"></i>Ces chiffres évoluent en temps réel selon les inscriptions.</p>
         </div>
     </div>
 </section>
 
-<!-- Programs Section -->
-<section class="programs-section">
+<!-- ==============================
+     NOUVELLE SECTION PROGRAMMES (PROFESSIONNELLE)
+     ============================== -->
+<section class="py-5 bg-white">
     <div class="container">
-        <div class="section-title">
-            <h2 style="color: white;">Nos Programmes Phares</h2>
-            <p style="color: rgba(255,255,255,0.9);">Des initiatives concrètes pour l'épanouissement et l'autonomisation des enfants et jeunes de la RDC.</p>
-        </div>
-        
-        <div class="programs-grid">
-            <div class="program-card">
-                <div class="program-icon">
-                    <i class="fas fa-bicycle"></i>
-                </div>
-                <h3 class="program-title">Mutoto Bike Challenge</h3>
-                <p class="program-description">
-                    Un défi cycliste annuel qui sensibilise les jeunes à la protection de l'environnement tout en promouvant le sport et la cohésion sociale.
-                </p>
-                <a href="{% url 'main:mutoto_bike_challenge' %}" class="program-link">
-                    En savoir plus <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-            
-            <div class="program-card">
-                <div class="program-icon">
-                    <i class="fas fa-microscope"></i>
-                </div>
-                <h3 class="program-title">Mutoto Science Adventure</h3>
-                <p class="program-description">
-                    Programme d'initiation aux sciences et technologies pour éveiller la curiosité scientifique des enfants et développer leur esprit critique.
-                </p>
-                <a href="{% url 'main:about' %}" class="program-link">
-                    En savoir plus <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-            
-            <div class="program-card">
-                <div class="program-icon">
-                    <i class="fas fa-laptop-code"></i>
-                </div>
-                <h3 class="program-title">École Numérique</h3>
-                <p class="program-description">
-                    Formation aux outils numériques et à la programmation pour préparer les jeunes aux métiers du futur et réduire la fracture numérique.
-                </p>
-                <a href="{% url 'main:projects' %}" class="program-link">
-                    En savoir plus <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- CTA Section -->
-<section class="cta-section">
-    <div class="container">
-        <div class="cta-content">
-            <h2 class="cta-title">Rejoignez Notre Mission</h2>
-            <p class="cta-description">
-                Ensemble, nous pouvons créer un avenir meilleur pour les enfants de la RDC. 
-                Votre soutien, quelle que soit sa forme, fait la différence dans la vie de centaines d'enfants.
+        <div class="text-center mb-5 reveal-on-scroll">
+            <h2 class="fw-bold mb-3" style="color: var(--clr-primary-dark);">Nos Programmes Phares</h2>
+            <p class="text-muted mx-auto" style="max-width: 700px; font-weight: 300;">
+                Des initiatives concrètes pour l'épanouissement et l'autonomisation des enfants et jeunes de la RDC.
             </p>
-            <div class="cta-buttons">
-                <a href="{% url 'main:donate' %}" class="btn-cta btn-cta-white">
-                    <i class="fas fa-heart"></i>
-                    Faire un don
-                </a>
-                <a href="{% url 'main:contact' %}" class="btn-cta btn-cta-outline">
-                    <i class="fas fa-hands-helping"></i>
-                    Devenir bénévole
-                </a>
+        </div>
+
+        <div class="row g-4">
+            <!-- Programme 1 -->
+            <div class="col-md-4 reveal-on-scroll" style="transition-delay: 0.1s;">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden program-card-hover">
+                    <img src="{% static 'main/images/hero/hero-map.jpg' %}" class="card-img-top" alt="Mutoto Bike Challenge" style="height: 220px; object-fit: cover;">
+                    <div class="card-body p-4 bg-white">
+                        <div class="badge bg-primary text-white mb-3 py-2 px-3 rounded-pill"><i class="fas fa-bicycle me-2"></i>Sport & Écologie</div>
+                        <h4 class="card-title fw-bold">Mutoto Bike Challenge</h4>
+                        <p class="card-text text-muted mb-4" style="font-weight: 300; font-size: 0.95rem;">Un défi cycliste annuel pour sensibiliser les jeunes à la protection de l'environnement tout en promouvant le sport et la cohésion sociale.</p>
+                        <a href="{% url 'main:mutoto_bike_challenge' %}" class="btn btn-outline-primary w-100 rounded-pill fw-bold">Découvrir <i class="fas fa-arrow-right ms-2"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Programme 2 -->
+            <div class="col-md-4 reveal-on-scroll" style="transition-delay: 0.2s;">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden program-card-hover">
+                    <img src="{% static 'main/images/hero/_V6A0191.JPG' %}" class="card-img-top" alt="Mutoto Science Adventure" style="height: 220px; object-fit: cover;">
+                    <div class="card-body p-4 bg-white">
+                        <div class="badge text-white mb-3 py-2 px-3 rounded-pill" style="background-color: var(--clr-secondary);"><i class="fas fa-flask me-2"></i>Sciences & Tech</div>
+                        <h4 class="card-title fw-bold">Mutoto Science</h4>
+                        <p class="card-text text-muted mb-4" style="font-weight: 300; font-size: 0.95rem;">Programme d'initiation aux sciences et technologies pour éveiller la curiosité scientifique des enfants et développer leur esprit critique.</p>
+                        <a href="{% url 'main:about' %}" class="btn w-100 rounded-pill fw-bold" style="border-color: var(--clr-secondary); color: var(--clr-secondary);">Découvrir <i class="fas fa-arrow-right ms-2"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Programme 3 -->
+            <div class="col-md-4 reveal-on-scroll" style="transition-delay: 0.3s;">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden program-card-hover">
+                    <img src="{% static 'main/images/hero/_V6A0166.JPG' %}" class="card-img-top" alt="École Numérique" style="height: 220px; object-fit: cover;">
+                    <div class="card-body p-4 bg-white">
+                        <div class="badge bg-success text-white mb-3 py-2 px-3 rounded-pill"><i class="fas fa-laptop-code me-2"></i>Digital & Futur</div>
+                        <h4 class="card-title fw-bold">École Numérique</h4>
+                        <p class="card-text text-muted mb-4" style="font-weight: 300; font-size: 0.95rem;">Formation aux outils numériques et à la programmation pour préparer les jeunes aux métiers du futur et réduire la fracture numérique.</p>
+                        <a href="{% url 'main:about' %}" class="btn btn-outline-success w-100 rounded-pill fw-bold">Découvrir <i class="fas fa-arrow-right ms-2"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-{% block extra_js %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Animation des compteurs
-    function animateCounters() {
-        const counters = document.querySelectorAll('[data-target]');
-        const observerOptions = {
-            threshold: 0.5,
-            rootMargin: '0px 0px -100px 0px'
-        };
+<!-- ==============================
+     NOUVELLE SECTION IMPACT (PROFESSIONNELLE)
+     ============================== -->
+<section class="py-5 bg-light">
+    <div class="container text-center">
+        <div class="mb-5 reveal-on-scroll">
+            <h2 class="fw-bold mb-3" style="color: var(--clr-primary-dark);">Notre Impact en Chiffres</h2>
+            <p class="text-muted mx-auto" style="max-width: 700px; font-weight: 300;">
+                Nous construisons notre impact pas à pas, avec authenticité et transparence.
+                Chaque chiffre représente une action concrète pour l'avenir de la RDC.
+            </p>
+        </div>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
-                    const counter = entry.target;
-                    const target = parseInt(counter.getAttribute('data-target'));
-                    const duration = 2000;
-                    const increment = target / (duration / 16);
-                    let current = 0;
-
-                    counter.classList.add('animated');
-
-                    const timer = setInterval(() => {
-                        current += increment;
-                        if (current >= target) {
-                            counter.textContent = target.toLocaleString();
-                            clearInterval(timer);
-                        } else {
-                            counter.textContent = Math.floor(current).toLocaleString();
-                        }
-                    }, 16);
-                }
-            });
-        }, observerOptions);
-
-        counters.forEach(counter => observer.observe(counter));
-    }
-
-    // Animation des éléments au scroll
-    function initScrollAnimations() {
-        const elements = document.querySelectorAll('.impact-card, .program-card');
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }, index * 100);
-                }
-            });
-        }, observerOptions);
-
-        elements.forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.8s ease-out';
-            observer.observe(el);
-        });
-    }
-
-    // Parallax effect for hero section
-    function initParallax() {
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const heroSection = document.querySelector('.hero-section');
-            if (heroSection && scrolled < heroSection.offsetHeight) {
-                // Réduire l'effet parallax pour éviter les chevauchements
-                const parallaxOffset = Math.min(scrolled * 0.15, heroSection.offsetHeight * 0.3);
-                heroSection.style.transform = `translateY(${parallaxOffset}px)`;
-            }
-        });
-    }
-
-    // Initialize all animations
-    animateCounters();
-    initScrollAnimations();
-    initParallax();
-
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-
-    // Initialize Live Chat
-    initLiveChat();
-});
-
-// Fonction pour récupérer le token CSRF
-function getCSRFToken() {
-    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]');
-    return csrfToken ? csrfToken.value : '';
-}
-
-// Live Chat Functionality
-function initLiveChat() {
-    const chatWidget = document.getElementById('livechat-widget');
-    const chatToggle = document.getElementById('chat-toggle');
-    const chatClose = document.getElementById('chat-close');
-    const chatSend = document.getElementById('chat-send');
-    const chatInput = document.getElementById('chat-input');
-    const chatMessages = document.getElementById('chat-messages');
-    
-    let isOpen = false;
-    
-    // Toggle chat
-    chatToggle.addEventListener('click', () => {
-        isOpen = !isOpen;
-        chatWidget.classList.toggle('open', isOpen);
-        if (isOpen) {
-            chatInput.focus();
-            // Welcome message
-            if (chatMessages.children.length === 0) {
-                addMessage('👋 Bonjour ! Je suis l\'assistant AIME. Comment puis-je vous aider aujourd\'hui ? Si vous préférez parler directement avec un humain, cliquez sur le bouton vert à côté !', 'bot');
-            }
-        }
-    });
-    
-    // Close chat
-    chatClose.addEventListener('click', () => {
-        isOpen = false;
-        chatWidget.classList.remove('open');
-    });
-    
-    // Send message
-    function sendMessage() {
-        const message = chatInput.value.trim();
-        if (message) {
-            addMessage(message, 'user');
-            chatInput.value = '';
-            
-            // Simulate typing
-            setTimeout(() => {
-                const response = getBotResponse(message);
-                addMessage(response, 'bot');
-                
-                // Sometimes offer human assistance
-                if (shouldOfferHumanHelp(message)) {
-                    setTimeout(() => {
-                        addHumanAssistanceButton();
-                    }, 2000);
-                }
-            }, 1000);
-        }
-    }
-    
-    chatSend.addEventListener('click', sendMessage);
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            sendMessage();
-        }
-    });
-    
-    // Quick human help button
-    const humanHelpQuick = document.getElementById('human-help-quick');
-    humanHelpQuick.addEventListener('click', () => {
-        const userMessage = Array.from(chatMessages.querySelectorAll('.chat-message.user .message-content'))
-            .map(el => el.textContent)
-            .join(' | ');
-        
-        const whatsappUrl = `https://wa.me/243823090002?text=${encodeURIComponent(
-            `Bonjour AIME ! J'aimerais parler directement avec un membre de votre équipe. Voici mon historique avec l'assistant : ${userMessage || 'Nouvelle conversation'}`
-        )}`;
-        
-        window.open(whatsappUrl, '_blank');
-        
-        // Add confirmation message
-        addMessage('✅ Vous allez être redirigé vers WhatsApp pour parler avec un membre de notre équipe !', 'bot');
-    });
-    
-    // Add message to chat
-    function addMessage(text, sender) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `chat-message ${sender}`;
-        messageDiv.innerHTML = `
-            <div class="message-content">${text}</div>
-            <div class="message-time">${new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit'})}</div>
-        `;
-        chatMessages.appendChild(messageDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-    
-    // Simple bot responses
-    function getBotResponse(message) {
-        const lowerMessage = message.toLowerCase();
-        
-        if (lowerMessage.includes('don') || lowerMessage.includes('donner')) {
-            return '💝 Merci pour votre intérêt ! Vous pouvez faire un don <a href="/donate/" target="_blank">ici</a>. Chaque contribution compte pour aider nos enfants.';
-        }
-        
-        if (lowerMessage.includes('projet') || lowerMessage.includes('programme')) {
-            return '🚀 Découvrez nos projets <a href="/projects/" target="_blank">ici</a>. Nous avons le Mutoto Bike Challenge, l\'École Numérique et bien plus !';
-        }
-        
-        if (lowerMessage.includes('bénévole') || lowerMessage.includes('volontaire')) {
-            return '🤝 Formidable ! Contactez-nous <a href="/contact/" target="_blank">ici</a> pour rejoindre notre équipe de bénévoles.';
-        }
-        
-        if (lowerMessage.includes('contact') || lowerMessage.includes('téléphone') || lowerMessage.includes('email')) {
-            return '📧 Vous pouvez nous contacter via notre <a href="/contact/" target="_blank">formulaire de contact</a> ou par email : contact@aime-rdc.org';
-        }
-        
-        if (lowerMessage.includes('mbc') || lowerMessage.includes('vélo') || lowerMessage.includes('bike')) {
-            return '🚴‍♂️ Le Mutoto Bike Challenge est notre programme phare ! Découvrez-le <a href="/mbc/" target="_blank">ici</a>.';
-        }
-        
-        if (lowerMessage.includes('bonjour') || lowerMessage.includes('salut') || lowerMessage.includes('hello')) {
-            return '👋 Bonjour ! Je suis ravi de vous parler. Comment puis-je vous aider avec AIME aujourd\'hui ?';
-        }
-        
-        if (lowerMessage.includes('merci')) {
-            return '😊 Je vous en prie ! N\'hésitez pas si vous avez d\'autres questions.';
-        }
-        
-        // Default responses
-        const defaultResponses = [
-            '🤔 Je peux vous aider avec nos projets, donations, bénévolat ou informations de contact. Que souhaitez-vous savoir ?',
-            '💡 Pour plus d\'informations détaillées, visitez notre page <a href="/about/" target="_blank">À propos</a> ou <a href="/contact/" target="_blank">contactez-nous</a> directement.',
-            '📞 Si vous préférez parler à un humain, contactez-nous <a href="/contact/" target="_blank">ici</a> !',
-        ];
-        
-        return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
-    }
-    
-    // Check if we should offer human assistance
-    function shouldOfferHumanHelp(message) {
-        const lowerMessage = message.toLowerCase();
-        const humanKeywords = ['urgent', 'aide', 'problème', 'question', 'parler', 'humain', 'personne', 'directement', 'immédiatement'];
-        
-        // Offer human help for urgent matters or specific requests
-        return humanKeywords.some(keyword => lowerMessage.includes(keyword)) || Math.random() < 0.3; // 30% chance for general questions
-    }
-    
-    // Add human assistance button
-    function addHumanAssistanceButton() {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'chat-message bot';
-        messageDiv.innerHTML = `
-            <div class="message-content">
-                <p>🤝 Pour une assistance plus personnalisée, je peux vous connecter avec un membre de notre équipe :</p>
-                <button id="human-help-btn" class="human-help-btn">
-                    <i class="fab fa-whatsapp"></i> Contacter via WhatsApp
-                </button>
-                <p style="margin-top: 8px; font-size: 0.8em; opacity: 0.8;">
-                    Ou appelez-nous directement : +243 823 090 002
-                </p>
+        <div class="row g-4 justify-content-center">
+            <!-- Carte 1 -->
+            <div class="col-6 col-md-3 reveal-on-scroll" style="transition-delay: 0.1s;">
+                <div class="card h-100 border-0 shadow-sm rounded-4 text-center p-4" style="background: white;">
+                    <i class="fas fa-child fa-3x mb-3" style="color: var(--clr-primary);"></i>
+                    <h3 class="fw-bold mb-1" style="font-size: 2.5rem; color: var(--clr-primary-dark);" data-target="{{ stats.total_children_helped }}">0</h3>
+                    <p class="text-muted mb-0 small text-uppercase fw-bold">Enfants Accompagnés</p>
+                </div>
             </div>
-            <div class="message-time">${new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit'})}</div>
-        `;
-        chatMessages.appendChild(messageDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+            <!-- Carte 2 -->
+            <div class="col-6 col-md-3 reveal-on-scroll" style="transition-delay: 0.2s;">
+                <div class="card h-100 border-0 shadow-sm rounded-4 text-center p-4" style="background: white;">
+                    <i class="fas fa-school fa-3x mb-3" style="color: var(--clr-secondary);"></i>
+                    <h3 class="fw-bold mb-1" style="font-size: 2.5rem; color: var(--clr-primary-dark);" data-target="{{ stats.schools_partners }}">0</h3>
+                    <p class="text-muted mb-0 small text-uppercase fw-bold">Écoles Partenaires</p>
+                </div>
+            </div>
+            <!-- Carte 3 -->
+            <div class="col-6 col-md-3 reveal-on-scroll" style="transition-delay: 0.3s;">
+                <div class="card h-100 border-0 shadow-sm rounded-4 text-center p-4" style="background: white;">
+                    <i class="fas fa-map-marker-alt fa-3x mb-3" style="color: #25d366;"></i>
+                    <h3 class="fw-bold mb-1" style="font-size: 2.5rem; color: var(--clr-primary-dark);" data-target="1">1</h3>
+                    <p class="text-muted mb-0 small text-uppercase fw-bold">Provinces RDC</p>
+                </div>
+            </div>
+            <!-- Carte 4 -->
+            <div class="col-6 col-md-3 reveal-on-scroll" style="transition-delay: 0.4s;">
+                <div class="card h-100 border-0 shadow-sm rounded-4 text-center p-4" style="background: white;">
+                    <i class="fas fa-hands-helping fa-3x mb-3" style="color: #e74c3c;"></i>
+                    <h3 class="fw-bold mb-1" style="font-size: 2.5rem; color: var(--clr-primary-dark);" data-target="{{ stats.families_helped }}">0</h3>
+                    <p class="text-muted mb-0 small text-uppercase fw-bold">Familles Soutenues</p>
+                </div>
+            </div>
+        </div>
         
-        // Add event listener to the button
-        document.getElementById('human-help-btn').addEventListener('click', () => {
-            // Récupérer l'historique de la conversation
-            const conversationHistory = Array.from(chatMessages.querySelectorAll('.chat-message'))
-                .map(msg => {
-                    const sender = msg.classList.contains('user') ? 'Visiteur' : 'Assistant';
-                    const content = msg.querySelector('.message-content').textContent;
-                    return `${sender}: ${content}`;
-                })
-                .join('\n');
-            
-            // Envoyer notification au backend
-            fetch('/api/chat/notification/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCSRFToken()
-                },
-                body: JSON.stringify({
-                    message: 'Demande d\'assistance humaine via le chat',
-                    history: conversationHistory,
-                    email: 'visiteur@site.com', // Peut être récupéré depuis un formulaire
-                    name: 'Visiteur du site'
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    console.log('Notification envoyée avec succès');
-                } else {
-                    console.error('Erreur lors de l\'envoi de la notification:', data.error);
-                }
-            })
-            .catch(error => {
-                console.error('Erreur réseau:', error);
-            });
-            
-            const whatsappUrl = `https://wa.me/243823090002?text=${encodeURIComponent(
-                `Bonjour AIME ! J'aimerais parler directement avec un membre de votre équipe. Voici mon historique avec l'assistant : ${conversationHistory}`
-            )}`;
-            
-            window.open(whatsappUrl, '_blank');
-            
-            // Add confirmation message
-            setTimeout(() => {
-                addMessage('✅ Vous allez être redirigé vers WhatsApp pour parler avec un membre de notre équipe !', 'bot');
-            }, 1000);
-        });
-    }
-}
-</script>
+        <div class="mt-4 pt-4 border-top reveal-on-scroll" style="transition-delay: 0.5s;">
+             <p class="text-muted mb-0"><i class="fas fa-info-circle me-2 text-primary"></i>Ces chiffres évoluent en temps réel selon les inscriptions.</p>
+        </div>
+    </div>
+</section>
 
-<!-- Gallery Section - Latest Realizations with Carousel -->
+
 <section class="py-5 bg-light">
     <div class="container">
         <div class="section-title">
@@ -1310,7 +268,7 @@ function initLiveChat() {
                 <!-- Slide 1: Formation Vélo -->
                 <div class="carousel-item active">
                     <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=600&fit=crop" class="d-block w-100" alt="Formation Mécanique Vélo" style="height: 500px; object-fit: cover;">
-                    <div class="carousel-caption d-none d-md-block" style="background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, transparent 100%); padding: 2rem;">
+                    <div class="carousel-caption d-none d-md-block" class="text-gradient">
                         <h5 class="fw-bold" style="font-size: 1.8rem;">Formation Mécanique Vélo</h5>
                         <p>Sensibilisation environnementale et formation technique à Kinshasa</p>
                     </div>
@@ -1319,7 +277,7 @@ function initLiveChat() {
                 <!-- Slide 2: Science Adventure -->
                 <div class="carousel-item">
                     <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop" class="d-block w-100" alt="Mutoto Science Adventure" style="height: 500px; object-fit: cover;">
-                    <div class="carousel-caption d-none d-md-block" style="background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, transparent 100%); padding: 2rem;">
+                    <div class="carousel-caption d-none d-md-block" class="text-gradient">
                         <h5 class="fw-bold" style="font-size: 1.8rem;">Mutoto Science Adventure</h5>
                         <p>Ateliers scientifiques et technologiques pour jeunes filles</p>
                     </div>
@@ -1328,7 +286,7 @@ function initLiveChat() {
                 <!-- Slide 3: Mon Beau Métier -->
                 <div class="carousel-item">
                     <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=600&fit=crop" class="d-block w-100" alt="Mon Beau Métier" style="height: 500px; object-fit: cover;">
-                    <div class="carousel-caption d-none d-md-block" style="background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, transparent 100%); padding: 2rem;">
+                    <div class="carousel-caption d-none d-md-block" class="text-gradient">
                         <h5 class="fw-bold" style="font-size: 1.8rem;">Mon Beau Métier</h5>
                         <p>Valorisation et formation des métiers étudiants en RDC</p>
                     </div>
@@ -1337,7 +295,7 @@ function initLiveChat() {
                 <!-- Slide 4: Communauté -->
                 <div class="carousel-item">
                     <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&h=600&fit=crop" class="d-block w-100" alt="Communauté" style="height: 500px; object-fit: cover;">
-                    <div class="carousel-caption d-none d-md-block" style="background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, transparent 100%); padding: 2rem;">
+                    <div class="carousel-caption d-none d-md-block" class="text-gradient">
                         <h5 class="fw-bold" style="font-size: 1.8rem;">Engagement Communautaire</h5>
                         <p>Travail collectif pour un impact durable dans nos communautés</p>
                     </div>
@@ -1346,7 +304,7 @@ function initLiveChat() {
                 <!-- Slide 5: Jeunesse & Éducation -->
                 <div class="carousel-item">
                     <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&h=600&fit=crop" class="d-block w-100" alt="Jeunesse & Éducation" style="height: 500px; object-fit: cover;">
-                    <div class="carousel-caption d-none d-md-block" style="background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, transparent 100%); padding: 2rem;">
+                    <div class="carousel-caption d-none d-md-block" class="text-gradient">
                         <h5 class="fw-bold" style="font-size: 1.8rem;">Jeunesse & Éducation</h5>
                         <p>Formation et accompagnement des jeunes entrepreneurs</p>
                     </div>
@@ -1355,7 +313,7 @@ function initLiveChat() {
                 <!-- Slide 6: Impact Social -->
                 <div class="carousel-item">
                     <img src="https://images.unsplash.com/photo-1564225215-4ae7f8438bbb?w=1200&h=600&fit=crop" class="d-block w-100" alt="Impact Social" style="height: 500px; object-fit: cover;">
-                    <div class="carousel-caption d-none d-md-block" style="background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, transparent 100%); padding: 2rem;">
+                    <div class="carousel-caption d-none d-md-block" class="text-gradient">
                         <h5 class="fw-bold" style="font-size: 1.8rem;">Impact Social Durable</h5>
                         <p>Création d'opportunités et transformation de vies en RDC</p>
                     </div>
@@ -1363,10 +321,10 @@ function initLiveChat() {
             </div>
             
             <!-- Carousel Controls -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev" style="background: linear-gradient(90deg, rgba(0,0,0,0.5) 0%, transparent 100%); border: none; width: 80px;">
+            <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev" class="text-gradient">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next" style="background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.5) 100%); border: none; width: 80px;">
+            <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next" class="text-gradient">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
             </button>
         </div>
@@ -1403,730 +361,4 @@ function initLiveChat() {
         </div>
     </div>
 </section>
-
-<!-- Daily Information Section -->
-<section class="py-5 bg-white">
-    <div class="container">
-        <div class="section-title">
-            <h2>Information du Jour</h2>
-            <p>Actualités et nouveautés de l'organisation</p>
-        </div>
-        
-        <div class="row g-4">
-            <!-- Left: News Articles -->
-            <div class="col-lg-8">
-                <div class="news-container">
-                    {% for article in daily_information %}
-                    <div class="news-article">
-                        <div class="news-date-badge">
-                            <span class="news-day">{{ article.display_date|date:"d" }}</span>
-                            <span class="news-month">{{ article.display_date|date:"M" }}</span>
-                        </div>
-                        <div class="news-body">
-                            <h5 class="news-title">{{ article.title }}</h5>
-                            <p class="news-text">{{ article.content }}</p>
-                            {% if article.link_url %}
-                                <a href="{{ article.link_url }}" class="news-link">{{ article.link_text }}</a>
-                            {% else %}
-                                <a href="#" class="news-link">{{ article.link_text }}</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                    {% empty %}
-                    <div class="news-article">
-                        <div class="news-date-badge">
-                            <span class="news-day">--</span>
-                            <span class="news-month">--</span>
-                        </div>
-                        <div class="news-body">
-                            <h5 class="news-title">Aucune information disponible</h5>
-                            <p class="news-text">Revenez bientôt pour découvrir nos dernières actualités.</p>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            
-            <!-- Right: Sidebar -->
-            <div class="col-lg-4">
-                <div class="info-sidebar">
-                    <!-- Upcoming Events Card -->
-                    <div class="sidebar-box upcoming-box">
-                        <div class="sidebar-header">
-                            <i class="fas fa-calendar-alt"></i>
-                            <h6>Prochainement</h6>
-                        </div>
-                        <div class="sidebar-content">
-                            <div class="event-item">
-                                <span class="event-date">12-15 Dec</span>
-                                <p class="event-title">Atelier Entrepreneuriat</p>
-                            </div>
-                            <div class="event-item">
-                                <span class="event-date">18-20 Dec</span>
-                                <p class="event-title">Foire Métiers</p>
-                            </div>
-                            <div class="event-item last">
-                                <span class="event-date">Janvier 2026</span>
-                                <p class="event-title">MBC Challenge 2026</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Call to Action Card -->
-                    <div class="sidebar-box cta-box">
-                        <div class="sidebar-header">
-                            <i class="fas fa-heart"></i>
-                            <h6>Appel à l'Action</h6>
-                        </div>
-                        <div class="sidebar-content">
-                            <p class="cta-text">Vous voulez aider ? Découvrez comment contribuer à nos projets.</p>
-                            <div class="cta-buttons">
-                                <a href="{% url 'main:donate' %}" class="btn btn-sm btn-primary w-100 mb-2">
-                                    <i class="fas fa-gift me-2"></i>Faire un don
-                                </a>
-                                <a href="{% url 'main:contact' %}" class="btn btn-sm btn-outline-primary w-100">
-                                    <i class="fas fa-handshake me-2"></i>Nous rejoindre
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Daily Information Styles -->
-<style>
-    /* NEWS CONTAINER */
-    .news-container {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-    }
-    
-    .news-article {
-        display: flex;
-        gap: 1.5rem;
-        padding: 1.5rem;
-        background: #f8f9fa;
-        border-radius: 12px;
-        transition: all 0.3s ease;
-        animation: slideInUp 0.6s ease-out both;
-    }
-    
-    .news-article:hover {
-        background: white;
-        box-shadow: 0 8px 20px rgba(18, 153, 243, 0.15);
-        transform: translateY(-4px);
-    }
-    
-    /* Date Badge */
-    .news-date-badge {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 70px;
-        height: 70px;
-        background: linear-gradient(135deg, #1299f3, #023e8a);
-        border-radius: 10px;
-        color: white;
-        flex-shrink: 0;
-        box-shadow: 0 4px 15px rgba(18, 153, 243, 0.3);
-        transition: all 0.3s ease;
-    }
-    
-    .news-article:hover .news-date-badge {
-        transform: scale(1.05);
-        box-shadow: 0 6px 20px rgba(18, 153, 243, 0.4);
-    }
-    
-    .news-day {
-        font-size: 1.6rem;
-        font-weight: 700;
-        line-height: 1;
-    }
-    
-    .news-month {
-        font-size: 0.75rem;
-        opacity: 0.9;
-        text-transform: uppercase;
-        margin-top: 0.25rem;
-        letter-spacing: 0.5px;
-    }
-    
-    /* News Content */
-    .news-body {
-        flex: 1;
-    }
-    
-    .news-title {
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: #1299f3;
-        margin-bottom: 0.5rem;
-    }
-    
-    .news-text {
-        font-size: 0.95rem;
-        color: #555;
-        margin-bottom: 1rem;
-        line-height: 1.6;
-    }
-    
-    .news-link {
-        color: #1299f3;
-        font-weight: 600;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.9rem;
-    }
-    
-    .news-link:hover {
-        color: #023e8a;
-        transform: translateX(5px);
-    }
-    
-    /* SIDEBAR */
-    .info-sidebar {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-    
-    .sidebar-box {
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        overflow: hidden;
-        transition: all 0.3s ease;
-        animation: slideInRight 0.6s ease-out both;
-    }
-    
-    .sidebar-box:hover {
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-        transform: translateY(-4px);
-    }
-    
-    .sidebar-header {
-        background: linear-gradient(135deg, #1299f3, #023e8a);
-        color: white;
-        padding: 1.25rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-    }
-    
-    .sidebar-header i {
-        font-size: 1.3rem;
-        opacity: 0.9;
-    }
-    
-    .sidebar-header h6 {
-        margin: 0;
-        font-weight: 700;
-        font-size: 1.1rem;
-    }
-    
-    .sidebar-content {
-        padding: 1.5rem;
-    }
-    
-    /* UPCOMING EVENTS */
-    .event-item {
-        padding-bottom: 1.25rem;
-        border-bottom: 1px solid #e5e7eb;
-        transition: all 0.3s ease;
-    }
-    
-    .event-item.last {
-        border-bottom: none;
-        padding-bottom: 0;
-    }
-    
-    .event-item:hover {
-        padding-left: 0.5rem;
-        color: #1299f3;
-    }
-    
-    .event-date {
-        display: block;
-        font-size: 0.8rem;
-        color: #999;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 0.25rem;
-    }
-    
-    .event-title {
-        margin: 0;
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: #333;
-    }
-    
-    /* CALL TO ACTION */
-    .cta-text {
-        color: #555;
-        font-size: 0.95rem;
-        line-height: 1.6;
-        margin-bottom: 1.25rem;
-    }
-    
-    .cta-buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-    
-    .cta-buttons .btn {
-        font-size: 0.9rem;
-        font-weight: 600;
-        padding: 0.6rem 1rem;
-        border-radius: 8px;
-        transition: all 0.3s ease;
-    }
-    
-    .btn-primary {
-        background: linear-gradient(135deg, #1299f3, #023e8a);
-        border: none;
-        color: white;
-    }
-    
-    .btn-primary:hover {
-        background: linear-gradient(135deg, #023e8a, #001a4d);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(18, 153, 243, 0.3);
-        color: white;
-    }
-    
-    .btn-outline-primary {
-        color: #1299f3;
-        border: 2px solid #1299f3;
-        background: transparent;
-    }
-    
-    .btn-outline-primary:hover {
-        background: #f0f7ff;
-        transform: translateY(-2px);
-        color: #023e8a;
-        border-color: #023e8a;
-    }
-    
-    /* ANIMATIONS */
-    @keyframes slideInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    @keyframes slideInRight {
-        from {
-            opacity: 0;
-            transform: translateX(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-    
-    /* STAGGER */
-    .news-article:nth-child(1) {
-        animation-delay: 0.1s;
-    }
-    
-    .news-article:nth-child(2) {
-        animation-delay: 0.2s;
-    }
-    
-    .news-article:nth-child(3) {
-        animation-delay: 0.3s;
-    }
-    
-    .upcoming-box {
-        animation-delay: 0.15s;
-    }
-    
-    .cta-box {
-        animation-delay: 0.3s;
-    }
-    
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-        .news-article {
-            flex-direction: column;
-            padding: 1rem;
-        }
-        
-        .news-date-badge {
-            width: 60px;
-            height: 60px;
-        }
-        
-        .news-day {
-            font-size: 1.3rem;
-        }
-        
-        .news-month {
-            font-size: 0.7rem;
-        }
-        
-        .sidebar-box {
-            margin-top: 1rem;
-        }
-    }
-</style>
-
-<!-- Live Chat Widget -->
-<div id="livechat-widget" class="livechat-widget">
-    <div class="chat-header">
-        <div class="chat-avatar">
-            <img src="{% static 'main/images/footer.png' %}" alt="AIME Logo" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
-        </div>
-        <div class="chat-info">
-            <div class="chat-title">Assistant AIME</div>
-            <div class="chat-status">
-                <i class="fas fa-circle" style="color: #25d366; margin-right: 5px;"></i>
-                En ligne avec support humain
-            </div>
-        </div>
-        <button id="chat-close" class="chat-close">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-    
-    <div id="chat-messages" class="chat-messages">
-        <!-- Messages will be added here dynamically -->
-    </div>
-    
-    <div class="chat-input-area">
-        <input type="text" id="chat-input" placeholder="Tapez votre message..." autocomplete="off">
-        <button id="human-help-quick" class="human-help-quick" title="Parler à un humain">
-            <i class="fas fa-user-friends"></i>
-        </button>
-        <button id="chat-send" class="chat-send">
-            <i class="fas fa-paper-plane"></i>
-        </button>
-    </div>
-</div>
-
-<button id="chat-toggle" class="chat-toggle">
-    <img src="{% static 'main/images/footer.png' %}" alt="AIME Chat" style="width: 70%; height: 70%; border-radius: 50%; object-fit: cover;">
-    <span class="chat-notification">1</span>
-</button>
-
-<style>
-/* Live Chat Styles */
-.chat-toggle {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(45deg, #3498db, #2980b9);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    box-shadow: 0 4px 20px rgba(52, 152, 219, 0.4);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    padding: 0;
-}
-
-.chat-toggle:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 25px rgba(52, 152, 219, 0.6);
-}
-
-.chat-notification {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: #e74c3c;
-    color: white;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.7rem;
-    font-weight: bold;
-    animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-10px); }
-    60% { transform: translateY(-5px); }
-}
-
-.livechat-widget {
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    width: 350px;
-    height: 500px;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-    z-index: 999;
-    transform: translateY(100%) scale(0.8);
-    opacity: 0;
-    transition: all 0.3s ease;
-    overflow: hidden;
-    border: 1px solid #e1e8ed;
-}
-
-.livechat-widget.open {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-}
-
-.chat-header {
-    background: linear-gradient(45deg, #3498db, #2980b9);
-    color: white;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.chat-avatar {
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-}
-
-.chat-info {
-    flex: 1;
-}
-
-.chat-title {
-    font-weight: 600;
-    font-size: 1rem;
-    margin-bottom: 2px;
-}
-
-.chat-status {
-    font-size: 0.8rem;
-    opacity: 0.9;
-}
-
-.chat-close {
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    padding: 5px;
-    border-radius: 50%;
-    transition: background 0.3s;
-}
-
-.chat-close:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.chat-messages {
-    height: 350px;
-    overflow-y: auto;
-    padding: 15px;
-    background: #f8f9fa;
-}
-
-.chat-message {
-    margin-bottom: 15px;
-    animation: fadeInUp 0.3s ease;
-}
-
-.chat-message.user {
-    text-align: right;
-}
-
-.chat-message.user .message-content {
-    background: #3498db;
-    color: white;
-    margin-left: 50px;
-}
-
-.chat-message.bot .message-content {
-    background: white;
-    color: #2c3e50;
-    margin-right: 50px;
-    border: 1px solid #e1e8ed;
-}
-
-.message-content {
-    padding: 10px 15px;
-    border-radius: 18px;
-    display: inline-block;
-    max-width: 80%;
-    word-wrap: break-word;
-    line-height: 1.4;
-}
-
-.message-content a {
-    color: inherit;
-    text-decoration: underline;
-    font-weight: 600;
-}
-
-.message-time {
-    font-size: 0.7rem;
-    color: #7f8c8d;
-    margin-top: 5px;
-}
-
-.chat-input-area {
-    padding: 15px;
-    background: white;
-    display: flex;
-    gap: 10px;
-    border-top: 1px solid #e1e8ed;
-}
-
-#chat-input {
-    flex: 1;
-    padding: 10px 15px;
-    border: 1px solid #e1e8ed;
-    border-radius: 25px;
-    outline: none;
-    font-size: 0.9rem;
-}
-
-#chat-input:focus {
-    border-color: #3498db;
-}
-
-.chat-send {
-    width: 40px;
-    height: 40px;
-    background: #3498db;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.chat-send:hover {
-    background: #2980b9;
-    transform: scale(1.1);
-}
-
-/* Mobile responsive */
-@media (max-width: 768px) {
-    .livechat-widget {
-        width: calc(100vw - 40px);
-        height: 400px;
-        right: 20px;
-        left: 20px;
-    }
-    
-    .chat-toggle {
-        bottom: 15px;
-        right: 15px;
-    }
-}
-
-/* Scrollbar styling */
-.chat-messages::-webkit-scrollbar {
-    width: 6px;
-}
-
-.chat-messages::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 3px;
-}
-
-.chat-messages::-webkit-scrollbar-thumb {
-    background: #bdc3c7;
-    border-radius: 3px;
-}
-
-.chat-messages::-webkit-scrollbar-thumb:hover {
-    background: #95a5a6;
-}
-
-/* Human assistance button */
-.human-help-btn {
-    background: linear-gradient(45deg, #25d366, #128c7e);
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 8px;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
-}
-
-.human-help-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
-    background: linear-gradient(45deg, #128c7e, #25d366);
-}
-
-.human-help-btn i {
-    font-size: 1rem;
-}
-
-/* Quick human help button */
-.human-help-quick {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(45deg, #25d366, #128c7e);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-    box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
-}
-
-.human-help-quick:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
-    background: linear-gradient(45deg, #128c7e, #25d366);
-}
-</style>
-
-<!-- Inclure la modal d'avis visiteur -->
-{% include 'main/visitor_feedback_modal.html' %}
-
-{% endblock %}
-
 {% endblock %}

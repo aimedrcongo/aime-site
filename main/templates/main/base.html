@@ -10,18 +10,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Roboto & Roboto Light pour un rendu épuré type Material Design -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     {% load static %}
-    <link rel="stylesheet" href="{% static 'main/dashboard_ocean.css' %}">
-    <link rel="stylesheet" href="{% static 'main/modern-enhancements.css' %}">
-    <link rel="stylesheet" href="{% static 'main/dashboard-fix.css' %}">
-    <link rel="stylesheet" href="{% static 'main/navbar-fix.css' %}">
-    <link rel="stylesheet" href="{% static 'main/footer-fix.css' %}">
-    <link rel="stylesheet" href="{% static 'main/global-fix.css' %}">
-    <link rel="stylesheet" href="{% static 'main/base-cleanup.css' %}">
-    
+    <!-- Design System AIME (Inspiration moderne) -->
+    <link rel="stylesheet" href="{% static 'main/design-system.css' %}">
+    <link rel="stylesheet" href="{% static 'main/components.css' %}">
+
     {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -78,7 +75,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'main:interactive_map' %}">
-                            <i class="fas fa-map-marked-alt me-1"></i>Impact Map
+                              <i class="fas fa-map-marked-alt me-1"></i>Impact
                         </a>
                     </li>
                     <li class="nav-item">
@@ -88,7 +85,7 @@
                 
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="btn btn-primary btn-sm" href="{% url 'main:donate' %}">
+                          <a class="nav-link text-primary fw-bold" href="{% url 'main:donate' %}">
                             <i class="fas fa-donate me-1"></i>Faire un don
                         </a>
                     </li>
@@ -122,11 +119,6 @@
                             <i class="fas fa-sign-in-alt me-1"></i>Connexion
                         </a>
                     </li>
-                    <li class="nav-item ms-1">
-                        <a class="btn btn-outline-primary btn-sm" href="{% url 'main:signup' %}">
-                            <i class="fas fa-user-plus me-1"></i>S'inscrire
-                        </a>
-                    </li>
                     {% endif %}
                 </ul>
             </div>
@@ -152,7 +144,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="site-footer">
         <div class="container">
             <div class="row">
                 <!-- Colonne 1: Logo et description -->
@@ -259,6 +251,37 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Global Fluid Animations Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Add fade-in classes to global sections that don't have them yet
+            const sections = document.querySelectorAll('section:not(.hero-section)');
+            sections.forEach(section => {
+                section.classList.add('reveal-on-scroll');
+            });
+
+            // Intersection Observer for smooth reveal
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-revealed');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
     
     {% block extra_js %}{% endblock %}
 </body>

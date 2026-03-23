@@ -1,0 +1,130 @@
+/* ==================== DASHBOARD UNIFIÉ ==================== */
+
+/* Container Principal */
+.dashboard-container {
+    background-color: var(--clr-surface-alt);
+    min-height: calc(100vh - 80px);
+    padding: var(--space-8) 0;
+}
+
+/* Modéré pour l'UX Mobile : moins de paddings globaux, on garde de la place */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: var(--space-4) 0;
+    }
+}
+
+/* Cartes Globales (Statistiques et Infos) */
+.dashboard-card, .stat-card {
+    background-color: var(--clr-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--clr-border);
+    padding: var(--space-6);
+    margin-bottom: var(--space-6);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    height: 100%;
+}
+
+.dashboard-card:hover, .stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 768px) {
+    .dashboard-card, .stat-card {
+        padding: var(--space-4);
+        margin-bottom: var(--space-4);
+    }
+}
+
+/* Icônes de statistiques */
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: var(--space-3);
+    background-color: var(--clr-primary-light);
+    color: var(--clr-primary);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--clr-text-main);
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--clr-text-muted);
+    font-weight: 500;
+}
+
+/* Profil utilisateur Sidebar ou En-tête */
+.profile-header {
+    text-align: center;
+    padding-bottom: var(--space-4);
+    margin-bottom: var(--space-4);
+    border-bottom: 1px solid var(--clr-border);
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* Seule exception : les avatars sont circulaires */
+    object-fit: cover;
+    border: 3px solid var(--clr-primary-light);
+    margin-bottom: var(--space-3);
+}
+
+.profile-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.profile-role {
+    font-size: 0.875rem;
+    color: var(--clr-primary);
+    font-weight: 500;
+}
+
+/* Listes d'Activités */
+.activity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.activity-item {
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--clr-border);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    margin-top: 0.25rem;
+    color: var(--clr-primary);
+}
+
+.activity-title {
+    font-weight: 500;
+    color: var(--clr-text-main);
+    margin-bottom: 0.25rem;
+}
+
+.activity-time {
+    font-size: 0.75rem;
+    color: var(--clr-text-muted);
+}

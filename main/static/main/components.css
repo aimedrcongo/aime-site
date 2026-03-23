@@ -1,0 +1,456 @@
+/* ============== COMPOSANTS REUTILISABLES ================== */
+/* Tous les ÃÂÃÂ©lÃÂÃÂ©ments UI basÃÂÃÂ©s sur le systÃÂÃÂ¨me de variables (Mobiles first) */
+
+/* 1. BOUTONS */
+.btn {
+  font-family: var(--font-main);
+  font-weight: 500;
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius-md); /* ModÃÂÃÂ©rÃÂÃÂ© : 8px (fini les ronds ÃÂÃÂ  50px) */
+  transition: all var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; /* Espace pour les icÃÂÃÂ´nes */
+  border: none;
+  cursor: pointer;
+}
+
+/* Version mobile: les boutons doivent ÃÂÃÂªtre facilement "cliquables" (touch targets) */
+@media (max-width: 768px) {
+  .btn {
+    padding: 0.75rem 1.5rem; /* Un peu plus grand sur mobile pour les doigts */
+    width: 100%; /* Souvent mieux en largeur totale sur petit ÃÂÃÂ©cran */
+    margin-bottom: 0.5rem;
+  }
+  .btn-auto {
+    width: auto; /* Classe optionnelle pour override */
+  }
+}
+
+.btn-primary {
+  background-color: var(--clr-primary);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover, .btn-primary:active {
+  background-color: var(--clr-primary-dark) !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+  background-color: var(--clr-secondary);
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background-color: var(--clr-secondary-dark);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--clr-primary);
+  border: 1px solid var(--clr-primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--clr-primary-light);
+  color: var(--clr-primary-dark);
+}
+
+/* 2. CARTES (CARDS) */
+.card {
+  background-color: var(--clr-surface);
+  border: 1px solid var(--clr-border) !important;
+  border-radius: var(--radius-lg); /* Angle modÃÂÃÂ©rÃÂÃÂ© (12px) * au lieu des angles agressifs */
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+  overflow: hidden; /* Important pour que l'image ÃÂÃÂ©pouse le border-radius */
+}
+
+.card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: var(--shadow-lg);
+}
+
+.card-body {
+  padding: var(--space-6);
+}
+
+@media (max-width: 768px) {
+  .card-body {
+    padding: var(--space-4); /* On rÃÂÃÂ©duit un peu l'espace intÃÂÃÂ©rieur sur mobille */
+  }
+}
+
+/* 3. NAVIGATION (ModernisÃÂÃÂ©e et allÃÂÃÂ©gÃÂÃÂ©e) */
+.navbar {
+  background-color: var(--clr-surface) !important;
+  border-bottom: 1px solid var(--clr-border);
+  padding: 0.75rem 0;
+  box-shadow: none; /* On prÃÂÃÂ©fÃÂÃÂ¨re un bord subtil plutÃÂÃÂ´t qu'une grosse ombre */
+}
+
+.navbar-brand {
+  font-weight: 700;
+  color: var(--clr-primary) !important;
+}
+
+.navbar-logo {
+  height: 40px; /* Conserver une taille correcte */
+  object-fit: contain;
+}
+
+.nav-link {
+  color: var(--clr-text-main) !important;
+  font-weight: 500;
+  padding: 0.5rem 1rem !important;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-smooth), background-color var(--transition-smooth), transform var(--transition-smooth);
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--clr-primary) !important;
+  background-color: var(--clr-primary-light);
+}
+
+/* Navbar mobile optimization */
+@media (max-width: 991px) {
+  .navbar-collapse {
+    background: var(--clr-surface);
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    margin-top: var(--space-3);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--clr-border);
+  }
+  .nav-item {
+    margin-bottom: 0.25rem;
+  }
+  /* Cacher la couleur de fond au hover sur mobile pour simplifier l'UX au tap */
+  .nav-link:hover {
+    background-color: transparent; 
+  }
+}
+
+/* 4. SECTIONS (Espaces constants) */
+.section {
+  padding: var(--space-12) 0;
+}
+
+.section-light {
+  background-color: var(--clr-surface);
+}
+
+.section-gray {
+  background-color: var(--clr-surface-alt);
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-8) 0;
+  }
+}
+
+/* 5. FORMULAIRES (Inputs clairs et facilement tapables sur mobile) */
+.form-control, .form-select {
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  font-family: var(--font-main);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  font-size: 1rem; /* Important: prÃÂÃÂ©vient le zoom automatique sur iOS iOS Safari */
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--clr-primary);
+  box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.15); /* Focus subtil */
+  outline: none;
+}
+
+.form-label {
+  font-weight: 500;
+  color: var(--clr-text-main);
+  margin-bottom: 0.5rem;
+}
+
+/* 6. FOOTER */
+.site-footer {
+  background-color: var(--clr-surface);
+  border-top: 1px solid var(--clr-border);
+  padding: var(--space-8) 0 var(--space-4);
+  margin-top: auto;
+}
+
+.site-footer h5 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: var(--space-4);
+}
+
+.site-footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.site-footer ul li {
+  margin-bottom: 0.5rem;
+}
+
+.site-footer a {
+  color: var(--clr-text-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.site-footer a:hover {
+  color: var(--clr-primary);
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--clr-border);
+  padding-top: var(--space-4);
+  margin-top: var(--space-6);
+  text-align: center;
+  color: var(--clr-text-muted);
+  font-size: 0.875rem;
+}
+
+/* Utilities Footer spÃÂ¯ÃÂ¿ÃÂ½cifiques */
+.footer-logo { max-height: 50px; margin-bottom: 1rem; }
+.social-links a { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: var(--radius-sm); background-color: var(--clr-surface-alt); color: var(--clr-text-main); margin-right: 0.5rem; transition: all var(--transition-fast); }
+.social-links a:hover { background-color: var(--clr-primary); color: #fff; transform: translateY(-2px); }
+
+/* FIXES LOGO & NAVBAR */
+.navbar-logo {
+    max-height: 40px !important;
+    width: auto !important;
+    object-fit: contain;
+}
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+/* ========================================================================= */
+/* LIVE CHAT WIDGET STYLES                                                   */
+/* ========================================================================= */
+
+.chat-toggle {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 60px;
+    height: 60px;
+    background: var(--clr-surface, #fff);
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.chat-toggle:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.chat-notification {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background: #ff4757;
+    color: white;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.livechat-widget {
+    position: fixed;
+    bottom: 95px;
+    right: 25px;
+    width: 350px;
+    height: 500px;
+    background: var(--clr-surface, #fff);
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    transform: translateY(20px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.livechat-widget.open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.chat-header {
+    background: var(--clr-primary, #0056b3);
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.chat-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.chat-info {
+    flex-grow: 1;
+}
+
+.chat-title {
+    font-weight: 500; /* Roboto 500 */
+    font-size: 1.1rem;
+    margin-bottom: 2px;
+}
+
+.chat-status {
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+}
+
+.chat-close {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+.chat-close:hover {
+    opacity: 1;
+}
+
+.chat-messages {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background: var(--clr-bg, #f8f9fa);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chat-message {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    font-size: 0.95rem;
+    word-wrap: break-word;
+}
+
+.chat-message.bot {
+    background: #fff;
+    align-self: flex-start;
+    border-bottom-left-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.chat-message.user {
+    background: var(--clr-primary, #0056b3);
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
+}
+
+.chat-input-area {
+    padding: 15px;
+    background: #fff;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#chat-input {
+    flex-grow: 1;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 10px 15px;
+    outline: none;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+}
+
+#chat-input:focus {
+    border-color: var(--clr-primary, #0056b3);
+}
+
+.chat-send, .human-help-quick {
+    background: var(--clr-primary, #0056b3);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.human-help-quick {
+    background: #25d366; /* WhatsApp vert */
+}
+
+.chat-send:hover, .human-help-quick:hover {
+    filter: brightness(1.1);
+}
+
+/* Responsive constraints */
+@media (max-width: 576px) {
+    .livechat-widget {
+        width: calc(100% - 40px);
+        height: 60vh;
+        bottom: 90px;
+        right: 20px;
+    }
+}
+
+/* Card Hover Effects */
+.program-card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+.program-card-hover:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15) !important;
+}
+.program-card-hover .card-img-top {
+    transition: transform 0.5s ease;
+}
+.program-card-hover:hover .card-img-top {
+    transform: scale(1.05);
+}
