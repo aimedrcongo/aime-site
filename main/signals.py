@@ -115,7 +115,7 @@ def save_user_profile(sender, instance, **kwargs):
 # --- Invalidation de cache CMS lors des modifications admin ---
 from django.db.models.signals import post_delete
 from django.core.cache import cache
-from .models import HeroSection, SiteSettings, ProgramCard, GalleryImage
+from .models import HeroSection, SiteSettings, ProgramCard, GalleryImage, ImpactStat
 
 
 @receiver([post_save, post_delete], sender=HeroSection)
@@ -136,3 +136,8 @@ def clear_programs_cache(sender, instance, **kwargs):
 @receiver([post_save, post_delete], sender=GalleryImage)
 def clear_gallery_cache(sender, instance, **kwargs):
     cache.delete('cms_gallery')
+
+
+@receiver([post_save, post_delete], sender=ImpactStat)
+def clear_impact_stats_cache(sender, instance, **kwargs):
+    cache.delete('cms_impact_stats')

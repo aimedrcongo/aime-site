@@ -245,3 +245,17 @@ for _t, _c, _img, _o in _gallery:
     GalleryImage.objects.get_or_create(title=_t, defaults={'caption': _c, 'image_url': _img, 'order': _o})
 
 print('CMS seeded: programs =', ProgramCard.objects.count(), '| gallery =', GalleryImage.objects.count())
+
+# --- CMS: Compteurs d'impact (page d'accueil) ---
+from main.models import ImpactStat
+_impact = [
+    ('Enfants impactés', 120, 'fa-child', '', '+', 1),
+    ('FC de dons collectés', 1125000, 'fa-hand-holding-heart', '', '', 2),
+    ('Projets & activités', 6, 'fa-diagram-project', '', '', 3),
+    ('Bénévoles & partenaires', 35, 'fa-users', '', '+', 4),
+]
+for _label, _value, _icon, _prefix, _suffix, _order in _impact:
+    ImpactStat.objects.get_or_create(label=_label, defaults={
+        'value': _value, 'icon': _icon, 'prefix': _prefix, 'suffix': _suffix, 'order': _order,
+    })
+print('CMS seeded: impact stats =', ImpactStat.objects.count())

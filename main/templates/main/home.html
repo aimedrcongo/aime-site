@@ -66,6 +66,61 @@
     </div>
 </section>
 
+<!-- ===================== IMPACT EN TEMPS RÉEL (éditable) ===================== -->
+{% get_impact_stats as impact_stats %}
+{% if impact_stats %}
+<section class="impact-realtime" data-testid="impact-realtime">
+    <div class="container">
+        <div class="impact-rt-head">
+            <span class="impact-rt-eyebrow"><span class="pulse-dot"></span> Notre impact en temps réel</span>
+            <h2 class="impact-rt-title">Des chiffres qui changent des vies</h2>
+        </div>
+        <div class="impact-rt-grid">
+            {% for s in impact_stats %}
+            <div class="impact-rt-card" data-testid="impact-stat-{{ forloop.counter }}">
+                <div class="impact-rt-icon"><i class="fas {{ s.icon }}"></i></div>
+                <div class="impact-rt-value" data-count-target="{{ s.value }}" data-prefix="{{ s.prefix }}" data-suffix="{{ s.suffix }}">{{ s.prefix }}0{{ s.suffix }}</div>
+                <div class="impact-rt-label">{{ s.label }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<script>
+(function(){
+    var els = document.querySelectorAll('.impact-rt-value[data-count-target]');
+    if(!els.length) return;
+    function animate(el){
+        var target = parseInt(el.getAttribute('data-count-target'), 10) || 0;
+        var prefix = el.getAttribute('data-prefix') || '';
+        var suffix = el.getAttribute('data-suffix') || '';
+        var dur = 1600, start = null;
+        function step(ts){
+            if(!start) start = ts;
+            var p = Math.min((ts - start) / dur, 1);
+            var eased = 1 - Math.pow(1 - p, 3);
+            var val = Math.floor(eased * target);
+            el.textContent = prefix + val.toLocaleString('fr-FR') + suffix;
+            if(p < 1) requestAnimationFrame(step);
+            else el.textContent = prefix + target.toLocaleString('fr-FR') + suffix;
+        }
+        requestAnimationFrame(step);
+    }
+    if('IntersectionObserver' in window){
+        var io = new IntersectionObserver(function(entries){
+            entries.forEach(function(e){
+                if(e.isIntersecting){ animate(e.target); io.unobserve(e.target); }
+            });
+        }, { threshold: 0.4 });
+        els.forEach(function(el){ io.observe(el); });
+    } else {
+        els.forEach(animate);
+    }
+})();
+</script>
+{% endif %}
+
+
 <!-- ========================= PROGRAMMES PHARES ========================= -->
 <section class="section section-light" data-testid="programs-section">
     <div class="container">

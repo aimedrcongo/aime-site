@@ -261,3 +261,14 @@ class GalleryImageAdmin(admin.ModelAdmin):
             return format_html('<img src="{}" style="max-height:140px;border-radius:8px;" />', url)
         return "Aucune image"
     image_preview.short_description = "Aperçu"
+
+
+from .models import ImpactStat
+
+
+@admin.register(ImpactStat)
+class ImpactStatAdmin(admin.ModelAdmin):
+    list_display = ['label', 'value', 'suffix', 'icon', 'order', 'is_active']
+    list_editable = ['value', 'suffix', 'order', 'is_active']
+    list_filter = ['is_active']
+    fields = ('label', 'value', 'prefix', 'suffix', 'icon', 'order', 'is_active')

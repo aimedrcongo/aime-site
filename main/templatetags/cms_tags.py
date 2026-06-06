@@ -1,7 +1,7 @@
 """Tags template pour le contenu CMS éditable (avec cache)."""
 from django import template
 from django.core.cache import cache
-from main.models import HeroSection, ProgramCard, GalleryImage
+from main.models import HeroSection, ProgramCard, GalleryImage, ImpactStat
 
 register = template.Library()
 
@@ -39,4 +39,14 @@ def get_gallery():
     if items is None:
         items = list(GalleryImage.objects.filter(is_active=True))
         cache.set('cms_gallery', items, 3600)
+    return items
+
+
+@register.simple_tag
+def get_impact_stats():
+    """Compteurs d'impact actifs (page d'accueil), triés par ordre."""
+    items = cache.get('cms_impact_stats')
+    if items is None:
+        items = list(ImpactStat.objects.filter(is_active=True))
+        cache.set('cms_impact_stats', items, 3600)
     return items

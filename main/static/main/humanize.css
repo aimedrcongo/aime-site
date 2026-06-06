@@ -1,0 +1,179 @@
+/* =========================================================================
+   AIME — "Humanize" : style chaleureux et artisanal
+   Chargé APRÈS les styles de page pour surcharger le look "IA générique".
+   --------------------------------------------------------------------------
+   Direction de design : on s'éloigne du bleu tech corporate pour une palette
+   terreuse et chaleureuse (terracotta, ocre, vert mousse, sable), des coins
+   légèrement irréguliers, des ombres douces ASYMÉTRIQUES (décalées), des
+   pastilles d'icônes discrètes et des micro-interactions subtiles (légère
+   rotation/translation). Objectif : une chaleur "humaine" cohérente avec une
+   ONG enfance/éducation en RDC, là où les radius parfaits + gradient bleu +
+   ombre centrée trahissent un rendu généré par IA.
+   ========================================================================= */
+
+:root {
+    /* Palette chaleureuse AIME */
+    --aime-terracotta: #C65D3B;   /* accent principal chaud */
+    --aime-ocre:       #E2A04A;   /* lumière, doré doux */
+    --aime-mousse:     #6B8E5A;   /* vert mousse, nature */
+    --aime-sable:      #FBF6EF;   /* fond crème/sable */
+    --aime-brun:       #7A5C44;   /* bordures/texte terreux */
+    --aime-navy:       #0A2A4D;   /* navy de marque (conservé) */
+}
+
+/* ============================ 1. CARTES OBJECTIFS ========================= */
+/* Suppression de la barre bleue à gauche + look chaleureux artisanal */
+.objective-item {
+    border: 1px solid rgba(122, 92, 68, 0.16) !important;   /* bordure terreuse fine */
+    border-left: none !important;                            /* supprime l'arc/barre bleu */
+    /* coins légèrement irréguliers (organiques, non parfaits) */
+    border-radius: 16px 14px 17px 13px !important;
+    /* ombre douce et asymétrique (décalée vers le bas-droite) */
+    box-shadow: 7px 9px 24px -12px rgba(122, 92, 68, 0.26) !important;
+    transition: transform .28s cubic-bezier(.2,.7,.3,1), box-shadow .28s ease !important;
+}
+.objective-item:hover {
+    transform: translateY(-3px) rotate(-0.35deg);            /* micro-rotation imperceptible */
+    box-shadow: 11px 15px 32px -12px rgba(198, 93, 59, 0.30) !important;
+}
+.objective-item h4 {
+    color: #3b2f28 !important;                               /* brun profond, chaleureux */
+    font-weight: 700;
+    letter-spacing: -0.012em;                                /* personnalité dans les titres */
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+}
+/* icône dans une pastille colorée discrète (plus de bleu vif en accent) */
+.objective-item h4 i {
+    color: var(--aime-terracotta) !important;
+    background: rgba(226, 160, 74, 0.16);                    /* halo ocre doux */
+    width: 2.3rem;
+    height: 2.3rem;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .95rem;
+    margin: 0 !important;                                    /* neutralise me-2 */
+    flex: 0 0 auto;
+    transition: transform .3s ease;
+}
+.objective-item:hover h4 i {
+    transform: rotate(-8deg) scale(1.07);                    /* l'icône s'anime légèrement */
+}
+.objective-item p {
+    color: #6b5d52 !important;                               /* texte terreux doux */
+}
+
+/* ============================ 2. BOUTONS ================================== */
+/* Boutons tactiles "pressables" : couleur pleine (pas de gradient), radius
+   modéré, ombre portée nette qui se réduit au clic → sensation physique. */
+.btn {
+    border-radius: 12px !important;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    border-width: 1px;
+    transition: transform .12s ease, box-shadow .2s ease, background-color .2s ease, color .2s ease !important;
+}
+.btn:active { transform: translateY(2px); }
+
+/* Primaire : navy de marque, tactile (ombre "socle" + relief) */
+.btn-primary {
+    background: var(--aime-navy) !important;
+    border-color: var(--aime-navy) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 0 0 #06203b, 0 10px 20px -8px rgba(10, 42, 77, .55) !important;
+}
+.btn-primary:hover {
+    background: #0d3a66 !important;
+    border-color: #0d3a66 !important;
+    box-shadow: 0 4px 0 0 #06203b, 0 14px 26px -8px rgba(10, 42, 77, .55) !important;
+}
+.btn-primary:active {
+    box-shadow: 0 1px 0 0 #06203b, 0 6px 14px -8px rgba(10, 42, 77, .55) !important;
+}
+
+/* CTA chaleureux pour "Faire un don" : terracotta invitant */
+.btn-donate, a.btn-primary[href*="don"], a.btn-primary[data-testid="hero-donate-btn"] {
+    background: var(--aime-terracotta) !important;
+    border-color: var(--aime-terracotta) !important;
+    box-shadow: 0 4px 0 0 #9c452a, 0 10px 22px -8px rgba(198, 93, 59, .55) !important;
+}
+.btn-donate:hover, a.btn-primary[href*="don"]:hover, a.btn-primary[data-testid="hero-donate-btn"]:hover {
+    background: #b14f31 !important;
+    border-color: #b14f31 !important;
+}
+
+/* Secondaire / contour : tactile, terreux */
+.btn-secondary, .btn-outline-primary {
+    background: #fff !important;
+    border: 1px solid rgba(122, 92, 68, .28) !important;
+    color: var(--aime-navy) !important;
+    box-shadow: 0 3px 0 0 rgba(122, 92, 68, .14), 0 8px 16px -10px rgba(122, 92, 68, .35) !important;
+}
+.btn-secondary:hover, .btn-outline-primary:hover {
+    background: var(--aime-sable) !important;
+    border-color: var(--aime-terracotta) !important;
+    color: var(--aime-terracotta) !important;
+}
+
+.btn-light {
+    border-radius: 12px !important;
+    box-shadow: 0 4px 0 0 rgba(0,0,0,.06), 0 10px 20px -10px rgba(0,0,0,.25) !important;
+}
+
+/* ===================== 3. SECTION "IMPACT EN TEMPS RÉEL" ================== */
+.impact-realtime {
+    background: linear-gradient(180deg, var(--aime-sable) 0%, #fff 100%);
+    padding: 4.5rem 0;
+    border-top: 1px solid rgba(122, 92, 68, .08);
+    border-bottom: 1px solid rgba(122, 92, 68, .08);
+}
+.impact-rt-head { text-align: center; margin-bottom: 2.8rem; }
+.impact-rt-eyebrow {
+    display: inline-flex; align-items: center; gap: .5rem;
+    color: var(--aime-terracotta); font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em; font-size: .82rem;
+}
+.impact-rt-eyebrow .pulse-dot {
+    width: 9px; height: 9px; border-radius: 50%; background: var(--aime-terracotta);
+    box-shadow: 0 0 0 0 rgba(198, 93, 59, .5); animation: aimePulse 1.8s infinite;
+}
+@keyframes aimePulse {
+    0% { box-shadow: 0 0 0 0 rgba(198, 93, 59, .5); }
+    70% { box-shadow: 0 0 0 10px rgba(198, 93, 59, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(198, 93, 59, 0); }
+}
+.impact-rt-title {
+    font-weight: 700; color: #3b2f28; letter-spacing: -0.02em;
+    margin-top: .6rem; font-size: clamp(1.6rem, 3vw, 2.4rem);
+}
+.impact-rt-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 1.5rem;
+}
+.impact-rt-card {
+    background: #fff; padding: 2rem 1.5rem; text-align: center;
+    border: 1px solid rgba(122, 92, 68, .14);
+    border-radius: 18px 15px 19px 14px;                      /* coins organiques */
+    box-shadow: 7px 9px 24px -14px rgba(122, 92, 68, .28);
+    transition: transform .28s cubic-bezier(.2,.7,.3,1), box-shadow .28s ease;
+}
+.impact-rt-card:hover {
+    transform: translateY(-4px) rotate(.3deg);
+    box-shadow: 11px 16px 34px -14px rgba(198, 93, 59, .32);
+}
+.impact-rt-icon {
+    width: 60px; height: 60px; margin: 0 auto 1rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; font-size: 1.4rem; color: var(--aime-terracotta);
+    background: rgba(226, 160, 74, .16);
+}
+.impact-rt-card:nth-child(2n) .impact-rt-icon { color: var(--aime-mousse); background: rgba(107,142,90,.15); }
+.impact-rt-card:nth-child(3n) .impact-rt-icon { color: var(--aime-ocre); background: rgba(226,160,74,.18); }
+.impact-rt-value {
+    font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800;
+    color: var(--aime-navy); letter-spacing: -0.03em; line-height: 1;
+}
+.impact-rt-label { margin-top: .6rem; color: #6b5d52; font-weight: 600; font-size: .95rem; }

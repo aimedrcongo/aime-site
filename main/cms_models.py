@@ -198,3 +198,25 @@ class GalleryImage(models.Model):
 
     def get_image(self):
         return self.image.url if self.image else self.image_url
+
+
+class ImpactStat(models.Model):
+    """Compteur d'impact public (page d'accueil) — éditable par l'équipe ONG."""
+    label = models.CharField("Libellé", max_length=120)
+    value = models.PositiveIntegerField("Valeur", default=0)
+    icon = models.CharField(
+        "Icône FontAwesome", max_length=40, default='fa-heart',
+        help_text="Ex: fa-child, fa-hand-holding-heart, fa-diagram-project, fa-users"
+    )
+    prefix = models.CharField("Préfixe", max_length=10, blank=True, help_text='Ex: "≈"')
+    suffix = models.CharField("Suffixe", max_length=10, blank=True, help_text='Ex: "+", "K", "FC"')
+    order = models.PositiveIntegerField("Ordre", default=0)
+    is_active = models.BooleanField("Actif", default=True)
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = "Statistique d'impact"
+        verbose_name_plural = "Statistiques d'impact"
+
+    def __str__(self):
+        return f"{self.label} : {self.value}"

@@ -597,5 +597,5 @@ class DailyInformation(models.Model):
 
 
 # --- Modèles CMS éditables (Hero, Paramètres du site) ---
-from .cms_models import HeroSection, SiteSettings, ProgramCard, GalleryImage  # noqa: E402,F401
+from .cms_models import HeroSection, SiteSettings, ProgramCard, GalleryImage, ImpactStat  # noqa: E402,F401
 
