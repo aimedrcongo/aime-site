@@ -1,23 +1,13 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% load cms_tags %}
 
 {% block title %}Événements{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="page-hero">
-    <div class="container">
-        <span class="eyebrow">Agenda</span>
-        <h1 class="display-4 fw-bold">Nos Événements</h1>
-        <p class="lead">
-            Découvrez tous nos événements, ateliers et activités organisés pour
-            le développement et l'épanouissement des enfants en RDC.
-        </p>
-        <a href="#upcoming-events" class="btn btn-light btn-lg mt-2">
-            <i class="fas fa-calendar-alt me-2"></i>Voir les événements
-        </a>
-    </div>
-</section>
+<!-- Hero Section (éditable depuis l'admin) -->
+{% get_hero 'events' as hero %}
+{% include 'main/partials/_page_hero.html' with hero=hero default_title="Nos Événements" default_subtitle="Découvrez tous nos événements, ateliers et activités organisés pour le développement et l'épanouissement des enfants en RDC." %}
 
 <!-- Événements à venir -->
 <section id="upcoming-events" class="py-5">

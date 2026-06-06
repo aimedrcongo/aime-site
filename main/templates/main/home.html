@@ -1,5 +1,6 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% load cms_tags %}
 
 {% block title %}AIME - Agissons Ici et Maintenant pour les Enfants{% endblock %}
 
@@ -8,32 +9,32 @@
 {% endblock %}
 
 {% block content %}
-<!-- ============================== HERO ============================== -->
+{% get_hero 'home' as hero %}
+<!-- ============================== HERO (éditable) ============================== -->
 <section class="hero-section" data-testid="hero-section">
     <div class="container">
         <div class="row align-items-center g-5">
             <div class="col-lg-7">
-                <span class="hero-label">ONG · RDC · Depuis Kinshasa &amp; Lubumbashi</span>
+                <span class="hero-label">{{ hero.eyebrow|default:"ONG · RDC · Depuis Kinshasa &amp; Lubumbashi" }}</span>
                 <h1 class="hero-title">
-                    Agissons ici et<br>maintenant pour<br>les <span class="accent-word">enfants</span>.
+                    {{ hero.title|default:"Agissons ici et maintenant pour les"|safe }} <span class="accent-word">{{ hero.title_highlight|default:"enfants" }}</span>.
                 </h1>
                 <p class="hero-subtitle">
-                    Développement socio-éducatif, entrepreneuriat et formation aux métiers :
-                    nous bâtissons l'avenir des enfants et des jeunes de la République Démocratique du Congo.
+                    {{ hero.subtitle|default:"Développement socio-éducatif, entrepreneuriat et formation aux métiers : nous bâtissons l'avenir des enfants et des jeunes de la République Démocratique du Congo." }}
                 </p>
                 <div class="hero-cta">
-                    <a href="{% url 'main:donate' %}" class="btn btn-primary" data-testid="hero-donate-btn">
-                        <i class="fas fa-heart"></i> Faire un don
+                    <a href="{% if hero.cta_primary_url %}{{ hero.cta_primary_url }}{% else %}{% url 'main:donate' %}{% endif %}" class="btn btn-primary" data-testid="hero-donate-btn">
+                        <i class="fas fa-heart"></i> {{ hero.cta_primary_label|default:"Faire un don" }}
                     </a>
-                    <a href="{% url 'main:projects' %}" class="btn btn-secondary" data-testid="hero-projects-btn">
-                        Découvrir nos projets <i class="fas fa-arrow-right"></i>
+                    <a href="{% if hero.cta_secondary_url %}{{ hero.cta_secondary_url }}{% else %}{% url 'main:projects' %}{% endif %}" class="btn btn-secondary" data-testid="hero-projects-btn">
+                        {{ hero.cta_secondary_label|default:"Découvrir nos projets" }} <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
             <div class="col-lg-5">
                 <div class="hero-visual" data-testid="hero-visual">
                     <span class="hero-badge"><span class="dot"></span> En direct</span>
-                    <img src="https://images.pexels.com/photos/14554003/pexels-photo-14554003.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=600"
+                    <img src="{% if hero.background_image %}{{ hero.background_image.url }}{% else %}https://images.pexels.com/photos/14554003/pexels-photo-14554003.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=600{% endif %}"
                          alt="Enfants congolais en activité éducative" loading="eager">
                     <div class="hero-float-stat">
                         <div class="num" data-target="{{ stats.total_children_helped }}">0</div>

@@ -140,3 +140,31 @@ cache.delete('site_statistics_v1')
 print('Stats enrichies. Dons completes:', Donation.objects.filter(status="completed").count(),
       '| MBC confirmes:', MBCParticipant.objects.filter(status="confirmed").count(),
       '| Enfants:', UserProfile.objects.filter(role="child").count())
+
+# --- CMS: Hero sections & paramètres du site (éditables depuis l'admin) ---
+from main.models import HeroSection, SiteSettings
+
+SiteSettings.load()  # crée le singleton avec les valeurs par défaut
+
+_hero_defaults = [
+    ('home', {
+        'eyebrow': 'ONG · RDC · Depuis Kinshasa & Lubumbashi',
+        'title': 'Agissons ici et maintenant pour les',
+        'title_highlight': 'enfants',
+        'subtitle': "Développement socio-éducatif, entrepreneuriat et formation aux métiers : nous bâtissons l'avenir des enfants et des jeunes de la République Démocratique du Congo.",
+        'cta_primary_label': 'Faire un don', 'cta_primary_url': '/donate/',
+        'cta_secondary_label': 'Découvrir nos projets', 'cta_secondary_url': '/projects/',
+        'overlay_enabled': False,
+    }),
+    ('events', {
+        'eyebrow': 'Agenda',
+        'title': 'Nos Événements',
+        'subtitle': "Découvrez tous nos événements, ateliers et activités organisés pour le développement et l'épanouissement des enfants en RDC.",
+        'cta_primary_label': 'Voir les événements', 'cta_primary_url': '#upcoming-events',
+        'overlay_enabled': True, 'overlay_type': 'linear', 'overlay_color': '#0A2A4D',
+        'overlay_color_2': '#1D4ED8', 'overlay_opacity': 60, 'overlay_angle': 135,
+    }),
+]
+for _page, _defaults in _hero_defaults:
+    HeroSection.objects.get_or_create(page=_page, defaults=_defaults)
+print('CMS seeded: heroes =', HeroSection.objects.count(), '| site settings OK')

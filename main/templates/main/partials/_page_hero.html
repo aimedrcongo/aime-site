@@ -1,0 +1,22 @@
+{% comment %}
+Hero réutilisable pour les pages internes (.page-hero).
+Usage :
+  {% load cms_tags %}
+  {% get_hero 'events' as hero %}
+  {% include 'main/partials/_page_hero.html' with hero=hero default_title="Nos Événements" default_subtitle="..." %}
+{% endcomment %}
+<section class="page-hero" data-testid="page-hero"
+    {% if hero.background_image %}style="background-image: {% if hero.overlay_enabled %}{{ hero.overlay_css }}, {% endif %}url('{{ hero.background_image.url }}'); background-size: cover; background-position: center;"{% endif %}>
+    <div class="container">
+        {% if hero.eyebrow %}<span class="eyebrow" data-testid="page-hero-eyebrow">{{ hero.eyebrow }}</span>{% endif %}
+        <h1 class="display-4 fw-bold" data-testid="page-hero-title">{{ hero.title|default:default_title }}</h1>
+        {% with subtitle=hero.subtitle|default:default_subtitle %}
+            {% if subtitle %}<p class="lead" data-testid="page-hero-subtitle">{{ subtitle }}</p>{% endif %}
+        {% endwith %}
+        {% if hero.cta_primary_label %}
+            <a href="{{ hero.cta_primary_url|default:'#' }}" class="btn btn-light btn-lg mt-2" data-testid="page-hero-cta">
+                {{ hero.cta_primary_label }}
+            </a>
+        {% endif %}
+    </div>
+</section>

@@ -110,3 +110,19 @@ def save_user_profile(sender, instance, **kwargs):
     """Sauvegarder le profil utilisateur"""
     if hasattr(instance, 'userprofile'):
         instance.userprofile.save()
+
+
+# --- Invalidation de cache CMS lors des modifications admin ---
+from django.db.models.signals import post_delete
+from django.core.cache import cache
+from .models import HeroSection, SiteSettings
+
+
+@receiver([post_save, post_delete], sender=HeroSection)
+def clear_hero_cache(sender, instance, **kwargs):
+    cache.delete(f'cms_hero_{instance.page}')
+
+
+@receiver([post_save, post_delete], sender=SiteSettings)
+def clear_site_settings_cache(sender, instance, **kwargs):
+    cache.delete('cms_site_settings')

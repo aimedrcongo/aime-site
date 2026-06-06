@@ -29,16 +29,16 @@
         <div class="container">
             <div class="topbar-inner">
                 <div class="topbar-contact">
-                    <span><i class="fas fa-envelope me-2"></i><a href="mailto:contact@aime-rdc.org">contact@aime-rdc.org</a></span>
-                    <span><i class="fas fa-phone me-2"></i><a href="tel:+243844444411">+243 844 444 411</a></span>
-                    <span><i class="fas fa-map-marker-alt me-2"></i>Kinshasa &amp; Lubumbashi, RDC</span>
+                    <span><i class="fas fa-envelope me-2"></i><a href="mailto:{{ site_settings.contact_email }}">{{ site_settings.contact_email }}</a></span>
+                    <span><i class="fas fa-phone me-2"></i><a href="tel:{{ site_settings.phone_1 }}">{{ site_settings.phone_1 }}</a></span>
+                    <span><i class="fas fa-map-marker-alt me-2"></i>{{ site_settings.address_1 }} &amp; {{ site_settings.address_2 }}</span>
                 </div>
                 <div class="topbar-social">
                     <span class="me-1">Suivez-nous :</span>
-                    <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="{{ site_settings.facebook_url|default:'#' }}" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="{{ site_settings.twitter_url|default:'#' }}" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="{{ site_settings.instagram_url|default:'#' }}" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="{{ site_settings.linkedin_url|default:'#' }}" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
         </div>
@@ -189,7 +189,7 @@
                     {% load static %}
                     <img src="{% static 'main/images/logo-aime.png' %}" alt="AIME Logo" class="footer-logo">
                     <h6 class="small fw-bold">Agissons Ici et<br>Maintenant pour<br>les Enfants</h6>
-                    <p class="footer-text small">Organisation dédiée au développement et épanouissement des enfants en RDC.</p>
+                    <p class="footer-text small">{{ site_settings.footer_tagline }}</p>
                 </div>
                 
                 <!-- Colonne 2: Navigation -->
@@ -222,28 +222,34 @@
                     <ul class="list-unstyled footer-contact">
                         <li class="mb-2">
                             <small><i class="fas fa-envelope me-2"></i></small>
-                            <small><a href="mailto:contact@aime-rdc.org">contact@aime-rdc.org</a></small>
+                            <small><a href="mailto:{{ site_settings.contact_email }}">{{ site_settings.contact_email }}</a></small>
                         </li>
+                        {% if site_settings.contact_email_2 %}
                         <li class="mb-2">
                             <small><i class="fas fa-envelope me-2"></i></small>
-                            <small><a href="mailto:kinshasa@aime-rdc.org">kinshasa@aime-rdc.org</a></small>
+                            <small><a href="mailto:{{ site_settings.contact_email_2 }}">{{ site_settings.contact_email_2 }}</a></small>
                         </li>
+                        {% endif %}
                         <li class="mb-2">
                             <small><i class="fas fa-phone me-2"></i></small>
-                            <small><a href="tel:+243844444411">+243 844 444 411</a></small>
+                            <small><a href="tel:{{ site_settings.phone_1 }}">{{ site_settings.phone_1 }}</a></small>
                         </li>
+                        {% if site_settings.phone_2 %}
                         <li class="mb-2">
                             <small><i class="fas fa-phone me-2"></i></small>
-                            <small><a href="tel:+243823090002">+243 823 090 002</a></small>
+                            <small><a href="tel:{{ site_settings.phone_2 }}">{{ site_settings.phone_2 }}</a></small>
                         </li>
+                        {% endif %}
                         <li class="mb-2">
                             <small><i class="fas fa-map-marker-alt me-2"></i></small>
-                            <small>Kinshasa - Gombe</small>
+                            <small>{{ site_settings.address_1 }}</small>
                         </li>
+                        {% if site_settings.address_2 %}
                         <li>
                             <small><i class="fas fa-map-marker-alt me-2"></i></small>
-                            <small>Lubumbashi - Ruashi</small>
+                            <small>{{ site_settings.address_2 }}</small>
                         </li>
+                        {% endif %}
                     </ul>
                 </div>
                 
@@ -262,10 +268,10 @@
                     
                     <h6 class="fw-bold small text-uppercase mb-2">Suivez-nous</h6>
                     <div class="social-links">
-                        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="{{ site_settings.facebook_url|default:'#' }}" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="{{ site_settings.twitter_url|default:'#' }}" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="{{ site_settings.instagram_url|default:'#' }}" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="{{ site_settings.linkedin_url|default:'#' }}" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
             </div>

@@ -115,6 +115,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.context_processors.site_settings',
             ],
         },
     },
@@ -246,6 +247,19 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = config('MEDIA_ROOT', default=str(BASE_DIR / 'media'))
+
+# Cloudinary : stockage des médias uploadés (images admin) sur le CDN.
+# Activé automatiquement si les identifiants Cloudinary sont présents.
+# Sinon, fallback sur le disque local (développement).
+CLOUDINARY_CLOUD_NAME = config('CLOUDINARY_CLOUD_NAME', default='')
+if CLOUDINARY_CLOUD_NAME:
+    INSTALLED_APPS += ['cloudinary', 'cloudinary_storage']
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': CLOUDINARY_CLOUD_NAME,
+        'API_KEY': config('CLOUDINARY_API_KEY', default=''),
+        'API_SECRET': config('CLOUDINARY_API_SECRET', default=''),
+    }
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # ==============================================================================
 # EMAIL CONFIGURATION

@@ -595,3 +595,7 @@ class DailyInformation(models.Model):
     def __str__(self):
         return f"{self.title} ({self.display_date.strftime('%d/%m/%Y')})"
 
+
+# --- Modèles CMS éditables (Hero, Paramètres du site) ---
+from .cms_models import HeroSection, SiteSettings  # noqa: E402,F401
+

@@ -151,3 +151,75 @@ class DailyInformationAdmin(admin.ModelAdmin):
         self.message_user(request, f"{queryset.count()} article(s) mis à jour.")
     toggle_featured.short_description = "Basculer l'épinglage des articles"
 
+
+
+# ==============================================================================
+# CMS — Contenu éditable (Hero, Paramètres du site)
+# ==============================================================================
+from django import forms
+from django.utils.html import format_html
+from .models import HeroSection, SiteSettings
+
+
+class HeroSectionForm(forms.ModelForm):
+    class Meta:
+        model = HeroSection
+        fields = '__all__'
+        widgets = {
+            'overlay_color': forms.TextInput(attrs={'type': 'color', 'style': 'width:70px;height:38px;padding:2px;'}),
+            'overlay_color_2': forms.TextInput(attrs={'type': 'color', 'style': 'width:70px;height:38px;padding:2px;'}),
+            'overlay_opacity': forms.NumberInput(attrs={'type': 'range', 'min': 0, 'max': 100, 'step': 5,
+                                                        'oninput': "this.nextElementSibling && (this.nextElementSibling.value=this.value)"}),
+        }
+
+
+@admin.register(HeroSection)
+class HeroSectionAdmin(admin.ModelAdmin):
+    form = HeroSectionForm
+    list_display = ['get_page_display', 'title', 'overlay_preview', 'is_active', 'updated_at']
+    list_filter = ['is_active', 'overlay_type']
+    readonly_fields = ['image_preview', 'updated_at']
+    fieldsets = (
+        ("Page", {'fields': ('page', 'is_active')}),
+        ("Contenu", {'fields': ('eyebrow', 'title', 'title_highlight', 'subtitle')}),
+        ("Image de fond", {'fields': ('background_image', 'image_preview')}),
+        ("Boutons (CTA)", {'fields': ('cta_primary_label', 'cta_primary_url',
+                                       'cta_secondary_label', 'cta_secondary_url')}),
+        ("Overlay (filtre couleur sur l'image)", {
+            'fields': ('overlay_enabled', 'overlay_type', 'overlay_color', 'overlay_color_2',
+                       'overlay_opacity', 'overlay_angle'),
+            'description': "Active un filtre coloré sur l'image de fond pour améliorer la lisibilité du texte.",
+        }),
+        (None, {'fields': ('updated_at',)}),
+    )
+
+    def image_preview(self, obj):
+        if obj.background_image:
+            return format_html('<img src="{}" style="max-height:180px;border-radius:8px;" />', obj.background_image.url)
+        return "Aucune image"
+    image_preview.short_description = "Aperçu"
+
+    def overlay_preview(self, obj):
+        if not obj.overlay_enabled:
+            return "—"
+        return format_html(
+            '<span style="display:inline-block;width:60px;height:20px;border-radius:4px;'
+            'background:{};border:1px solid #ccc;"></span>', obj.overlay_color
+        )
+    overlay_preview.short_description = "Overlay"
+
+
+@admin.register(SiteSettings)
+class SiteSettingsAdmin(admin.ModelAdmin):
+    fieldsets = (
+        ("Contact", {'fields': ('contact_email', 'contact_email_2', 'phone_1', 'phone_2', 'address_1', 'address_2')}),
+        ("Réseaux sociaux", {'fields': ('facebook_url', 'twitter_url', 'instagram_url', 'linkedin_url')}),
+        ("Footer", {'fields': ('footer_tagline',)}),
+    )
+
+    def has_add_permission(self, request):
+        # Singleton : interdit d'ajouter plusieurs instances
+        return not SiteSettings.objects.exists()
+
+    def has_delete_permission(self, request, obj=None):
+        return False

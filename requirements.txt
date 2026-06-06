@@ -39,6 +39,10 @@ django-ratelimit==4.1.0
 pillow==11.3.0
 dj-database-url==2.2.0
 
+# Media storage (Cloudinary CDN pour les images uploadées via l'admin)
+cloudinary==1.41.0
+django-cloudinary-storage==0.3.0
+
 # ====================
 # API & HTTP
 # ====================
