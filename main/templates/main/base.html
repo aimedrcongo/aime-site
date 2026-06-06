@@ -4,7 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{{ title }}{% endblock %} - AIME</title>
-    <meta name="description" content="Agissons Ici et Maintenant pour les Enfants - Organisation pour le développement et l'épanouissement des enfants en RDC">
+    <meta name="description" content="{{ seo.description }}">
+
+    <!-- Open Graph / partage social (éditable par page depuis l'admin) -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AIME - Agissons Ici et Maintenant pour les Enfants">
+    <meta property="og:title" content="{{ seo.title }} - AIME">
+    <meta property="og:description" content="{{ seo.description }}">
+    <meta property="og:url" content="{{ seo.url }}">
+    {% if seo.image %}<meta property="og:image" content="{{ seo.image }}">{% endif %}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ seo.title }} - AIME">
+    <meta name="twitter:description" content="{{ seo.description }}">
+    {% if seo.image %}<meta name="twitter:image" content="{{ seo.image }}">{% endif %}
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -12,6 +24,49 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Polices : General Sans (titres, premium via Fontshare) + Manrope (corps) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Bouton de partage flottant -->
+    <div class="aime-share" data-testid="share-widget">
+        <div class="aime-share-menu">
+            <a class="aime-share-btn wa" target="_blank" rel="noopener" data-net="whatsapp" title="Partager sur WhatsApp" data-testid="share-whatsapp"><i class="fab fa-whatsapp"></i></a>
+            <a class="aime-share-btn fb" target="_blank" rel="noopener" data-net="facebook" title="Partager sur Facebook" data-testid="share-facebook"><i class="fab fa-facebook-f"></i></a>
+            <a class="aime-share-btn tw" target="_blank" rel="noopener" data-net="twitter" title="Partager sur X" data-testid="share-twitter"><i class="fab fa-twitter"></i></a>
+            <button type="button" class="aime-share-btn cp" data-net="copy" title="Copier le lien" data-testid="share-copy"><i class="fas fa-link"></i></button>
+        </div>
+        <button type="button" class="aime-share-toggle" aria-label="Partager cette page" data-testid="share-toggle">
+            <i class="fas fa-share-alt"></i>
+        </button>
+    </div>
+    <style>
+    .aime-share{position:fixed;right:18px;bottom:18px;z-index:1050;display:flex;flex-direction:column;align-items:center;gap:10px}
+    .aime-share-toggle{width:54px;height:54px;border-radius:50%;border:none;background:#1D4ED8;color:#fff;font-size:1.25rem;box-shadow:0 8px 24px rgba(29,78,216,.4);cursor:pointer;transition:transform .2s,background-color .2s}
+    .aime-share-toggle:hover{transform:scale(1.08);background:#0A2A4D}
+    .aime-share-menu{display:flex;flex-direction:column;gap:8px;opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .25s,transform .25s}
+    .aime-share.open .aime-share-menu{opacity:1;pointer-events:auto;transform:translateY(0)}
+    .aime-share-btn{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;border:none;cursor:pointer;font-size:1.05rem;box-shadow:0 4px 14px rgba(0,0,0,.18);transition:transform .2s}
+    .aime-share-btn:hover{transform:scale(1.1);color:#fff}
+    .aime-share-btn.wa{background:#25D366}.aime-share-btn.fb{background:#1877F2}.aime-share-btn.tw{background:#000}.aime-share-btn.cp{background:#475569}
+    @media(max-width:576px){.aime-share{right:12px;bottom:12px}}
+    </style>
+    <script>
+    (function(){
+        var wrap=document.querySelector('.aime-share');if(!wrap)return;
+        var toggle=wrap.querySelector('.aime-share-toggle');
+        var url=encodeURIComponent(window.location.href);
+        var text=encodeURIComponent(document.title);
+        wrap.querySelector('[data-net="whatsapp"]').href='https://wa.me/?text='+text+'%20'+url;
+        wrap.querySelector('[data-net="facebook"]').href='https://www.facebook.com/sharer/sharer.php?u='+url;
+        wrap.querySelector('[data-net="twitter"]').href='https://twitter.com/intent/tweet?url='+url+'&text='+text;
+        toggle.addEventListener('click',function(){wrap.classList.toggle('open');});
+        var cp=wrap.querySelector('[data-net="copy"]');
+        cp.addEventListener('click',function(){
+            navigator.clipboard.writeText(window.location.href).then(function(){
+                cp.innerHTML='<i class="fas fa-check"></i>';
+                setTimeout(function(){cp.innerHTML='<i class="fas fa-link"></i>';},1500);
+            });
+        });
+    })();
+    </script>
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://api.fontshare.com/v2/css?f[]=general-sans@500,600,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">

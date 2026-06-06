@@ -42,3 +42,10 @@ services:
         value: "aimesite.settings"
       - key: RENDER
         value: "true"
+      # Cloudinary — stockage CDN des images uploadées (admin). Valeurs dans le dashboard Render.
+      - key: CLOUDINARY_CLOUD_NAME
+        value: "dnzbxj2ip"
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false

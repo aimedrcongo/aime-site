@@ -190,6 +190,10 @@ class HeroSectionAdmin(admin.ModelAdmin):
                        'overlay_opacity', 'overlay_angle'),
             'description': "Active un filtre coloré sur l'image de fond pour améliorer la lisibilité du texte.",
         }),
+        ("SEO & Partage social (Open Graph)", {
+            'fields': ('meta_description', 'og_image'),
+            'description': "Description et image affichées lors du partage WhatsApp/Facebook et pour Google.",
+        }),
         (None, {'fields': ('updated_at',)}),
     )
 

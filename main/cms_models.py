@@ -83,6 +83,16 @@ class HeroSection(models.Model):
         "Angle dégradé (deg)", default=135, validators=[MaxValueValidator(360)]
     )
 
+    # SEO / Open Graph (partage social)
+    meta_description = models.CharField(
+        "Description SEO / partage", max_length=300, blank=True,
+        help_text="Texte affiché lors du partage (WhatsApp, Facebook...) et pour le référencement."
+    )
+    og_image = models.ImageField(
+        "Image de partage (Open Graph)", upload_to='og/', blank=True, null=True,
+        help_text="Image affichée lors du partage. Si vide, l'image de fond est utilisée."
+    )
+
     is_active = models.BooleanField("Actif", default=True)
     updated_at = models.DateTimeField(auto_now=True)
 
