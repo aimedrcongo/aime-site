@@ -292,16 +292,17 @@
 {% endblock %}
 
 {% block content %}
+{% load cms_tags %}
+{% get_hero 'mbc' as hero %}
 <!-- Hero Section -->
 <section class="mbc-hero">
     <div class="container text-center">
         <div class="mbc-icon">
             <i class="fas fa-bicycle"></i>
         </div>
-        <h1 class="display-4 fw-bold mb-3">Mutoto Bike Challenge</h1>
+        <h1 class="display-4 fw-bold mb-3">{{ hero.title|default:"Mutoto Bike Challenge" }}</h1>
         <p class="lead mb-4">
-            Défi cycliste annuel pour sensibiliser les jeunes à la protection de l'environnement 
-            tout en promouvant le sport et la cohésion sociale.
+            {{ hero.subtitle|default:"Défi cycliste annuel pour sensibiliser les jeunes à la protection de l'environnement tout en promouvant le sport et la cohésion sociale." }}
         </p>
         {% if current_event %}
             <div class="challenge-date">

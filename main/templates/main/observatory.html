@@ -124,15 +124,16 @@
 {% endblock %}
 
 {% block content %}
+{% load cms_tags %}
+{% get_hero 'observatory' as hero %}
 <!-- Hero Section -->
 <section class="observatory-hero">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-8 mx-auto text-center">
-                <h1 class="display-4 fw-bold mb-4">Observatoire International des Droits de l'Enfant</h1>
+                <h1 class="display-4 fw-bold mb-4">{{ hero.title|default:"Observatoire International des Droits de l'Enfant" }}</h1>
                 <p class="lead">
-                    AIME surveille, documente et agit pour la protection des droits fondamentaux 
-                    des enfants en RDC et dans la région des Grands Lacs
+                    {{ hero.subtitle|default:"AIME surveille, documente et agit pour la protection des droits fondamentaux des enfants en RDC et dans la région des Grands Lacs" }}
                 </p>
                 <div class="mt-4">
                     <span class="badge bg-warning me-2 p-2">🚨 Alerte Active</span>

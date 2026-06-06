@@ -155,14 +155,16 @@
 {% endblock %}
 
 {% block content %}
+{% load cms_tags %}
+{% get_hero 'research_center' as hero %}
 <!-- Hero Section -->
 <section class="research-hero">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-8 mx-auto text-center">
-                <h1 class="display-4 fw-bold mb-4">Centre de Recherche & Innovation AIME</h1>
+                <h1 class="display-4 fw-bold mb-4">{{ hero.title|default:"Centre de Recherche & Innovation AIME" }}</h1>
                 <p class="lead">
-                    "L'avenir de l'enfance se construit aujourd'hui dans nos laboratoires"
+                    {{ hero.subtitle|default:'"L\'avenir de l\'enfance se construit aujourd\'hui dans nos laboratoires"' }}
                 </p>
                 <p class="lead">
                     Premier centre de recherche appliquée en développement de l'enfant en Afrique Centrale

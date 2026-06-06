@@ -197,6 +197,18 @@ _hero_defaults = [
 ]
 for _page, _defaults in _hero_defaults:
     HeroSection.objects.get_or_create(page=_page, defaults=_defaults)
+
+# Heros des pages au design custom (texte editable, design conserve)
+_hero_rich = [
+    ('mbc', {'title': 'Mutoto Bike Challenge', 'subtitle': "Défi cycliste annuel pour sensibiliser les jeunes à la protection de l'environnement tout en promouvant le sport et la cohésion sociale.", 'overlay_enabled': False}),
+    ('msa', {'title': 'Mutoto Science Adventure', 'subtitle': "Éveiller la curiosité scientifique des enfants de 3 à 6 ans et promouvoir l'égalité des genres dans les STEM", 'overlay_enabled': False}),
+    ('mon_beau_metier', {'title': 'Mon Beau Métier', 'subtitle': "Reconnaître, valoriser et accompagner les métiers exercés par les étudiants pour leur autonomisation économique et professionnelle", 'overlay_enabled': False}),
+    ('manifesto', {'title': 'MANIFESTE AIME', 'eyebrow': '"L\'Afrique de demain se construit aujourd\'hui dans les mains de nos enfants"', 'subtitle': "Nous croyons en une Afrique où chaque enfant, peu importe son origine, sa condition sociale ou son genre, peut devenir l'architecte de son destin et le bâtisseur d'un continent prospère.", 'overlay_enabled': False}),
+    ('observatory', {'title': "Observatoire International des Droits de l'Enfant", 'subtitle': "AIME surveille, documente et agit pour la protection des droits fondamentaux des enfants en RDC et dans la région des Grands Lacs", 'overlay_enabled': False}),
+    ('research_center', {'title': 'Centre de Recherche & Innovation AIME', 'subtitle': '"L\'avenir de l\'enfance se construit aujourd\'hui dans nos laboratoires"', 'overlay_enabled': False}),
+]
+for _page, _defaults in _hero_rich:
+    HeroSection.objects.get_or_create(page=_page, defaults=_defaults)
 print('CMS seeded: heroes =', HeroSection.objects.count(), '| site settings OK')
 
 # --- CMS: Programmes & Galerie (page d'accueil) ---

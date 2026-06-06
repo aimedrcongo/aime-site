@@ -83,6 +83,8 @@
 {% endblock %}
 
 {% block content %}
+{% load cms_tags %}
+{% get_hero 'mon_beau_metier' as hero %}
 <!-- Hero Section -->
 <div class="mbm-hero">
     <div class="mbm-hero::before"></div>
@@ -91,11 +93,10 @@
             <i class="fas fa-star me-2"></i>Valorisation des Métiers Étudiants
         </div>
         <h1>
-            <i class="fas fa-briefcase me-3"></i>Mon Beau Métier
+            <i class="fas fa-briefcase me-3"></i>{{ hero.title|default:"Mon Beau Métier" }}
         </h1>
         <p class="subtitle">
-            Reconnaître, valoriser et accompagner les métiers exercés par les étudiants<br>
-            pour leur autonomisation économique et professionnelle
+            {{ hero.subtitle|default:"Reconnaître, valoriser et accompagner les métiers exercés par les étudiants pour leur autonomisation économique et professionnelle"|safe }}
         </p>
         <div>
             <a href="#metiers" class="btn btn-mbm me-2">

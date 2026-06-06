@@ -408,6 +408,8 @@
 {% endblock %}
 
 {% block content %}
+{% load cms_tags %}
+{% get_hero 'msa' as hero %}
 <!-- Hero Section -->
 <div class="msa-hero">
     <div class="msa-hero::before"></div>
@@ -416,11 +418,10 @@
             <i class="fas fa-flask-vial me-2"></i>Branche Scientifique de MUTOTO
         </div>
         <h1>
-            <i class="fas fa-rocket me-3"></i>Mutoto Science Adventure
+            <i class="fas fa-rocket me-3"></i>{{ hero.title|default:"Mutoto Science Adventure" }}
         </h1>
         <p class="subtitle">
-            Éveiller la curiosité scientifique des enfants de 3 à 6 ans<br>
-            et promouvoir l'égalité des genres dans les STEM
+            {{ hero.subtitle|default:"Éveiller la curiosité scientifique des enfants de 3 à 6 ans et promouvoir l'égalité des genres dans les STEM"|safe }}
         </p>
         <div>
             <a href="#activites" class="btn btn-msa me-2">

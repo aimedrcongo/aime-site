@@ -199,19 +199,19 @@
 {% endblock %}
 
 {% block content %}
+{% load cms_tags %}
+{% get_hero 'manifesto' as hero %}
 <!-- Hero Section -->
 <section class="manifesto-hero">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-10 mx-auto text-center">
-                <h1 class="display-3 fw-bold mb-4">MANIFESTE AIME</h1>
+                <h1 class="display-3 fw-bold mb-4">{{ hero.title|default:"MANIFESTE AIME" }}</h1>
                 <h2 class="h3 mb-4 text-warning">
-                    "L'Afrique de demain se construit aujourd'hui dans les mains de nos enfants"
+                    {{ hero.eyebrow|default:'"L\'Afrique de demain se construit aujourd\'hui dans les mains de nos enfants"' }}
                 </h2>
                 <p class="lead">
-                    Nous croyons en une Afrique où chaque enfant, peu importe son origine, 
-                    sa condition sociale ou son genre, peut devenir l'architecte de son destin 
-                    et le bâtisseur d'un continent prospère.
+                    {{ hero.subtitle|default:"Nous croyons en une Afrique où chaque enfant, peu importe son origine, sa condition sociale ou son genre, peut devenir l'architecte de son destin et le bâtisseur d'un continent prospère." }}
                 </p>
                 <div class="mt-4">
                     <span class="badge bg-warning me-2 p-3 fs-6">🌍 Vision Panafricaine</span>
