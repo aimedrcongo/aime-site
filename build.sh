@@ -21,6 +21,10 @@ python manage.py collectstatic --noinput || true
 echo "🗄️  Running database migrations..."
 python manage.py migrate --noinput
 
+# Peupler la base de données avec le contenu du site (idempotent)
+echo "🌱 Seeding database content..."
+python seed_preview.py || true
+
 # Créer la table de cache
 echo "🗄️  Creating cache table..."
 python manage.py createcachetable || true

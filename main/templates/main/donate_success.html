@@ -1,0 +1,86 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Don confirmé - AIME{% endblock %}
+
+{% block content %}
+<!-- En-tête premium cohérent -->
+<section class="page-hero">
+    <div class="container">
+        <span class="eyebrow">Merci infiniment</span>
+        <h1 class="display-4 fw-bold">Votre don est confirmé</h1>
+        <p class="lead">Grâce à vous, nous agissons ici et maintenant pour les enfants de la RDC.</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="card text-center">
+                    <div class="card-body p-5">
+                        <!-- Coche animée -->
+                        <div class="success-check mx-auto mb-4" data-testid="donate-success-check">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3 class="mb-3">Un grand merci pour votre générosité !</h3>
+                        <p class="text-muted mb-4">
+                            Votre contribution a bien été enregistrée. Vous recevrez très prochainement
+                            les instructions de paiement et un reçu par email. Chaque don compte et
+                            transforme concrètement la vie d'un enfant.
+                        </p>
+
+                        <div class="row g-3 my-4 text-start">
+                            <div class="col-md-4">
+                                <div class="mini-impact"><i class="fas fa-graduation-cap"></i><span>Éducation</span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mini-impact"><i class="fas fa-briefcase"></i><span>Formation</span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mini-impact"><i class="fas fa-hand-holding-heart"></i><span>Solidarité</span></div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-wrap gap-2 justify-content-center mt-4">
+                            <a href="{% url 'main:projects' %}" class="btn btn-primary" data-testid="success-projects-btn">
+                                <i class="fas fa-folder-open me-1"></i> Découvrir nos projets
+                            </a>
+                            <a href="{% url 'main:home' %}" class="btn btn-secondary" data-testid="success-home-btn">
+                                Retour à l'accueil
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-center text-muted mt-4 mb-0" style="font-size:0.9rem;">
+                    Une question ? <a href="{% url 'main:contact' %}">Contactez-nous</a> — notre équipe vous répond avec plaisir.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Médaillon de confirmation (dégradé de marque + halo doux) */
+.success-check {
+    width: 96px; height: 96px; border-radius: 50%;
+    background: var(--gradient-primary);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 2.4rem;
+    box-shadow: 0 0 0 10px rgba(29,78,216,0.10);
+    animation: popIn 0.6s var(--transition-bounce) both;
+}
+@keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.mini-impact {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.85rem 1rem;
+    background: var(--clr-surface-alt);
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius-md);
+    font-weight: 600; color: var(--clr-text-main); font-size: 0.92rem;
+}
+.mini-impact i { color: var(--clr-primary); }
+</style>
+{% endblock %}

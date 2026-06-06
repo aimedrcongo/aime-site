@@ -44,8 +44,8 @@ urlpatterns = [
     
     # Dons
     path('donate/', views.donate, name='donate'),
-    path('donate/<slug:project_slug>/', views.donate, name='donate_project'),
     path('donate/success/', views.donate_success, name='donate_success'),
+    path('donate/<slug:project_slug>/', views.donate, name='donate_project'),
     
     # AJAX
     path('newsletter/subscribe/', views.newsletter_subscribe, name='newsletter_subscribe'),

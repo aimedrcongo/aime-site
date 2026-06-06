@@ -292,8 +292,7 @@ def newsletter_subscribe(request):
         email = email.strip()
         if email:
             subscription, created = NewsletterSubscription.objects.get_or_create(
-                email=email,
-                defaults={'name': name}
+                email=email
             )
             if created:
                 return JsonResponse({'success': True, 'message': 'Abonnement réussi!'})

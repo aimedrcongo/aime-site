@@ -5,75 +5,110 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'main/home.css' %}">
-
 {% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="hero-section">
+<!-- ============================== HERO ============================== -->
+<section class="hero-section" data-testid="hero-section">
     <div class="container">
-        <div class="row align-items-center">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7">
+                <span class="hero-label">ONG · RDC · Depuis Kinshasa &amp; Lubumbashi</span>
+                <h1 class="hero-title">
+                    Agissons ici et<br>maintenant pour<br>les <span class="accent-word">enfants</span>.
+                </h1>
+                <p class="hero-subtitle">
+                    Développement socio-éducatif, entrepreneuriat et formation aux métiers :
+                    nous bâtissons l'avenir des enfants et des jeunes de la République Démocratique du Congo.
+                </p>
+                <div class="hero-cta">
+                    <a href="{% url 'main:donate' %}" class="btn btn-primary" data-testid="hero-donate-btn">
+                        <i class="fas fa-heart"></i> Faire un don
+                    </a>
+                    <a href="{% url 'main:projects' %}" class="btn btn-secondary" data-testid="hero-projects-btn">
+                        Découvrir nos projets <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="hero-visual" data-testid="hero-visual">
+                    <span class="hero-badge"><span class="dot"></span> En direct</span>
+                    <img src="https://images.pexels.com/photos/14554003/pexels-photo-14554003.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=600"
+                         alt="Enfants congolais en activité éducative" loading="eager">
+                    <div class="hero-float-stat">
+                        <div class="num" data-target="{{ stats.total_children_helped }}">0</div>
+                        <div class="lbl">Enfants accompagnés</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bandeau statistiques (grille Tetris) -->
+        <div class="hero-stats-band" data-testid="hero-stats-band">
+            <div class="hero-stat">
+                <span class="hero-stat-number" data-target="{{ stats.active_projects }}">0</span>
+                <div class="hero-stat-label">Projets actifs</div>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-number" data-target="{{ stats.total_events }}">0</span>
+                <div class="hero-stat-label">Événements</div>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-number" data-target="{{ stats.families_supported }}">0</span>
+                <div class="hero-stat-label">Familles soutenues</div>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-number" data-target="{{ stats.total_donations }}">0</span>
+                <div class="hero-stat-label">FC collectés</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========================= PROGRAMMES PHARES ========================= -->
+<section class="section section-light" data-testid="programs-section">
+    <div class="container">
+        <div class="section-head row align-items-end">
             <div class="col-lg-8">
-                <div class="hero-content">
-                    <h1 class="hero-title animate-enter">
-                        Agissons Ici et Maintenant pour les 
-                        <span class="text-gradient">Enfants</span>
-                    </h1>
-                    <p class="hero-subtitle animate-enter delay-1">
-                        Organisation dédiée au développement socio-éducationnel, entrepreneurial et à la formation 
-                        en divers métiers pour l'épanouissement des enfants en République Démocratique du Congo.
-                    </p>
-                    
-                    <div class="hero-stats animate-enter delay-2">
-                        <div class="hero-stat">
-                            <span class="hero-stat-number" data-target="{{ stats.total_children_helped }}">0</span>
-                            <div class="hero-stat-label">Enfants aidés</div>
-                        </div>
-                        <div class="hero-stat">
-                            <span class="hero-stat-number" data-target="{{ stats.active_projects }}">0</span>
-                            <div class="hero-stat-label">Projets actifs</div>
-                        </div>
-                        <div class="hero-stat">
-                            <span class="hero-stat-number" data-target="{{ stats.total_events }}">0</span>
-                            <div class="hero-stat-label">Événements</div>
-                        </div>
-                        <div class="hero-stat">
-                            <span class="hero-stat-number" data-target="{{ stats.total_donations }}">0</span>
-                            <div class="hero-stat-label">FC collectés</div>
-                        </div>
-                    </div>
-                    
-                    <div class="hero-cta">
-                        {% if user.is_authenticated %}
-                        <a href="{% url 'main:dashboard_home' %}" class="btn btn-primary">
-                            <i class="fas fa-tachometer-alt"></i>
-                            Mon tableau de bord
-                        </a>
-                        {% endif %}
-                        <a href="{% url 'main:projects' %}" class="btn btn-primary">
-                            <i class="fas fa-rocket"></i>
-                            Découvrir nos projets
-                        </a>
-                        <a href="{% url 'main:interactive_map' %}" class="btn btn-secondary">
-                            <i class="fas fa-map-marked-alt"></i>
-                            Voir notre impact
-                        </a>
-                        {% if not user.is_authenticated %}
-                        <a href="{% url 'main:signup' %}" class="btn btn-secondary">
-                            <i class="fas fa-user-plus"></i>
-                            Rejoindre AIME
-                        </a>
-                        {% endif %}
+                <span class="section-eyebrow">Nos programmes</span>
+                <div class="section-title"><h2>Des initiatives concrètes,<br>pensées pour durer.</h2></div>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <p class="section-subtitle ms-lg-auto">Sport, sciences et métiers : trois leviers pour l'autonomie des jeunes Congolais.</p>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-2">
+            <div class="col-md-4">
+                <div class="card h-100 program-card-hover" data-testid="program-mbc">
+                    <img src="https://images.unsplash.com/photo-1515658323406-25d61c141a6e?auto=format&fit=crop&w=900&q=80" class="card-img-top" alt="Mutoto Bike Challenge" style="height: 230px; object-fit: cover;">
+                    <div class="card-body">
+                        <span class="badge bg-primary mb-3"><i class="fas fa-bicycle me-1"></i> Sport &amp; Écologie</span>
+                        <h4 class="card-title">Mutoto Bike Challenge</h4>
+                        <p class="card-text text-muted mb-4">Un défi cycliste annuel qui sensibilise les jeunes à l'environnement tout en renforçant la cohésion sociale.</p>
+                        <a href="{% url 'main:mutoto_bike_challenge' %}" class="btn btn-outline-primary w-100" data-testid="link-mbc">Découvrir <i class="fas fa-arrow-right ms-2"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 text-center">
-                <div class="position-relative">
-                    <i class="fas fa-child" style="font-size: 15rem; opacity: 0.8; color: rgba(255,255,255,0.9);"></i>
-                    <div class="position-absolute top-0 end-0">
-                        <span class="badge bg-success rounded-pill" style="animation: pulse 2s infinite;">
-                            <i class="fas fa-satellite-dish me-1"></i>En direct
-                        </span>
+            <div class="col-md-4">
+                <div class="card h-100 program-card-hover" data-testid="program-msa">
+                    <img src="https://images.pexels.com/photos/8471835/pexels-photo-8471835.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600&w=900" class="card-img-top" alt="Mutoto Science Adventure" style="height: 230px; object-fit: cover;">
+                    <div class="card-body">
+                        <span class="badge bg-success mb-3"><i class="fas fa-flask me-1"></i> Sciences &amp; Tech</span>
+                        <h4 class="card-title">Mutoto Science Adventure</h4>
+                        <p class="card-text text-muted mb-4">Des ateliers scientifiques qui éveillent la curiosité, développent l'esprit critique et inspirent les vocations.</p>
+                        <a href="{% url 'main:mutoto_science_adventure' %}" class="btn btn-outline-primary w-100" data-testid="link-msa">Découvrir <i class="fas fa-arrow-right ms-2"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 program-card-hover" data-testid="program-mbm">
+                    <img src="https://images.pexels.com/photos/9301461/pexels-photo-9301461.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600&w=900" class="card-img-top" alt="Mon Beau Métier" style="height: 230px; object-fit: cover;">
+                    <div class="card-body">
+                        <span class="badge bg-primary mb-3"><i class="fas fa-briefcase me-1"></i> Métiers &amp; Avenir</span>
+                        <h4 class="card-title">Mon Beau Métier</h4>
+                        <p class="card-text text-muted mb-4">La valorisation et la formation aux métiers porteurs pour ouvrir aux jeunes la voie de l'autonomie économique.</p>
+                        <a href="{% url 'main:mon_beau_metier' %}" class="btn btn-outline-primary w-100" data-testid="link-mbm">Découvrir <i class="fas fa-arrow-right ms-2"></i></a>
                     </div>
                 </div>
             </div>
@@ -81,284 +116,171 @@
     </div>
 </section>
 
-<!-- Impact Section -->
-
-<!-- ==============================
-     NOUVELLE SECTION IMPACT (PROFESSIONNELLE)
-     ============================== -->
-<section class="py-5 bg-light">
-    <div class="container text-center">
-        <div class="mb-5 reveal-on-scroll">
-            <h2 class="fw-bold mb-3" style="color: var(--clr-primary-dark);">Notre Impact en Chiffres</h2>
-            <p class="text-muted mx-auto" style="max-width: 700px; font-weight: 300;">
-                Nous construisons notre impact pas à pas, avec authenticité et transparence.
-                Chaque chiffre représente une action concrète pour l'avenir de la RDC.
-            </p>
-        </div>
-
-        <div class="row g-4 justify-content-center">
-            <!-- Carte 1 -->
-            <div class="col-6 col-md-3 reveal-on-scroll" style="transition-delay: 0.1s;">
-                <div class="card h-100 border-0 shadow-sm rounded-4 text-center p-4" style="background: white;">
-                    <i class="fas fa-child fa-3x mb-3" style="color: var(--clr-primary);"></i>
-                    <h3 class="fw-bold mb-1" style="font-size: 2.5rem; color: var(--clr-primary-dark);" data-target="{{ stats.total_children_helped }}">0</h3>
-                    <p class="text-muted mb-0 small text-uppercase fw-bold">Enfants Accompagnés</p>
-                </div>
-            </div>
-            <!-- Carte 2 -->
-            <div class="col-6 col-md-3 reveal-on-scroll" style="transition-delay: 0.2s;">
-                <div class="card h-100 border-0 shadow-sm rounded-4 text-center p-4" style="background: white;">
-                    <i class="fas fa-school fa-3x mb-3" style="color: var(--clr-secondary);"></i>
-                    <h3 class="fw-bold mb-1" style="font-size: 2.5rem; color: var(--clr-primary-dark);" data-target="{{ stats.schools_partners }}">0</h3>
-                    <p class="text-muted mb-0 small text-uppercase fw-bold">Écoles Partenaires</p>
-                </div>
-            </div>
-            <!-- Carte 3 -->
-            <div class="col-6 col-md-3 reveal-on-scroll" style="transition-delay: 0.3s;">
-                <div class="card h-100 border-0 shadow-sm rounded-4 text-center p-4" style="background: white;">
-                    <i class="fas fa-map-marker-alt fa-3x mb-3" style="color: #25d366;"></i>
-                    <h3 class="fw-bold mb-1" style="font-size: 2.5rem; color: var(--clr-primary-dark);" data-target="1">1</h3>
-                    <p class="text-muted mb-0 small text-uppercase fw-bold">Provinces RDC</p>
-                </div>
-            </div>
-            <!-- Carte 4 -->
-            <div class="col-6 col-md-3 reveal-on-scroll" style="transition-delay: 0.4s;">
-                <div class="card h-100 border-0 shadow-sm rounded-4 text-center p-4" style="background: white;">
-                    <i class="fas fa-hands-helping fa-3x mb-3" style="color: #e74c3c;"></i>
-                    <h3 class="fw-bold mb-1" style="font-size: 2.5rem; color: var(--clr-primary-dark);" data-target="{{ stats.families_helped }}">0</h3>
-                    <p class="text-muted mb-0 small text-uppercase fw-bold">Familles Soutenues</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="mt-4 pt-4 border-top reveal-on-scroll" style="transition-delay: 0.5s;">
-             <p class="text-muted mb-0"><i class="fas fa-info-circle me-2 text-primary"></i>Ces chiffres évoluent en temps réel selon les inscriptions.</p>
-        </div>
-    </div>
-</section>
-
-<!-- ==============================
-     NOUVELLE SECTION PROGRAMMES (PROFESSIONNELLE)
-     ============================== -->
-<section class="py-5 bg-white">
+<!-- ========================= PROJETS À LA UNE ========================= -->
+{% if featured_projects %}
+<section class="section section-gray" data-testid="featured-projects-section">
     <div class="container">
-        <div class="text-center mb-5 reveal-on-scroll">
-            <h2 class="fw-bold mb-3" style="color: var(--clr-primary-dark);">Nos Programmes Phares</h2>
-            <p class="text-muted mx-auto" style="max-width: 700px; font-weight: 300;">
-                Des initiatives concrètes pour l'épanouissement et l'autonomisation des enfants et jeunes de la RDC.
-            </p>
+        <div class="section-head row align-items-end">
+            <div class="col-lg-8">
+                <span class="section-eyebrow">Sur le terrain</span>
+                <div class="section-title"><h2>Les projets que vous<br>faites avancer.</h2></div>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{% url 'main:projects' %}" class="btn btn-secondary" data-testid="all-projects-btn">Tous les projets</a>
+            </div>
         </div>
 
-        <div class="row g-4">
-            <!-- Programme 1 -->
-            <div class="col-md-4 reveal-on-scroll" style="transition-delay: 0.1s;">
-                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden program-card-hover">
-                    <img src="{% static 'main/images/hero/hero-map.jpg' %}" class="card-img-top" alt="Mutoto Bike Challenge" style="height: 220px; object-fit: cover;">
-                    <div class="card-body p-4 bg-white">
-                        <div class="badge bg-primary text-white mb-3 py-2 px-3 rounded-pill"><i class="fas fa-bicycle me-2"></i>Sport & Écologie</div>
-                        <h4 class="card-title fw-bold">Mutoto Bike Challenge</h4>
-                        <p class="card-text text-muted mb-4" style="font-weight: 300; font-size: 0.95rem;">Un défi cycliste annuel pour sensibiliser les jeunes à la protection de l'environnement tout en promouvant le sport et la cohésion sociale.</p>
-                        <a href="{% url 'main:mutoto_bike_challenge' %}" class="btn btn-outline-primary w-100 rounded-pill fw-bold">Découvrir <i class="fas fa-arrow-right ms-2"></i></a>
+        <div class="row g-4 mt-2">
+            {% for project in featured_projects %}
+            <div class="col-md-4">
+                <div class="card h-100" data-testid="project-card-{{ project.slug }}">
+                    {% if project.image %}
+                    <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.name }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <img src="https://images.pexels.com/photos/8471835/pexels-photo-8471835.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=500&w=800" class="card-img-top" alt="{{ project.name }}" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        {% if project.category %}<span class="badge bg-success mb-3">{{ project.category.name }}</span>{% endif %}
+                        <h4 class="card-title">{{ project.name }}</h4>
+                        <p class="card-text text-muted mb-4">{{ project.description|truncatewords:18 }}</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between mb-2" style="font-size:0.82rem; font-weight:700;">
+                                <span class="text-green">{{ project.raised_amount|floatformat:0 }} FC</span>
+                                <span class="text-muted">/ {{ project.goal_amount|floatformat:0 }} FC</span>
+                            </div>
+                            <div class="progress-track mb-4">
+                                <div class="progress-fill" style="width: {{ project.progress_percentage|floatformat:0 }}%;"></div>
+                            </div>
+                            <a href="{% url 'main:donate_project' project.slug %}" class="btn btn-primary w-100" data-testid="donate-{{ project.slug }}">
+                                <i class="fas fa-heart"></i> Soutenir
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Programme 2 -->
-            <div class="col-md-4 reveal-on-scroll" style="transition-delay: 0.2s;">
-                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden program-card-hover">
-                    <img src="{% static 'main/images/hero/_V6A0191.JPG' %}" class="card-img-top" alt="Mutoto Science Adventure" style="height: 220px; object-fit: cover;">
-                    <div class="card-body p-4 bg-white">
-                        <div class="badge text-white mb-3 py-2 px-3 rounded-pill" style="background-color: var(--clr-secondary);"><i class="fas fa-flask me-2"></i>Sciences & Tech</div>
-                        <h4 class="card-title fw-bold">Mutoto Science</h4>
-                        <p class="card-text text-muted mb-4" style="font-weight: 300; font-size: 0.95rem;">Programme d'initiation aux sciences et technologies pour éveiller la curiosité scientifique des enfants et développer leur esprit critique.</p>
-                        <a href="{% url 'main:about' %}" class="btn w-100 rounded-pill fw-bold" style="border-color: var(--clr-secondary); color: var(--clr-secondary);">Découvrir <i class="fas fa-arrow-right ms-2"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Programme 3 -->
-            <div class="col-md-4 reveal-on-scroll" style="transition-delay: 0.3s;">
-                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden program-card-hover">
-                    <img src="{% static 'main/images/hero/_V6A0166.JPG' %}" class="card-img-top" alt="École Numérique" style="height: 220px; object-fit: cover;">
-                    <div class="card-body p-4 bg-white">
-                        <div class="badge bg-success text-white mb-3 py-2 px-3 rounded-pill"><i class="fas fa-laptop-code me-2"></i>Digital & Futur</div>
-                        <h4 class="card-title fw-bold">École Numérique</h4>
-                        <p class="card-text text-muted mb-4" style="font-weight: 300; font-size: 0.95rem;">Formation aux outils numériques et à la programmation pour préparer les jeunes aux métiers du futur et réduire la fracture numérique.</p>
-                        <a href="{% url 'main:about' %}" class="btn btn-outline-success w-100 rounded-pill fw-bold">Découvrir <i class="fas fa-arrow-right ms-2"></i></a>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
+{% endif %}
 
-<!-- ==============================
-     NOUVELLE SECTION IMPACT (PROFESSIONNELLE)
-     ============================== -->
-<section class="py-5 bg-light">
-    <div class="container text-center">
-        <div class="mb-5 reveal-on-scroll">
-            <h2 class="fw-bold mb-3" style="color: var(--clr-primary-dark);">Notre Impact en Chiffres</h2>
-            <p class="text-muted mx-auto" style="max-width: 700px; font-weight: 300;">
-                Nous construisons notre impact pas à pas, avec authenticité et transparence.
-                Chaque chiffre représente une action concrète pour l'avenir de la RDC.
-            </p>
-        </div>
-
-        <div class="row g-4 justify-content-center">
-            <!-- Carte 1 -->
-            <div class="col-6 col-md-3 reveal-on-scroll" style="transition-delay: 0.1s;">
-                <div class="card h-100 border-0 shadow-sm rounded-4 text-center p-4" style="background: white;">
-                    <i class="fas fa-child fa-3x mb-3" style="color: var(--clr-primary);"></i>
-                    <h3 class="fw-bold mb-1" style="font-size: 2.5rem; color: var(--clr-primary-dark);" data-target="{{ stats.total_children_helped }}">0</h3>
-                    <p class="text-muted mb-0 small text-uppercase fw-bold">Enfants Accompagnés</p>
-                </div>
-            </div>
-            <!-- Carte 2 -->
-            <div class="col-6 col-md-3 reveal-on-scroll" style="transition-delay: 0.2s;">
-                <div class="card h-100 border-0 shadow-sm rounded-4 text-center p-4" style="background: white;">
-                    <i class="fas fa-school fa-3x mb-3" style="color: var(--clr-secondary);"></i>
-                    <h3 class="fw-bold mb-1" style="font-size: 2.5rem; color: var(--clr-primary-dark);" data-target="{{ stats.schools_partners }}">0</h3>
-                    <p class="text-muted mb-0 small text-uppercase fw-bold">Écoles Partenaires</p>
-                </div>
-            </div>
-            <!-- Carte 3 -->
-            <div class="col-6 col-md-3 reveal-on-scroll" style="transition-delay: 0.3s;">
-                <div class="card h-100 border-0 shadow-sm rounded-4 text-center p-4" style="background: white;">
-                    <i class="fas fa-map-marker-alt fa-3x mb-3" style="color: #25d366;"></i>
-                    <h3 class="fw-bold mb-1" style="font-size: 2.5rem; color: var(--clr-primary-dark);" data-target="1">1</h3>
-                    <p class="text-muted mb-0 small text-uppercase fw-bold">Provinces RDC</p>
-                </div>
-            </div>
-            <!-- Carte 4 -->
-            <div class="col-6 col-md-3 reveal-on-scroll" style="transition-delay: 0.4s;">
-                <div class="card h-100 border-0 shadow-sm rounded-4 text-center p-4" style="background: white;">
-                    <i class="fas fa-hands-helping fa-3x mb-3" style="color: #e74c3c;"></i>
-                    <h3 class="fw-bold mb-1" style="font-size: 2.5rem; color: var(--clr-primary-dark);" data-target="{{ stats.families_helped }}">0</h3>
-                    <p class="text-muted mb-0 small text-uppercase fw-bold">Familles Soutenues</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="mt-4 pt-4 border-top reveal-on-scroll" style="transition-delay: 0.5s;">
-             <p class="text-muted mb-0"><i class="fas fa-info-circle me-2 text-primary"></i>Ces chiffres évoluent en temps réel selon les inscriptions.</p>
-        </div>
-    </div>
-</section>
-
-
-<section class="py-5 bg-light">
+<!-- ===================== BANDE IMPACT (vert inversé) ===================== -->
+<section class="section impact-band" data-testid="impact-band">
     <div class="container">
-        <div class="section-title">
-            <h2>Galerie - Nos Dernières Réalisations</h2>
-            <p>Découvrez nos actions et réalisations à travers la RDC</p>
+        <div class="row align-items-center g-5">
+            <div class="col-lg-5">
+                <div class="big-number" data-target="{{ stats.total_children_helped }}">0</div>
+                <h2 class="mt-2">enfants déjà accompagnés vers un avenir meilleur.</h2>
+            </div>
+            <div class="col-lg-6 offset-lg-1">
+                <p class="mb-4" style="font-size:1.15rem;">
+                    Chaque chiffre est une histoire : un enfant scolarisé, un jeune formé, une famille soutenue.
+                    Nous mesurons notre impact avec transparence — et il grandit grâce à vous.
+                </p>
+                <div class="row g-4">
+                    <div class="col-6 col-md-4">
+                        <div class="big-number" style="font-size:clamp(2rem,4vw,3rem);" data-target="{{ stats.families_supported }}">0</div>
+                        <div class="text-light opacity-75" style="font-weight:700; text-transform:uppercase; letter-spacing:0.06em; font-size:0.78rem;">Familles soutenues</div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="big-number" style="font-size:clamp(2rem,4vw,3rem);" data-target="{{ stats.mbc_participants }}">0</div>
+                        <div class="text-light opacity-75" style="font-weight:700; text-transform:uppercase; letter-spacing:0.06em; font-size:0.78rem;">Participants MBC</div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="big-number" style="font-size:clamp(2rem,4vw,3rem);" data-target="{{ stats.active_projects }}">0</div>
+                        <div class="text-light opacity-75" style="font-weight:700; text-transform:uppercase; letter-spacing:0.06em; font-size:0.78rem;">Projets actifs</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <!-- Carousel Bootstrap 5 -->
+    </div>
+</section>
+
+<!-- ============================ GALERIE ============================ -->
+<section class="section section-light" data-testid="gallery-section">
+    <div class="container">
+        <div class="section-head">
+            <span class="section-eyebrow">En images</span>
+            <div class="section-title"><h2>Nos dernières réalisations.</h2></div>
+        </div>
+
         <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
                 <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="1"></button>
                 <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="2"></button>
                 <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="3"></button>
-                <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="4"></button>
-                <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="5"></button>
             </div>
-            <div class="carousel-inner rounded-4 overflow-hidden" style="box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
-                <!-- Slide 1: Formation Vélo -->
+            <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=600&fit=crop" class="d-block w-100" alt="Formation Mécanique Vélo" style="height: 500px; object-fit: cover;">
-                    <div class="carousel-caption d-none d-md-block" class="text-gradient">
-                        <h5 class="fw-bold" style="font-size: 1.8rem;">Formation Mécanique Vélo</h5>
-                        <p>Sensibilisation environnementale et formation technique à Kinshasa</p>
-                    </div>
+                    <img src="https://images.pexels.com/photos/14554003/pexels-photo-14554003.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600&w=1200" class="d-block w-100" alt="Éducation" style="height: 520px; object-fit: cover;">
+                    <div class="carousel-caption"><h5>Mutoto Science Adventure</h5><p>Ateliers scientifiques pour éveiller la curiosité des enfants</p></div>
                 </div>
-                
-                <!-- Slide 2: Science Adventure -->
                 <div class="carousel-item">
-                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop" class="d-block w-100" alt="Mutoto Science Adventure" style="height: 500px; object-fit: cover;">
-                    <div class="carousel-caption d-none d-md-block" class="text-gradient">
-                        <h5 class="fw-bold" style="font-size: 1.8rem;">Mutoto Science Adventure</h5>
-                        <p>Ateliers scientifiques et technologiques pour jeunes filles</p>
-                    </div>
+                    <img src="https://images.pexels.com/photos/9301461/pexels-photo-9301461.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600&w=1200" class="d-block w-100" alt="Entrepreneuriat" style="height: 520px; object-fit: cover;">
+                    <div class="carousel-caption"><h5>Mon Beau Métier</h5><p>Formation et valorisation des métiers étudiants en RDC</p></div>
                 </div>
-                
-                <!-- Slide 3: Mon Beau Métier -->
                 <div class="carousel-item">
-                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=600&fit=crop" class="d-block w-100" alt="Mon Beau Métier" style="height: 500px; object-fit: cover;">
-                    <div class="carousel-caption d-none d-md-block" class="text-gradient">
-                        <h5 class="fw-bold" style="font-size: 1.8rem;">Mon Beau Métier</h5>
-                        <p>Valorisation et formation des métiers étudiants en RDC</p>
-                    </div>
+                    <img src="https://images.unsplash.com/photo-1515658323406-25d61c141a6e?auto=format&fit=crop&w=1200&q=80" class="d-block w-100" alt="Communauté" style="height: 520px; object-fit: cover;">
+                    <div class="carousel-caption"><h5>Engagement communautaire</h5><p>Un travail collectif pour un impact durable</p></div>
                 </div>
-                
-                <!-- Slide 4: Communauté -->
                 <div class="carousel-item">
-                    <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&h=600&fit=crop" class="d-block w-100" alt="Communauté" style="height: 500px; object-fit: cover;">
-                    <div class="carousel-caption d-none d-md-block" class="text-gradient">
-                        <h5 class="fw-bold" style="font-size: 1.8rem;">Engagement Communautaire</h5>
-                        <p>Travail collectif pour un impact durable dans nos communautés</p>
-                    </div>
-                </div>
-                
-                <!-- Slide 5: Jeunesse & Éducation -->
-                <div class="carousel-item">
-                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&h=600&fit=crop" class="d-block w-100" alt="Jeunesse & Éducation" style="height: 500px; object-fit: cover;">
-                    <div class="carousel-caption d-none d-md-block" class="text-gradient">
-                        <h5 class="fw-bold" style="font-size: 1.8rem;">Jeunesse & Éducation</h5>
-                        <p>Formation et accompagnement des jeunes entrepreneurs</p>
-                    </div>
-                </div>
-                
-                <!-- Slide 6: Impact Social -->
-                <div class="carousel-item">
-                    <img src="https://images.unsplash.com/photo-1564225215-4ae7f8438bbb?w=1200&h=600&fit=crop" class="d-block w-100" alt="Impact Social" style="height: 500px; object-fit: cover;">
-                    <div class="carousel-caption d-none d-md-block" class="text-gradient">
-                        <h5 class="fw-bold" style="font-size: 1.8rem;">Impact Social Durable</h5>
-                        <p>Création d'opportunités et transformation de vies en RDC</p>
-                    </div>
+                    <img src="https://images.pexels.com/photos/8617843/pexels-photo-8617843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600&w=1200" class="d-block w-100" alt="Jeunesse" style="height: 520px; object-fit: cover;">
+                    <div class="carousel-caption"><h5>Jeunesse &amp; éducation</h5><p>Accompagner les jeunes vers l'autonomie</p></div>
                 </div>
             </div>
-            
-            <!-- Carousel Controls -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev" class="text-gradient">
+            <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next" class="text-gradient">
+            <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
             </button>
         </div>
-        
-        <!-- Quick Links Below Carousel -->
-        <div class="row g-3 mt-5">
+
+        <div class="row g-4 mt-4">
             <div class="col-md-4">
                 <a href="{% url 'main:mutoto_bike_challenge' %}" class="text-decoration-none">
-                    <div class="gallery-quick-link">
-                        <i class="fas fa-bicycle text-primary"></i>
-                        <h6 class="mt-2">Bike Challenge</h6>
-                        <p class="text-muted small">Sensibilisation environnementale</p>
-                    </div>
+                    <div class="gallery-quick-link" data-testid="quick-mbc"><i class="fas fa-bicycle"></i><h6>Bike Challenge</h6><p class="text-muted small mb-0">Sensibilisation environnementale</p></div>
                 </a>
             </div>
             <div class="col-md-4">
                 <a href="{% url 'main:mutoto_science_adventure' %}" class="text-decoration-none">
-                    <div class="gallery-quick-link">
-                        <i class="fas fa-flask-vial text-primary"></i>
-                        <h6 class="mt-2">Science Adventure</h6>
-                        <p class="text-muted small">Ateliers pour jeunes filles</p>
-                    </div>
+                    <div class="gallery-quick-link" data-testid="quick-msa"><i class="fas fa-flask-vial"></i><h6>Science Adventure</h6><p class="text-muted small mb-0">Ateliers pour jeunes filles</p></div>
                 </a>
             </div>
             <div class="col-md-4">
                 <a href="{% url 'main:mon_beau_metier' %}" class="text-decoration-none">
-                    <div class="gallery-quick-link">
-                        <i class="fas fa-briefcase text-primary"></i>
-                        <h6 class="mt-2">Mon Beau Métier</h6>
-                        <p class="text-muted small">Valorisation métiers</p>
-                    </div>
+                    <div class="gallery-quick-link" data-testid="quick-mbm"><i class="fas fa-briefcase"></i><h6>Mon Beau Métier</h6><p class="text-muted small mb-0">Valorisation des métiers</p></div>
                 </a>
             </div>
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Animation de comptage des statistiques (hero + impact band)
+document.addEventListener("DOMContentLoaded", () => {
+    const animateCount = (el) => {
+        const target = parseInt((el.getAttribute('data-target') || '0').replace(/[^0-9]/g, ''), 10) || 0;
+        const duration = 1600;
+        const start = performance.now();
+        const step = (now) => {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.floor(eased * target).toLocaleString('fr-FR');
+            if (progress < 1) requestAnimationFrame(step);
+            else el.textContent = target.toLocaleString('fr-FR');
+        };
+        requestAnimationFrame(step);
+    };
+    const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) { animateCount(entry.target); obs.unobserve(entry.target); }
+        });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('[data-target]').forEach(c => io.observe(c));
+});
+</script>
 {% endblock %}

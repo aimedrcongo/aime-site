@@ -4,48 +4,51 @@
 {% block title %}Nos Projets - AIME{% endblock %}
 
 {% block content %}
-<div class="container mt-5 pt-5">
-    <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold text-primary">Nos Projets</h1>
+<section class="page-hero">
+    <div class="container">
+        <span class="eyebrow">Nos initiatives</span>
+        <h1 class="display-4 fw-bold">Nos Projets</h1>
         <p class="lead">Découvrez nos initiatives pour l'épanouissement des enfants</p>
     </div>
+</section>
+
+<div class="container py-5">
 
     <div class="row">
         {% for project in projects %}
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100 border-0 shadow project-card">
                 {% if project.image %}
-                <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
+                <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.name }}" style="height: 200px; object-fit: cover;">
                 {% else %}
                 <div class="bg-primary d-flex align-items-center justify-content-center" style="height: 200px;">
                     <i class="fas fa-project-diagram text-white" style="font-size: 3rem;"></i>
                 </div>
                 {% endif %}
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">{{ project.title }}</h5>
-                    <p class="card-text flex-grow-1">{{ project.description|truncatewords:20 }}</p>
+                    {% if project.category %}<span class="badge bg-success mb-2 align-self-start">{{ project.category.name }}</span>{% endif %}
+                    <h5 class="card-title">{{ project.name }}</h5>
+                    <p class="card-text flex-grow-1 text-muted">{{ project.description|truncatewords:20 }}</p>
                     
                     <div class="mt-auto">
-                        {% if project.budget %}
-                        <div class="mb-2">
-                            <small class="text-muted">Budget: {{ project.budget|floatformat:0 }} FC</small>
+                        <div class="d-flex justify-content-between mb-2" style="font-size:0.85rem; font-weight:700;">
+                            <span class="text-primary">{{ project.raised_amount|floatformat:0 }} FC</span>
+                            <span class="text-muted">/ {{ project.goal_amount|floatformat:0 }} FC</span>
                         </div>
+                        <div class="progress-track mb-2">
+                            <div class="progress-fill" style="width: {{ project.progress_percentage|floatformat:0 }}%;"></div>
+                        </div>
+                        <small class="text-muted">Progression : {{ project.progress_percentage|floatformat:0 }}%</small>
+
+                        {% if project.slug %}
+                        <a href="{% url 'main:donate_project' project.slug %}" class="btn btn-primary w-100 mt-3" data-testid="project-support-{{ project.slug }}">
+                            <i class="fas fa-heart"></i> Soutenir ce projet
+                        </a>
+                        {% else %}
+                        <a href="{% url 'main:donate' %}" class="btn btn-primary w-100 mt-3">
+                            <i class="fas fa-heart"></i> Soutenir ce projet
+                        </a>
                         {% endif %}
-                        
-                        <div class="mb-3">
-                            <div class="progress" style="height: 8px;">
-                                <div class="progress-bar bg-success" role="progressbar" 
-                                     style="width: 75%"></div>
-                            </div>
-                            <small class="text-muted">Progression: 75%</small>
-                        </div>
-                        
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="badge bg-{{ project.status|default:'primary' }}">
-                                {{ project.get_status_display|default:'En cours' }}
-                            </span>
-                            <small class="text-muted">{{ project.date }}</small>
-                        </div>
                     </div>
                 </div>
             </div>

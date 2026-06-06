@@ -1,24 +1,44 @@
+# ============================================================================
+# AIME - Déploiement Render.com (Django monolithe + PostgreSQL)
+# Render sert À LA FOIS le frontend (pages HTML) ET le backend.
+# Déploiement en 1 clic : Render Dashboard -> New + -> Blueprint -> ce repo.
+# ============================================================================
+
+databases:
+  - name: aime-db
+    plan: free
+    region: frankfurt
+    databaseName: aime
+    user: aime
+
 services:
   - type: web
-    name: aime-backend
-    env: python
+    name: aime-site
+    runtime: python
     region: frankfurt
     plan: free
-    buildCommand: bash build.sh
-    startCommand: gunicorn aimesite.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120
-
+    buildCommand: "bash build.sh"
+    startCommand: "gunicorn aimesite.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120"
+    healthCheckPath: /
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.9
-      - key: DJANGO_SETTINGS_MODULE
-        value: aimesite.settings
+      # Connexion automatique à la base PostgreSQL créée ci-dessus
+      - key: DATABASE_URL
+        fromDatabase:
+          name: aime-db
+          property: connectionString
+      # Clé secrète générée automatiquement par Render
+      - key: SECRET_KEY
+        generateValue: true
       - key: DEBUG
-        value: false
+        value: "False"
+      # .onrender.com couvre automatiquement l'URL du service (ex: aime-site.onrender.com)
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: CSRF_TRUSTED_ORIGINS
+        value: "https://*.onrender.com"
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+      - key: DJANGO_SETTINGS_MODULE
+        value: "aimesite.settings"
       - key: RENDER
-        value: true
-      - key: SECURE_SSL_REDIRECT
-        value: true
-      - key: SESSION_COOKIE_SECURE
-        value: true
-      - key: CSRF_COOKIE_SECURE
-        value: true
+        value: "true"
