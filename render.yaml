@@ -31,11 +31,11 @@ services:
         generateValue: true
       - key: DEBUG
         value: "False"
-      # .onrender.com couvre automatiquement l'URL du service (ex: aime-site.onrender.com)
+      # .onrender.com couvre l'URL Render ; les domaines aime-rdc.org sont prêts pour le DNS
       - key: ALLOWED_HOSTS
-        value: ".onrender.com"
+        value: ".onrender.com,aime-rdc.org,www.aime-rdc.org"
       - key: CSRF_TRUSTED_ORIGINS
-        value: "https://*.onrender.com"
+        value: "https://*.onrender.com,https://aime-rdc.org,https://www.aime-rdc.org"
       - key: PYTHON_VERSION
         value: "3.11.9"
       - key: DJANGO_SETTINGS_MODULE
