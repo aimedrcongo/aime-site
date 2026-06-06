@@ -80,39 +80,20 @@
         </div>
 
         <div class="row g-4 mt-2">
+            {% get_programs as programs %}
+            {% for p in programs %}
             <div class="col-md-4">
-                <div class="card h-100 program-card-hover" data-testid="program-mbc">
-                    <img src="https://images.unsplash.com/photo-1515658323406-25d61c141a6e?auto=format&fit=crop&w=900&q=80" class="card-img-top" alt="Mutoto Bike Challenge" style="height: 230px; object-fit: cover;">
+                <div class="card h-100 program-card-hover" data-testid="program-card-{{ forloop.counter }}">
+                    {% if p.get_image %}<img src="{{ p.get_image }}" class="card-img-top" alt="{{ p.title }}" style="height: 230px; object-fit: cover;">{% endif %}
                     <div class="card-body">
-                        <span class="badge bg-primary mb-3"><i class="fas fa-bicycle me-1"></i> Sport &amp; Écologie</span>
-                        <h4 class="card-title">Mutoto Bike Challenge</h4>
-                        <p class="card-text text-muted mb-4">Un défi cycliste annuel qui sensibilise les jeunes à l'environnement tout en renforçant la cohésion sociale.</p>
-                        <a href="{% url 'main:mutoto_bike_challenge' %}" class="btn btn-outline-primary w-100" data-testid="link-mbc">Découvrir <i class="fas fa-arrow-right ms-2"></i></a>
+                        {% if p.badge_label %}<span class="badge bg-primary mb-3"><i class="fas {{ p.badge_icon }} me-1"></i> {{ p.badge_label }}</span>{% endif %}
+                        <h4 class="card-title">{{ p.title }}</h4>
+                        <p class="card-text text-muted mb-4">{{ p.description }}</p>
+                        {% if p.link_url %}<a href="{{ p.link_url }}" class="btn btn-outline-primary w-100" data-testid="link-program-{{ forloop.counter }}">{{ p.link_label }} <i class="fas fa-arrow-right ms-2"></i></a>{% endif %}
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card h-100 program-card-hover" data-testid="program-msa">
-                    <img src="https://images.pexels.com/photos/8471835/pexels-photo-8471835.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600&w=900" class="card-img-top" alt="Mutoto Science Adventure" style="height: 230px; object-fit: cover;">
-                    <div class="card-body">
-                        <span class="badge bg-success mb-3"><i class="fas fa-flask me-1"></i> Sciences &amp; Tech</span>
-                        <h4 class="card-title">Mutoto Science Adventure</h4>
-                        <p class="card-text text-muted mb-4">Des ateliers scientifiques qui éveillent la curiosité, développent l'esprit critique et inspirent les vocations.</p>
-                        <a href="{% url 'main:mutoto_science_adventure' %}" class="btn btn-outline-primary w-100" data-testid="link-msa">Découvrir <i class="fas fa-arrow-right ms-2"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card h-100 program-card-hover" data-testid="program-mbm">
-                    <img src="https://images.pexels.com/photos/9301461/pexels-photo-9301461.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600&w=900" class="card-img-top" alt="Mon Beau Métier" style="height: 230px; object-fit: cover;">
-                    <div class="card-body">
-                        <span class="badge bg-primary mb-3"><i class="fas fa-briefcase me-1"></i> Métiers &amp; Avenir</span>
-                        <h4 class="card-title">Mon Beau Métier</h4>
-                        <p class="card-text text-muted mb-4">La valorisation et la formation aux métiers porteurs pour ouvrir aux jeunes la voie de l'autonomie économique.</p>
-                        <a href="{% url 'main:mon_beau_metier' %}" class="btn btn-outline-primary w-100" data-testid="link-mbm">Découvrir <i class="fas fa-arrow-right ms-2"></i></a>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
@@ -205,30 +186,20 @@
             <div class="section-title"><h2>Nos dernières réalisations.</h2></div>
         </div>
 
+        {% get_gallery as gallery %}
         <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
-                <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
-                <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="1"></button>
-                <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="2"></button>
-                <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="3"></button>
+                {% for g in gallery %}
+                <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active" aria-current="true"{% endif %}></button>
+                {% endfor %}
             </div>
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="https://images.pexels.com/photos/14554003/pexels-photo-14554003.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600&w=1200" class="d-block w-100" alt="Éducation" style="height: 520px; object-fit: cover;">
-                    <div class="carousel-caption"><h5>Mutoto Science Adventure</h5><p>Ateliers scientifiques pour éveiller la curiosité des enfants</p></div>
+                {% for g in gallery %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <img src="{{ g.get_image }}" class="d-block w-100" alt="{{ g.title }}" style="height: 520px; object-fit: cover;">
+                    {% if g.title or g.caption %}<div class="carousel-caption"><h5>{{ g.title }}</h5><p>{{ g.caption }}</p></div>{% endif %}
                 </div>
-                <div class="carousel-item">
-                    <img src="https://images.pexels.com/photos/9301461/pexels-photo-9301461.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600&w=1200" class="d-block w-100" alt="Entrepreneuriat" style="height: 520px; object-fit: cover;">
-                    <div class="carousel-caption"><h5>Mon Beau Métier</h5><p>Formation et valorisation des métiers étudiants en RDC</p></div>
-                </div>
-                <div class="carousel-item">
-                    <img src="https://images.unsplash.com/photo-1515658323406-25d61c141a6e?auto=format&fit=crop&w=1200&q=80" class="d-block w-100" alt="Communauté" style="height: 520px; object-fit: cover;">
-                    <div class="carousel-caption"><h5>Engagement communautaire</h5><p>Un travail collectif pour un impact durable</p></div>
-                </div>
-                <div class="carousel-item">
-                    <img src="https://images.pexels.com/photos/8617843/pexels-photo-8617843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600&w=1200" class="d-block w-100" alt="Jeunesse" style="height: 520px; object-fit: cover;">
-                    <div class="carousel-caption"><h5>Jeunesse &amp; éducation</h5><p>Accompagner les jeunes vers l'autonomie</p></div>
-                </div>
+                {% endfor %}
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>

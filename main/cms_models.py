@@ -141,3 +141,50 @@ class SiteSettings(models.Model):
     def load(cls):
         obj, _ = cls.objects.get_or_create(pk=1)
         return obj
+
+
+class ProgramCard(models.Model):
+    """Carte programme affichée sur la page d'accueil (section 'Nos programmes')."""
+    title = models.CharField("Titre", max_length=120)
+    description = models.TextField("Description")
+    image = models.ImageField("Image", upload_to='programs/', blank=True, null=True)
+    image_url = models.URLField("URL image (si pas d'upload)", blank=True)
+    badge_label = models.CharField("Badge — texte", max_length=60, blank=True)
+    badge_icon = models.CharField("Badge — icône FontAwesome", max_length=40, blank=True,
+                                  default='fa-star', help_text="Ex: fa-bicycle, fa-flask, fa-briefcase")
+    link_url = models.CharField("Lien", max_length=300, blank=True)
+    link_label = models.CharField("Lien — texte", max_length=60, default='Découvrir')
+    order = models.PositiveIntegerField("Ordre", default=0)
+    is_active = models.BooleanField("Actif", default=True)
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = "Programme (accueil)"
+        verbose_name_plural = "Programmes (accueil)"
+
+    def __str__(self):
+        return self.title
+
+    def get_image(self):
+        return self.image.url if self.image else self.image_url
+
+
+class GalleryImage(models.Model):
+    """Image de la galerie/carrousel de la page d'accueil."""
+    title = models.CharField("Titre", max_length=120, blank=True)
+    caption = models.CharField("Légende", max_length=200, blank=True)
+    image = models.ImageField("Image", upload_to='gallery/', blank=True, null=True)
+    image_url = models.URLField("URL image (si pas d'upload)", blank=True)
+    order = models.PositiveIntegerField("Ordre", default=0)
+    is_active = models.BooleanField("Actif", default=True)
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = "Image galerie (accueil)"
+        verbose_name_plural = "Images galerie (accueil)"
+
+    def __str__(self):
+        return self.title or self.caption or f"Image #{self.pk}"
+
+    def get_image(self):
+        return self.image.url if self.image else self.image_url

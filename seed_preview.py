@@ -198,3 +198,38 @@ _hero_defaults = [
 for _page, _defaults in _hero_defaults:
     HeroSection.objects.get_or_create(page=_page, defaults=_defaults)
 print('CMS seeded: heroes =', HeroSection.objects.count(), '| site settings OK')
+
+# --- CMS: Programmes & Galerie (page d'accueil) ---
+from main.models import ProgramCard, GalleryImage
+
+_programs = [
+    ("Mutoto Bike Challenge", "Un défi cycliste annuel qui sensibilise les jeunes à l'environnement tout en renforçant la cohésion sociale.",
+     "https://images.unsplash.com/photo-1515658323406-25d61c141a6e?auto=format&fit=crop&w=900&q=80",
+     "Sport & Écologie", "fa-bicycle", "/mutoto-bike-challenge/", 1),
+    ("Mutoto Science Adventure", "Des ateliers scientifiques qui éveillent la curiosité, développent l'esprit critique et inspirent les vocations.",
+     "https://images.pexels.com/photos/8471835/pexels-photo-8471835.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600&w=900",
+     "Sciences & Tech", "fa-flask", "/mutoto-science-adventure/", 2),
+    ("Mon Beau Métier", "La valorisation et la formation aux métiers porteurs pour ouvrir aux jeunes la voie de l'autonomie économique.",
+     "https://images.pexels.com/photos/9301461/pexels-photo-9301461.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600&w=900",
+     "Métiers & Avenir", "fa-briefcase", "/mon-beau-metier/", 3),
+]
+for _t, _d, _img, _badge, _icon, _link, _o in _programs:
+    ProgramCard.objects.get_or_create(title=_t, defaults={
+        'description': _d, 'image_url': _img, 'badge_label': _badge,
+        'badge_icon': _icon, 'link_url': _link, 'link_label': 'Découvrir', 'order': _o,
+    })
+
+_gallery = [
+    ("Mutoto Science Adventure", "Ateliers scientifiques pour éveiller la curiosité des enfants",
+     "https://images.pexels.com/photos/14554003/pexels-photo-14554003.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600&w=1200", 1),
+    ("Mon Beau Métier", "Formation et valorisation des métiers étudiants en RDC",
+     "https://images.pexels.com/photos/9301461/pexels-photo-9301461.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600&w=1200", 2),
+    ("Engagement communautaire", "Un travail collectif pour un impact durable",
+     "https://images.unsplash.com/photo-1515658323406-25d61c141a6e?auto=format&fit=crop&w=1200&q=80", 3),
+    ("Jeunesse & éducation", "Accompagner les jeunes vers l'autonomie",
+     "https://images.pexels.com/photos/8617843/pexels-photo-8617843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600&w=1200", 4),
+]
+for _t, _c, _img, _o in _gallery:
+    GalleryImage.objects.get_or_create(title=_t, defaults={'caption': _c, 'image_url': _img, 'order': _o})
+
+print('CMS seeded: programs =', ProgramCard.objects.count(), '| gallery =', GalleryImage.objects.count())

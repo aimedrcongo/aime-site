@@ -223,3 +223,37 @@ class SiteSettingsAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return False
+
+
+from .models import ProgramCard, GalleryImage
+
+
+@admin.register(ProgramCard)
+class ProgramCardAdmin(admin.ModelAdmin):
+    list_display = ['title', 'badge_label', 'order', 'is_active']
+    list_editable = ['order', 'is_active']
+    readonly_fields = ['image_preview']
+    fields = ('title', 'description', 'image', 'image_url', 'image_preview',
+              'badge_label', 'badge_icon', 'link_url', 'link_label', 'order', 'is_active')
+
+    def image_preview(self, obj):
+        url = obj.get_image()
+        if url:
+            return format_html('<img src="{}" style="max-height:140px;border-radius:8px;" />', url)
+        return "Aucune image"
+    image_preview.short_description = "Aperçu"
+
+
+@admin.register(GalleryImage)
+class GalleryImageAdmin(admin.ModelAdmin):
+    list_display = ['__str__', 'caption', 'order', 'is_active']
+    list_editable = ['order', 'is_active']
+    readonly_fields = ['image_preview']
+    fields = ('title', 'caption', 'image', 'image_url', 'image_preview', 'order', 'is_active')
+
+    def image_preview(self, obj):
+        url = obj.get_image()
+        if url:
+            return format_html('<img src="{}" style="max-height:140px;border-radius:8px;" />', url)
+        return "Aucune image"
+    image_preview.short_description = "Aperçu"
