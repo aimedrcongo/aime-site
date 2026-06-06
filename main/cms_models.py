@@ -14,6 +14,7 @@ PAGE_CHOICES = [
     ('contact', 'Contact'),
     ('donate', 'Faire un don'),
     ('mbc', 'Mutoto Bike Challenge'),
+    ('mbc_registration', 'Inscription MBC'),
     ('msa', 'Mutoto Science Adventure'),
     ('mon_beau_metier', 'Mon Beau Métier'),
     ('manifesto', 'Manifeste'),

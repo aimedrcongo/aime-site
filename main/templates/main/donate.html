@@ -4,13 +4,9 @@
 {% block title %}Faire un don - AIME{% endblock %}
 
 {% block content %}
-<section class="page-hero">
-    <div class="container">
-        <span class="eyebrow">Soutenir AIME</span>
-        <h1 class="display-4 fw-bold">Faire un don</h1>
-        <p class="lead">Votre générosité peut transformer la vie d'un enfant</p>
-    </div>
-</section>
+{% load cms_tags %}
+{% get_hero 'donate' as hero %}
+{% include 'main/partials/_page_hero.html' with hero=hero default_title="Faire un don" default_subtitle="Votre générosité peut transformer la vie d'un enfant" %}
 
 <div class="container py-5">
     <div class="row justify-content-center">

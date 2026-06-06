@@ -1,17 +1,9 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="page-hero">
-    <div class="container">
-        <span class="eyebrow">Qui sommes-nous</span>
-        <h1 class="display-4 fw-bold">{{ title }}</h1>
-        <p class="lead">
-            Agissons Ici et Maintenant pour les Enfants — une organisation dédiée au développement
-            et à l'épanouissement des enfants en République Démocratique du Congo.
-        </p>
-    </div>
-</section>
+{% load cms_tags %}
+{% get_hero 'about' as hero %}
+{% include 'main/partials/_page_hero.html' with hero=hero default_title=title default_subtitle="Agissons Ici et Maintenant pour les Enfants — une organisation dédiée au développement et à l'épanouissement des enfants en République Démocratique du Congo." %}
 
 <!-- Mission & Vision -->
 <section class="py-5">

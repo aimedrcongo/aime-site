@@ -4,13 +4,9 @@
 {% block title %}Nos Projets - AIME{% endblock %}
 
 {% block content %}
-<section class="page-hero">
-    <div class="container">
-        <span class="eyebrow">Nos initiatives</span>
-        <h1 class="display-4 fw-bold">Nos Projets</h1>
-        <p class="lead">Découvrez nos initiatives pour l'épanouissement des enfants</p>
-    </div>
-</section>
+{% load cms_tags %}
+{% get_hero 'projects' as hero %}
+{% include 'main/partials/_page_hero.html' with hero=hero default_title="Nos Projets" default_subtitle="Découvrez nos initiatives pour l'épanouissement des enfants" %}
 
 <div class="container py-5">
 

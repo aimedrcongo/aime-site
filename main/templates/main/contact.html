@@ -4,13 +4,9 @@
 {% block title %}Contact - AIME{% endblock %}
 
 {% block content %}
-<section class="page-hero">
-    <div class="container">
-        <span class="eyebrow">Contact</span>
-        <h1 class="display-4 fw-bold">Contactez-nous</h1>
-        <p class="lead">Nous sommes là pour vous écouter et répondre à vos questions</p>
-    </div>
-</section>
+{% load cms_tags %}
+{% get_hero 'contact' as hero %}
+{% include 'main/partials/_page_hero.html' with hero=hero default_title="Contactez-nous" default_subtitle="Nous sommes là pour vous écouter et répondre à vos questions" %}
 
 <div class="container py-5">
     <div class="row justify-content-center">

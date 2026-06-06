@@ -61,13 +61,9 @@
 {% endblock %}
 
 {% block content %}
-<section class="page-hero">
-    <div class="container">
-        <span class="eyebrow">Inscription</span>
-        <h1 class="display-4 fw-bold"><i class="fas fa-bicycle me-2"></i>Mutoto Bike Challenge</h1>
-        <p class="lead">Rejoignez-nous pour cette aventure cycliste éducative et solidaire !</p>
-    </div>
-</section>
+{% load cms_tags %}
+{% get_hero 'mbc_registration' as hero %}
+{% include 'main/partials/_page_hero.html' with hero=hero default_title="Mutoto Bike Challenge" default_subtitle="Rejoignez-nous pour cette aventure cycliste éducative et solidaire !" %}
 
 <div class="container py-5">
     <div class="row justify-content-center">

@@ -164,6 +164,36 @@ _hero_defaults = [
         'overlay_enabled': True, 'overlay_type': 'linear', 'overlay_color': '#0A2A4D',
         'overlay_color_2': '#1D4ED8', 'overlay_opacity': 60, 'overlay_angle': 135,
     }),
+    ('about', {
+        'eyebrow': 'Qui sommes-nous', 'title': "À propos d'AIME",
+        'subtitle': "Agissons Ici et Maintenant pour les Enfants — une organisation dédiée au développement et à l'épanouissement des enfants en République Démocratique du Congo.",
+        'overlay_enabled': True, 'overlay_color': '#0A2A4D', 'overlay_color_2': '#1D4ED8', 'overlay_opacity': 60,
+    }),
+    ('projects', {
+        'eyebrow': 'Nos initiatives', 'title': 'Nos Projets',
+        'subtitle': "Découvrez nos initiatives pour l'épanouissement des enfants.",
+        'overlay_enabled': True, 'overlay_color': '#0A2A4D', 'overlay_color_2': '#1D4ED8', 'overlay_opacity': 60,
+    }),
+    ('contact', {
+        'eyebrow': 'Contact', 'title': 'Contactez-nous',
+        'subtitle': "Nous sommes là pour vous écouter et répondre à vos questions.",
+        'overlay_enabled': True, 'overlay_color': '#0A2A4D', 'overlay_color_2': '#1D4ED8', 'overlay_opacity': 60,
+    }),
+    ('donate', {
+        'eyebrow': 'Soutenir AIME', 'title': 'Faire un don',
+        'subtitle': "Votre générosité peut transformer la vie d'un enfant.",
+        'overlay_enabled': True, 'overlay_color': '#0A2A4D', 'overlay_color_2': '#1D4ED8', 'overlay_opacity': 60,
+    }),
+    ('impact_theory', {
+        'eyebrow': 'Notre approche', 'title': 'Notre Théorie du Changement',
+        'subtitle': "De l'enfant d'aujourd'hui au leader de demain : comment AIME transforme des vies et construit l'avenir de la RDC.",
+        'overlay_enabled': True, 'overlay_color': '#0A2A4D', 'overlay_color_2': '#1D4ED8', 'overlay_opacity': 60,
+    }),
+    ('mbc_registration', {
+        'eyebrow': 'Inscription', 'title': 'Mutoto Bike Challenge',
+        'subtitle': "Rejoignez-nous pour cette aventure cycliste éducative et solidaire !",
+        'overlay_enabled': True, 'overlay_color': '#0A2A4D', 'overlay_color_2': '#1D4ED8', 'overlay_opacity': 60,
+    }),
 ]
 for _page, _defaults in _hero_defaults:
     HeroSection.objects.get_or_create(page=_page, defaults=_defaults)

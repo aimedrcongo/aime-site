@@ -124,17 +124,9 @@
 {% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="page-hero">
-    <div class="container">
-        <span class="eyebrow">Notre approche</span>
-        <h1 class="display-4 fw-bold">Notre Théorie du Changement</h1>
-        <p class="lead">
-            De l'enfant d'aujourd'hui au leader de demain : comment AIME transforme des vies
-            et construit l'avenir de la RDC.
-        </p>
-    </div>
-</section>
+{% load cms_tags %}
+{% get_hero 'impact_theory' as hero %}
+{% include 'main/partials/_page_hero.html' with hero=hero default_title="Notre Théorie du Changement" default_subtitle="De l'enfant d'aujourd'hui au leader de demain : comment AIME transforme des vies et construit l'avenir de la RDC." %}
 
 <!-- Théorie du Changement Timeline -->
 <section class="py-5">
